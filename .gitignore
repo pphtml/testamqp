@@ -1,0 +1,13 @@
+.idea/
+target/
+*.iml
+dependency-reduced-pom.xml
+src/main/java/org/superbiz/model/jooq/
+src/main/frontend/node
+src/main/frontend/node_modules
+src/main/frontend/etc
+src/main/frontend/yarn.lock
+src/main/frontend/package-lock.json
+src/main/frontend/dist/
+src/main/resources/static/dist/
+

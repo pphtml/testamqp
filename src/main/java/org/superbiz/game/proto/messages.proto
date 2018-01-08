@@ -1,0 +1,111 @@
+syntax = "proto3";
+
+//package proto;
+
+option java_package = "org.superbiz.game.proto";
+option java_outer_classname = "Msg";
+
+message Message {
+    //PlayerMoved playerMoved = 1;
+    PlayerStartReq playerStartReq = 1;
+    PlayerUpdateReq playerUpdateReq = 2;
+    PlayerResp playerResp = 3;
+
+    WorldInfo worldInfo = 4;
+    Resize resize = 5;
+    DotsUpdate dotsUpdate = 6;
+    //EatenFood eatenFood = 7;
+    SnakesUpdate snakesUpdate = 8;
+    ClientDisconnect clientDisconnect = 9;
+}
+
+message PlayerStartReq {
+    string skin = 1;
+    int64 initiated = 2;
+}
+
+message PlayerUpdateReq {
+    float rotationAsked = 1;
+    float speedMultiplier = 2;
+    int64 initiated = 3;
+}
+
+message PlayerResp {
+    TimeInfo timeInfo = 1;
+    float x = 2;
+    float y = 3;
+    float rotation = 4;
+    //float rotationAsked = 5;
+    uint32 length = 6;
+    repeated Part parts = 7; // prejmenovat na path
+    float speed = 8;
+    repeated Dot eatenFood = 9;
+}
+
+message WorldInfo {
+    int32 radius = 1;
+}
+
+message Dot {
+    float x = 1;
+    float y = 2;
+    int32 color = 3;
+    int32 size = 4;
+}
+
+message DotsUpdate {
+    repeated Dot dots = 1;
+}
+
+message SnakesUpdate {
+    repeated SnakeInfo snakes = 1;
+    uint64 serverTimestamp = 2;
+}
+
+//message PlayerMoved {
+//    float x = 1;
+//    float y = 2;
+//    float rotation = 3;
+//    float speed = 4;
+//    string skin = 5;
+//    repeated Part parts = 6;
+//    int64 initiated = 7;
+//}
+
+message Part {
+    float x = 1;
+    float y = 2;
+    float rotation = 3;
+}
+
+message TimeInfo {
+    int64 initiated = 1;
+    int64 processing = 2;
+}
+
+//message EatenFood {
+//    TimeInfo timeInfo = 1;
+//    repeated Dot dots = 2;
+//}
+
+message SnakeInfo {
+    string id = 1;
+    float x = 2;
+    float y = 3;
+    float rotation = 4;
+    float rotationAsked = 5;
+    uint32 length = 6;
+    repeated Part path = 7;
+    float speed = 8;
+    string skin = 9;
+    uint64 lastProcessedOnServer = 10;
+}
+
+message Resize {
+    int32 width = 1;
+    int32 height = 2;
+}
+
+message ClientDisconnect {
+    string id = 1;
+}

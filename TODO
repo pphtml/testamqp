@@ -1,0 +1,9 @@
+- protobuf - nastudovat oneOf
+- TO DO appka
+- vyzkouset jak dlouho vydrzi sesna na heroku - heroku ps -a <app name> - https://devcenter.heroku.com/articles/free-dyno-hours
+
+node/node node_modules/.bin/mocha --reporter spec
+node/node node/node_modules/npm/bin/npm-cli.js run build
+node index.js --padding 2 ~/Documents/ZizalyGrafika/TextureSource2/*.png
+protoc -I=src/main/java/org/superbiz/game/proto --java_out=src/main/java messages.proto
+protoc -I=src/main/java/org/superbiz/game/proto --js_out=import_style=commonjs,binary:src/main/frontend/src/proto messages.proto
