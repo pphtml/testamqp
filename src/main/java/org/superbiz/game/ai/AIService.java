@@ -27,25 +27,19 @@ public class AIService {
     private static final float PI_DOUBLE = (float) (Math.PI * 2);
 
     public void update(SnakePositions snakePositions, long elapsedTime) {
-        Collection<SnakeData> allAISnakes = snakePositions.getAllAISnakes();
-        if (allAISnakes.size() == 0) {
-            SnakeData snake = snakePositions.createSnake("14338485", 0, TARGET_DISTANCE);
-            snake.setAiDriven(true);
-            snakePositions.registerSnake(generateNewId(), snake);
-        } else {
-            for (SnakeData snakeData : allAISnakes) {
-
-                float angle = angle(snakeData);
-                //snakeData.setRotation(angle);
-                snakeData.setRotationAsked(angle);
-//                if (snakeData.getX() > 1000) {
-//                    snakeData.setRotationAsked((float) Math.PI);
-//                }
-//                if (snakeData.getX() < -1000) {
-//                    snakeData.setRotationAsked(0.0f);
-//                }
-            }
-        }
+//        Collection<SnakeData> allAISnakes = snakePositions.getAllAISnakes();
+//        if (allAISnakes.size() == 0) {
+//            SnakeData snake = snakePositions.createSnake("14338485", 0, TARGET_DISTANCE);
+//            snake.setAiDriven(true);
+//            snakePositions.registerSnake(generateNewId(), snake);
+//        } else {
+//            for (SnakeData snakeData : allAISnakes) {
+//
+//                float angle = angle(snakeData);
+//                //snakeData.setRotation(angle);
+//                snakeData.setRotationAsked(angle);
+//            }
+//        }
     }
 
     private float angle(SnakeData snakeData) {

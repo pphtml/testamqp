@@ -1,5 +1,5 @@
 import rx from 'rxjs'
-const withinPiBounds = require('./wormMovement').withinPiBounds;
+const withinPiBounds = require('../computation/movements').withinPiBounds;
 
 class Controls {
     constructor(gameContext) {

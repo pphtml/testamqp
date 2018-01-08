@@ -10,13 +10,13 @@ import ratpack.server.RatpackServer;
 
 import java.util.logging.Logger;
 
-public class GusanosServer {
+public class TruckingServer {
     static {
         System.setProperty("java.util.logging.config.class", LoggingConfig.class.getName());
         System.setProperty("org.jooq.no-logo", "true");
     }
 
-    private static final Logger logger = Logger.getLogger(GusanosServer.class.getName());
+    private static final Logger logger = Logger.getLogger(TruckingServer.class.getName());
 
     public static void main(String[] args) throws Exception {
         // Registry.builder().add(FileRenderer.TYPE, FileRenderer.NON_CACHING);

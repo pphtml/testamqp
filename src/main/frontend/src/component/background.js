@@ -30,8 +30,8 @@ class Background {
             this.sprite.width = width + 256;
             this.sprite.height = height + 256;
         } else {
-            //this.sprite = new TilingSprite(resources["images/background2.png"].texture, width + 256, height + 256);
-            this.sprite = new TilingSprite(resources["images/spritesheet.json"].textures['background3.png'], width + 256, height + 256);
+            this.sprite = new TilingSprite(resources["images/background.png"].texture, width + 256, height + 256);
+            //this.sprite = new TilingSprite(resources["images/spritesheet.json"].textures['background3.png'], width + 256, height + 256);
             this.sprite.tileScale.set(0.5, 0.5);
             //this.sprite.zOrder = -2000;
             //this.sprite.displayGroup = layers.backgroundLayer;

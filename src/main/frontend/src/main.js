@@ -6,8 +6,8 @@ import Player from './component/player'
 import GameInfo from './component/gameInfo'
 import Controls from './component/controls'
 import Background from './component/background'
-import NPCS from './component/npcs'
-import Worms from './component/worms'
+// import NPCS from './component/npcs'
+// import Worms from './component/worms'
 import Communication from "./component/communication"
 import FeatureMatrix from './component/featureMatrix'
 
@@ -41,13 +41,12 @@ let color = COLORS[Math.floor(Math.random() * COLORS.length)];
 PIXI.utils.skipHello();
 let stage = new Container();
 let renderOptions = {antialias: false, transparent: false, resolution: 1};
-//let rendererFc = forceCanvas ? CanvasRenderer : autoDetectRenderer;
 let renderer;
 if (!featureMatrix.webGl) {
     console.info(`Using canvas renderer...`);
-    renderer = new CanvasRenderer(256, 256, renderOptions);
+    renderer = new CanvasRenderer(window.innerWidth, window.innerHeight, renderOptions);
 } else {
-    renderer = new autoDetectRenderer(256, 256, renderOptions);
+    renderer = new autoDetectRenderer(window.innerWidth, window.innerHeight, renderOptions);
 }
 renderer.view.style.position = "absolute";
 renderer.view.style.display = "block";
@@ -55,9 +54,6 @@ renderer.autoResize = true;
 renderer.backgroundColor = 0x061639;
 
 let gameContext = {
-    // width: window.innerWidth,
-    // height: window.innerHeight,
-    // middle: { x: window.innerWidth / 2, y: window.innerHeight / 2 },
     stage: stage,
     renderer: renderer,
     middleCoordinates: function() {
@@ -73,14 +69,9 @@ stage.displayList = new DisplayList(); // zOrder
 document.body.appendChild(renderer.view);
 
 loader
-    //.add("images/sprites.json")
     .add('images/spritesheet.json')
-    // .add("images/myfood.png")
-    // .add("images/myfood-outer.png")
-    // .add("images/tail-basic-white.png")
-    // .add("images/tail-mod1-white.png")
-    // .add("images/tail-mod2-white.png")
-    // .add("images/eye.png")
+    .add("images/background.png")
+    //.add("images/background2.png")
     .load(setup);
 
 function setup() {
@@ -90,18 +81,14 @@ function setup() {
     let background = new Background(gameContext);
     gameContext.background = background;
 
-    // let colorIndex = 0; //Math.floor(Math.random() * 10);
-    // let color = ['ble', 'blue', 'darkblue', 'darkgreen', 'darkred', 'green', 'lime', 'orange', 'purple', 'yellow'][colorIndex];
-
     let player = new Player(gameContext, color);
     gameContext.player = player;
 
-    //stage.addChild(player.container);
-    let npcs = new NPCS(gameContext);
-    stage.addChild(npcs.container);
-    let worms = new Worms(gameContext);
-    stage.addChild(worms.container);
-    //worms.updateWorms({"HJlnnghGz":{"path":[{"x":29.85,"y":2.78,"r":0.11},{"x":9.9,"y":1.29,"r":0.07},{"x":-10.08,"y":0.53,"r":0.04},{"x":-30.08,"y":0.19,"r":0.02},{"x":-50.08,"y":0.07,"r":0.01},{"x":-70.08,"y":0.02,"r":0.0},{"x":-90.08,"y":0.01,"r":0.0},{"x":-110.08,"y":0.0,"r":0.0},{"x":-130.08,"y":0.0,"r":0.0},{"x":-150.08,"y":0.0,"r":0.0},{"x":-170.08,"y":0.0,"r":0.0},{"x":-190.08,"y":0.0,"r":0.0},{"x":-210.08,"y":0.0,"r":0.0},{"x":-230.08,"y":0.0,"r":0.0},{"x":-250.08,"y":0.0,"r":0.0}],"skin":"ble","rotation":0.0,"speed":0.05}});
+    // //stage.addChild(player.container);
+    // let npcs = new NPCS(gameContext);
+    // stage.addChild(npcs.container);
+    // let worms = new Worms(gameContext);
+    // stage.addChild(worms.container);
 
     let gameInfo = new GameInfo(gameContext, 10, 10);
     stage.addChild(gameInfo.container);
@@ -117,19 +104,13 @@ function setup() {
         before = now;
         gameContext.controls.fpsSubject.next('a');
 
-/*        totalTimeForFrames += elapsedTime - (frameTimeHistory[frameTimeIndex] || 0);
-        frameTimeHistory[frameTimeIndex] = elapsedTime;
-        frameTimeIndex = (frameTimeIndex + 1) % numFramesToAverage;
-        var averageElapsedTime = totalTimeForFrames / numFramesToAverage;
-        var fps = 1000 / averageElapsedTime;*/
-
         let angle = gameContext.controls.angle();
 
         player.update(angle, elapsedTime);
         gameInfo.update(angle);
         background.update();
-        npcs.update();
-        worms.update(elapsedTime);
+        // npcs.update();
+        // worms.update(elapsedTime);
 
         renderer.render(stage);
 
