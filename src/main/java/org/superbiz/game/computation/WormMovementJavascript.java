@@ -29,14 +29,14 @@ public class WormMovementJavascript implements WormMovement {
         ScriptEngine engine = new ScriptEngineManager().getEngineByName("nashorn");
         NASHORN_INVOCABLE = (Invocable) engine;
 
-//        try {
-//            String content = new String(Files.readAllBytes(Paths.get("src/main/frontend/src/component/wormMovement.js")));
-//            engine.eval(content);
-//
-//        } catch (IOException | ScriptException e) {
-//            logger.log(Level.SEVERE, e.getMessage(), e);
-//            throw new RuntimeException(e);
-//        }
+        try {
+            String content = new String(Files.readAllBytes(Paths.get("src/main/frontend/src/computation/movements.js")));
+            engine.eval(content);
+
+        } catch (IOException | ScriptException e) {
+            logger.log(Level.SEVERE, e.getMessage(), e);
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

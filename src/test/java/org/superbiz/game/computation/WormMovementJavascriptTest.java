@@ -1,5 +1,6 @@
 package org.superbiz.game.computation;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.superbiz.game.BaseTest;
 import org.superbiz.game.model.MoveSnakeResult;
@@ -15,6 +16,7 @@ public class WormMovementJavascriptTest extends BaseTest {
     private WormMovement wormMovement = new WormMovementJavascript();
 
     @Test
+    @Ignore
     public void moveSnake() {
         List<Part> path = Arrays.asList(Part.create(20.0f, 10.0f, 0.0f), Part.create(30.0f, 10.0f, 0.0f));
         MoveSnakeResult result = wormMovement.moveSnake(path, 1.67f, 10.0f, 20.0f);

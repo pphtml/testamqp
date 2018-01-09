@@ -1,104 +1,119 @@
 syntax = "proto3";
 
-//package proto;
-
 option java_package = "org.superbiz.game.proto";
 option java_outer_classname = "Msg";
 
 message Message {
-    //PlayerMoved playerMoved = 1;
-    PlayerStartReq playerStartReq = 1;
-    PlayerUpdateReq playerUpdateReq = 2;
-    PlayerResp playerResp = 3;
+    oneof msg {
+        PlayerStartRequest playerStartRequest = 1;
+        PlayerStartResponse playerStartResponse = 2;
 
-    WorldInfo worldInfo = 4;
-    Resize resize = 5;
-    DotsUpdate dotsUpdate = 6;
-    //EatenFood eatenFood = 7;
-    SnakesUpdate snakesUpdate = 8;
-    ClientDisconnect clientDisconnect = 9;
+        PlayerUpdateRequest playerUpdateRequest = 3;
+        PlayerUpdateResponse playerUpdateResponse = 4;
+
+        Resize resize = 5;
+        PeriodicVehiclesUpdate periodicVehicleUpdate = 6;
+
+        ClientDisconnect clientDisconnect = 9;
+    }
 }
 
-message PlayerStartReq {
-    string skin = 1;
-    int64 initiated = 2;
+message PlayerStartRequest {
+    string name = 1;
+    string vehicleType = 2;
+    string vehicleDesign = 3;
+    int64 initiated = 4;
 }
 
-message PlayerUpdateReq {
-    float rotationAsked = 1;
+message PlayerStartResponse {
+    TimeInfo timeInfo = 1;
+    int32 worldWidth = 2;
+    int32 worldHeight = 3;
+    int32 sectorWidth = 4;
+    int32 sectorHeight = 5;
+    repeated SectorData sectorData = 6;
+    float birthLocationX = 7;
+    float birthLocationY = 8;
+    float birthOrientation = 9;
+    float baseSpeed = 10;
+}
+
+message SectorData {
+    int32 x = 1;
+    int32 y = 2;
+    enum RoadType {
+        NONE = 0;
+        SINGLE = 1;
+        DOUBLE = 2;
+        TRIPLE = 3;
+    }
+    RoadType north = 3;
+    RoadType east = 4;
+    RoadType south = 5;
+    RoadType west = 6;
+}
+
+
+message PlayerUpdateRequest {
+    float orientationRequested = 1;
     float speedMultiplier = 2;
     int64 initiated = 3;
 }
 
-message PlayerResp {
+message PlayerUpdateResponse {
     TimeInfo timeInfo = 1;
-    float x = 2;
-    float y = 3;
-    float rotation = 4;
-    //float rotationAsked = 5;
-    uint32 length = 6;
-    repeated Part parts = 7; // prejmenovat na path
-    float speed = 8;
-    repeated Dot eatenFood = 9;
+//    float x = 2;
+//    float y = 3;
+    //float orientationRequested = 5;
+    //repeated VehiclePart parts = 6;
+    VehicleData vehicleData = 2;
 }
 
-message WorldInfo {
-    int32 radius = 1;
-}
-
-message Dot {
-    float x = 1;
-    float y = 2;
-    int32 color = 3;
-    int32 size = 4;
-}
-
-message DotsUpdate {
-    repeated Dot dots = 1;
-}
-
-message SnakesUpdate {
-    repeated SnakeInfo snakes = 1;
-    uint64 serverTimestamp = 2;
-}
-
-//message PlayerMoved {
+//message Dot {
 //    float x = 1;
 //    float y = 2;
-//    float rotation = 3;
-//    float speed = 4;
-//    string skin = 5;
-//    repeated Part parts = 6;
-//    int64 initiated = 7;
+//    int32 color = 3;
+//    int32 size = 4;
 //}
 
-message Part {
+//message DotsUpdate {
+//    repeated Dot dots = 1;
+//}
+
+message PeriodicVehiclesUpdate {
+    uint64 serverTimestamp = 1;
+    repeated VehicleData vehicles = 2;
+}
+
+message VehicleData {
+    uint64 lastProcessedOnServer = 1;
+    repeated VehiclePart vehicleParts = 2;
+    float orientationRequested = 3;
+    float orientation = 4;
+    float speedMultiplier = 5;
+}
+
+message VehiclePart {
     float x = 1;
     float y = 2;
     float rotation = 3;
+    PartType partType = 4;
+
+    // following needed only once
+    string partId = 11;
+    int32 pivotX = 12;
+    int32 pivotY = 13;
+
+    enum PartType {
+        HEAD = 0;
+        TRAILER = 1;
+        FRONT_WHEEL = 2;
+    }
 }
 
 message TimeInfo {
     int64 initiated = 1;
     int64 processing = 2;
-}
-
-//message EatenFood {
-//    TimeInfo timeInfo = 1;
-//    repeated Dot dots = 2;
-//}
-
-message SnakeInfo {
-    string id = 1;
-    float x = 2;
-    float y = 3;
-    float rotation = 4;
-    float rotationAsked = 5;
-    uint32 length = 6;
-    repeated Part path = 7;
-    float speed = 8;
-    string skin = 9;
-    uint64 lastProcessedOnServer = 10;
 }
 
 message Resize {
@@ -108,4 +123,5 @@ message Resize {
 
 message ClientDisconnect {
     string id = 1;
+    string name = 2;
 }

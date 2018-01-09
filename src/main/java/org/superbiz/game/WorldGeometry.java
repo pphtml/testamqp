@@ -1,19 +1,30 @@
 package org.superbiz.game;
 
 public class WorldGeometry {
-    private final int radius = 3000;
+    private final int sectorWidth = 1024;
+    private final int sectorHeight = 1024;
+    private final int worldWidth = sectorWidth * 18;
+    private final int worldHeight = sectorHeight * 9;
 
-    public int getRadius() {
-        return radius;
+    private final float baseSpeed = 10.0f;
+
+    public int getSectorWidth() {
+        return sectorWidth;
     }
 
-    /*    private final int width = 512;
-    private final int height = 512;
-
-    public int getWidth() {
-        return width;
+    public int getSectorHeight() {
+        return sectorHeight;
     }
-    public int getHeight() {
-        return height;
-    }*/
+
+    public int getWorldWidth() {
+        return worldWidth;
+    }
+
+    public int getWorldHeight() {
+        return worldHeight;
+    }
+
+    public float getBaseSpeed() {
+        return baseSpeed;
+    }
 }

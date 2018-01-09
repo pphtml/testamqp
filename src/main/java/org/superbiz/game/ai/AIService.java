@@ -2,10 +2,8 @@ package org.superbiz.game.ai;
 
 import org.superbiz.game.SnakePositions;
 import org.superbiz.game.computation.WormMovementJava;
-import org.superbiz.game.model.SnakeData;
 
 import javax.inject.Inject;
-import java.util.Collection;
 import java.util.logging.Logger;
 
 public class AIService {
@@ -42,24 +40,24 @@ public class AIService {
 //        }
     }
 
-    private float angle(SnakeData snakeData) {
-        float diffX = snakeData.getX();
-        float diffY = snakeData.getY();
-        float angle = -((float)Math.atan2(diffX, diffY)) + PI_HALF;
-        if (angle < 0) {
-            angle += PI_DOUBLE;
-        }
-        float distance = (float) Math.sqrt(snakeData.getX() * snakeData.getX() + snakeData.getY() * snakeData.getY());
-
-        float tooFarRatio = distance / TARGET_DISTANCE;
-        if (tooFarRatio > 1.0f) {
-            angle -= 0.05 * tooFarRatio;
-        }
-        float result = wormMovement.withinPiBounds(angle) - PI_HALF;
-        //logger.info(String.format("distance: %s, tooFarRatio: %s", distance, tooFarRatio));
-        //logger.info(String.format("Angle: %s, Rotation: %s, x: %s, y: %s", angle, snakeData.getRotationAsked(), snakeData.getX(), snakeData.getY()));
-        return result;
-    }
+//    private float angle(SnakeData snakeData) {
+//        float diffX = snakeData.getX();
+//        float diffY = snakeData.getY();
+//        float angle = -((float)Math.atan2(diffX, diffY)) + PI_HALF;
+//        if (angle < 0) {
+//            angle += PI_DOUBLE;
+//        }
+//        float distance = (float) Math.sqrt(snakeData.getX() * snakeData.getX() + snakeData.getY() * snakeData.getY());
+//
+//        float tooFarRatio = distance / TARGET_DISTANCE;
+//        if (tooFarRatio > 1.0f) {
+//            angle -= 0.05 * tooFarRatio;
+//        }
+//        float result = wormMovement.withinPiBounds(angle) - PI_HALF;
+//        //logger.info(String.format("distance: %s, tooFarRatio: %s", distance, tooFarRatio));
+//        //logger.info(String.format("Angle: %s, Rotation: %s, x: %s, y: %s", angle, snakeData.getRotationAsked(), snakeData.getX(), snakeData.getY()));
+//        return result;
+//    }
 
 //
 //    public static void main(String[] args) {

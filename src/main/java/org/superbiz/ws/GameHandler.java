@@ -37,8 +37,8 @@ public class GameHandler implements Handler {
         this.snakePositions = snakePositions;
         logger.info(String.format("STREAM: %s", gameDataService.getSnakeUpdate()));
         gameDataService.getSnakeUpdate().subscribe(snakesUpdate -> {
-            byte[] msg = Msg.Message.newBuilder().setSnakesUpdate(snakesUpdate).build().toByteArray();
-            sendToAllPlayers(msg);
+            byte[] msg = Msg.Message.newBuilder()./*setSnakesUpdate(snakesUpdate).*/build().toByteArray();
+            //sendToAllPlayers(msg);
         });
     }
 
@@ -74,14 +74,13 @@ public class GameHandler implements Handler {
                     Player player = new Player(playerId, webSocket);
                     players.put(playerId, player);
 
-                    // dots update so far...
-                    player.getPeriodicUpdate().subscribe(player1 -> { // TODO mozna zjednodusit
-                        gameDataService.processPeriodicUpdate(player1);
-                    });
+//                    player.getPeriodicUpdate().subscribe(player1 -> {
+//                        gameDataService.processPeriodicUpdate(player1);
+//                    });
 
-                    Msg.WorldInfo.Builder worldInfo = Msg.WorldInfo.newBuilder().setRadius(3000);
-                    byte[] msgBytes = Msg.Message.newBuilder().setWorldInfo(worldInfo).build().toByteArray();
-                    webSocket.send(Unpooled.wrappedBuffer(msgBytes));
+//                    Msg.WorldInfo.Builder worldInfo = Msg.WorldInfo.newBuilder().setRadius(3000);
+//                    byte[] msgBytes = Msg.Message.newBuilder().setWorldInfo(worldInfo).build().toByteArray();
+//                    webSocket.send(Unpooled.wrappedBuffer(msgBytes));
 
 //                    final Subscription subscription = events.subscribe(webSocket::send);
 //                    subscriptions.put(playerId, subscription);
@@ -90,7 +89,7 @@ public class GameHandler implements Handler {
                     //logger.info(String.format("Subscription map: %s", subscriptions));
                 }
 
-                return null; //Unpooled.wrappedBuffer("abcdef".getBytes());
+                return null;
             }
 
             @Override
