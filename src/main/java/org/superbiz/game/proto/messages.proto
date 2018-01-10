@@ -31,7 +31,7 @@ message PlayerStartResponse {
     int32 worldHeight = 3;
     int32 sectorWidth = 4;
     int32 sectorHeight = 5;
-    repeated SectorData sectorData = 6;
+    map <string, SectorData> sectorMap = 6;
     float birthLocationX = 7;
     float birthLocationY = 8;
     float birthOrientation = 9;

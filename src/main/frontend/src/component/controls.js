@@ -71,11 +71,6 @@ class Controls {
         let bytes = message.serializeBinary();
         //this.gameContext.communication.socket.send(bytes);
         this.gameContext.communication.subject.next(bytes);
-
-        // var message2 = MyMessage.deserializeBinary(bytes);
-        //
-        // this.gameContext.communication.subject.next(JSON.stringify({ resize:
-        //     {width: this.gameContext.width, height: this.gameContext.height}}));
     }
 
     isMouseDown() {

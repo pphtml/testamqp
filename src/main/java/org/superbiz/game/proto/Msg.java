@@ -2892,28 +2892,38 @@ public final class Msg {
     int getSectorHeight();
 
     /**
-     * <code>repeated .SectorData sectorData = 6;</code>
+     * <code>map&lt;string, .SectorData&gt; sectorMap = 6;</code>
      */
-    java.util.List<org.superbiz.game.proto.Msg.SectorData> 
-        getSectorDataList();
+    int getSectorMapCount();
     /**
-     * <code>repeated .SectorData sectorData = 6;</code>
+     * <code>map&lt;string, .SectorData&gt; sectorMap = 6;</code>
      */
-    org.superbiz.game.proto.Msg.SectorData getSectorData(int index);
+    boolean containsSectorMap(
+        java.lang.String key);
     /**
-     * <code>repeated .SectorData sectorData = 6;</code>
+     * Use {@link #getSectorMapMap()} instead.
      */
-    int getSectorDataCount();
+    @java.lang.Deprecated
+    java.util.Map<java.lang.String, org.superbiz.game.proto.Msg.SectorData>
+    getSectorMap();
     /**
-     * <code>repeated .SectorData sectorData = 6;</code>
+     * <code>map&lt;string, .SectorData&gt; sectorMap = 6;</code>
      */
-    java.util.List<? extends org.superbiz.game.proto.Msg.SectorDataOrBuilder> 
-        getSectorDataOrBuilderList();
+    java.util.Map<java.lang.String, org.superbiz.game.proto.Msg.SectorData>
+    getSectorMapMap();
     /**
-     * <code>repeated .SectorData sectorData = 6;</code>
+     * <code>map&lt;string, .SectorData&gt; sectorMap = 6;</code>
      */
-    org.superbiz.game.proto.Msg.SectorDataOrBuilder getSectorDataOrBuilder(
-        int index);
+
+    org.superbiz.game.proto.Msg.SectorData getSectorMapOrDefault(
+        java.lang.String key,
+        org.superbiz.game.proto.Msg.SectorData defaultValue);
+    /**
+     * <code>map&lt;string, .SectorData&gt; sectorMap = 6;</code>
+     */
+
+    org.superbiz.game.proto.Msg.SectorData getSectorMapOrThrow(
+        java.lang.String key);
 
     /**
      * <code>float birthLocationX = 7;</code>
@@ -2952,7 +2962,6 @@ public final class Msg {
       worldHeight_ = 0;
       sectorWidth_ = 0;
       sectorHeight_ = 0;
-      sectorData_ = java.util.Collections.emptyList();
       birthLocationX_ = 0F;
       birthLocationY_ = 0F;
       birthOrientation_ = 0F;
@@ -3025,11 +3034,15 @@ public final class Msg {
             }
             case 50: {
               if (!((mutable_bitField0_ & 0x00000020) == 0x00000020)) {
-                sectorData_ = new java.util.ArrayList<org.superbiz.game.proto.Msg.SectorData>();
+                sectorMap_ = com.google.protobuf.MapField.newMapField(
+                    SectorMapDefaultEntryHolder.defaultEntry);
                 mutable_bitField0_ |= 0x00000020;
               }
-              sectorData_.add(
-                  input.readMessage(org.superbiz.game.proto.Msg.SectorData.parser(), extensionRegistry));
+              com.google.protobuf.MapEntry<java.lang.String, org.superbiz.game.proto.Msg.SectorData>
+              sectorMap__ = input.readMessage(
+                  SectorMapDefaultEntryHolder.defaultEntry.getParserForType(), extensionRegistry);
+              sectorMap_.getMutableMap().put(
+                  sectorMap__.getKey(), sectorMap__.getValue());
               break;
             }
             case 61: {
@@ -3060,9 +3073,6 @@ public final class Msg {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e).setUnfinishedMessage(this);
       } finally {
-        if (((mutable_bitField0_ & 0x00000020) == 0x00000020)) {
-          sectorData_ = java.util.Collections.unmodifiableList(sectorData_);
-        }
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
       }
@@ -3072,6 +3082,17 @@ public final class Msg {
       return org.superbiz.game.proto.Msg.internal_static_PlayerStartResponse_descriptor;
     }
 
+    @SuppressWarnings({"rawtypes"})
+    protected com.google.protobuf.MapField internalGetMapField(
+        int number) {
+      switch (number) {
+        case 6:
+          return internalGetSectorMap();
+        default:
+          throw new RuntimeException(
+              "Invalid map field number: " + number);
+      }
+    }
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return org.superbiz.game.proto.Msg.internal_static_PlayerStartResponse_fieldAccessorTable
@@ -3137,39 +3158,80 @@ public final class Msg {
       return sectorHeight_;
     }
 
-    public static final int SECTORDATA_FIELD_NUMBER = 6;
-    private java.util.List<org.superbiz.game.proto.Msg.SectorData> sectorData_;
-    /**
-     * <code>repeated .SectorData sectorData = 6;</code>
-     */
-    public java.util.List<org.superbiz.game.proto.Msg.SectorData> getSectorDataList() {
-      return sectorData_;
+    public static final int SECTORMAP_FIELD_NUMBER = 6;
+    private static final class SectorMapDefaultEntryHolder {
+      static final com.google.protobuf.MapEntry<
+          java.lang.String, org.superbiz.game.proto.Msg.SectorData> defaultEntry =
+              com.google.protobuf.MapEntry
+              .<java.lang.String, org.superbiz.game.proto.Msg.SectorData>newDefaultInstance(
+                  org.superbiz.game.proto.Msg.internal_static_PlayerStartResponse_SectorMapEntry_descriptor, 
+                  com.google.protobuf.WireFormat.FieldType.STRING,
+                  "",
+                  com.google.protobuf.WireFormat.FieldType.MESSAGE,
+                  org.superbiz.game.proto.Msg.SectorData.getDefaultInstance());
+    }
+    private com.google.protobuf.MapField<
+        java.lang.String, org.superbiz.game.proto.Msg.SectorData> sectorMap_;
+    private com.google.protobuf.MapField<java.lang.String, org.superbiz.game.proto.Msg.SectorData>
+    internalGetSectorMap() {
+      if (sectorMap_ == null) {
+        return com.google.protobuf.MapField.emptyMapField(
+            SectorMapDefaultEntryHolder.defaultEntry);
+      }
+      return sectorMap_;
+    }
+
+    public int getSectorMapCount() {
+      return internalGetSectorMap().getMap().size();
     }
     /**
-     * <code>repeated .SectorData sectorData = 6;</code>
+     * <code>map&lt;string, .SectorData&gt; sectorMap = 6;</code>
      */
-    public java.util.List<? extends org.superbiz.game.proto.Msg.SectorDataOrBuilder> 
-        getSectorDataOrBuilderList() {
-      return sectorData_;
+
+    public boolean containsSectorMap(
+        java.lang.String key) {
+      if (key == null) { throw new java.lang.NullPointerException(); }
+      return internalGetSectorMap().getMap().containsKey(key);
     }
     /**
-     * <code>repeated .SectorData sectorData = 6;</code>
+     * Use {@link #getSectorMapMap()} instead.
      */
-    public int getSectorDataCount() {
-      return sectorData_.size();
+    @java.lang.Deprecated
+    public java.util.Map<java.lang.String, org.superbiz.game.proto.Msg.SectorData> getSectorMap() {
+      return getSectorMapMap();
     }
     /**
-     * <code>repeated .SectorData sectorData = 6;</code>
+     * <code>map&lt;string, .SectorData&gt; sectorMap = 6;</code>
      */
-    public org.superbiz.game.proto.Msg.SectorData getSectorData(int index) {
-      return sectorData_.get(index);
+
+    public java.util.Map<java.lang.String, org.superbiz.game.proto.Msg.SectorData> getSectorMapMap() {
+      return internalGetSectorMap().getMap();
     }
     /**
-     * <code>repeated .SectorData sectorData = 6;</code>
+     * <code>map&lt;string, .SectorData&gt; sectorMap = 6;</code>
      */
-    public org.superbiz.game.proto.Msg.SectorDataOrBuilder getSectorDataOrBuilder(
-        int index) {
-      return sectorData_.get(index);
+
+    public org.superbiz.game.proto.Msg.SectorData getSectorMapOrDefault(
+        java.lang.String key,
+        org.superbiz.game.proto.Msg.SectorData defaultValue) {
+      if (key == null) { throw new java.lang.NullPointerException(); }
+      java.util.Map<java.lang.String, org.superbiz.game.proto.Msg.SectorData> map =
+          internalGetSectorMap().getMap();
+      return map.containsKey(key) ? map.get(key) : defaultValue;
+    }
+    /**
+     * <code>map&lt;string, .SectorData&gt; sectorMap = 6;</code>
+     */
+
+    public org.superbiz.game.proto.Msg.SectorData getSectorMapOrThrow(
+        java.lang.String key) {
+      if (key == null) { throw new java.lang.NullPointerException(); }
+      java.util.Map<java.lang.String, org.superbiz.game.proto.Msg.SectorData> map =
+          internalGetSectorMap().getMap();
+      if (!map.containsKey(key)) {
+        throw new java.lang.IllegalArgumentException();
+      }
+      return map.get(key);
     }
 
     public static final int BIRTHLOCATIONX_FIELD_NUMBER = 7;
@@ -3235,9 +3297,12 @@ public final class Msg {
       if (sectorHeight_ != 0) {
         output.writeInt32(5, sectorHeight_);
       }
-      for (int i = 0; i < sectorData_.size(); i++) {
-        output.writeMessage(6, sectorData_.get(i));
-      }
+      com.google.protobuf.GeneratedMessageV3
+        .serializeStringMapTo(
+          output,
+          internalGetSectorMap(),
+          SectorMapDefaultEntryHolder.defaultEntry,
+          6);
       if (birthLocationX_ != 0F) {
         output.writeFloat(7, birthLocationX_);
       }
@@ -3278,9 +3343,15 @@ public final class Msg {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(5, sectorHeight_);
       }
-      for (int i = 0; i < sectorData_.size(); i++) {
+      for (java.util.Map.Entry<java.lang.String, org.superbiz.game.proto.Msg.SectorData> entry
+           : internalGetSectorMap().getMap().entrySet()) {
+        com.google.protobuf.MapEntry<java.lang.String, org.superbiz.game.proto.Msg.SectorData>
+        sectorMap__ = SectorMapDefaultEntryHolder.defaultEntry.newBuilderForType()
+            .setKey(entry.getKey())
+            .setValue(entry.getValue())
+            .build();
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(6, sectorData_.get(i));
+            .computeMessageSize(6, sectorMap__);
       }
       if (birthLocationX_ != 0F) {
         size += com.google.protobuf.CodedOutputStream
@@ -3327,8 +3398,8 @@ public final class Msg {
           == other.getSectorWidth());
       result = result && (getSectorHeight()
           == other.getSectorHeight());
-      result = result && getSectorDataList()
-          .equals(other.getSectorDataList());
+      result = result && internalGetSectorMap().equals(
+          other.internalGetSectorMap());
       result = result && (
           java.lang.Float.floatToIntBits(getBirthLocationX())
           == java.lang.Float.floatToIntBits(
@@ -3368,9 +3439,9 @@ public final class Msg {
       hash = (53 * hash) + getSectorWidth();
       hash = (37 * hash) + SECTORHEIGHT_FIELD_NUMBER;
       hash = (53 * hash) + getSectorHeight();
-      if (getSectorDataCount() > 0) {
-        hash = (37 * hash) + SECTORDATA_FIELD_NUMBER;
-        hash = (53 * hash) + getSectorDataList().hashCode();
+      if (!internalGetSectorMap().getMap().isEmpty()) {
+        hash = (37 * hash) + SECTORMAP_FIELD_NUMBER;
+        hash = (53 * hash) + internalGetSectorMap().hashCode();
       }
       hash = (37 * hash) + BIRTHLOCATIONX_FIELD_NUMBER;
       hash = (53 * hash) + java.lang.Float.floatToIntBits(
@@ -3489,6 +3560,28 @@ public final class Msg {
         return org.superbiz.game.proto.Msg.internal_static_PlayerStartResponse_descriptor;
       }
 
+      @SuppressWarnings({"rawtypes"})
+      protected com.google.protobuf.MapField internalGetMapField(
+          int number) {
+        switch (number) {
+          case 6:
+            return internalGetSectorMap();
+          default:
+            throw new RuntimeException(
+                "Invalid map field number: " + number);
+        }
+      }
+      @SuppressWarnings({"rawtypes"})
+      protected com.google.protobuf.MapField internalGetMutableMapField(
+          int number) {
+        switch (number) {
+          case 6:
+            return internalGetMutableSectorMap();
+          default:
+            throw new RuntimeException(
+                "Invalid map field number: " + number);
+        }
+      }
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return org.superbiz.game.proto.Msg.internal_static_PlayerStartResponse_fieldAccessorTable
@@ -3509,7 +3602,6 @@ public final class Msg {
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessageV3
                 .alwaysUseFieldBuilders) {
-          getSectorDataFieldBuilder();
         }
       }
       public Builder clear() {
@@ -3528,12 +3620,7 @@ public final class Msg {
 
         sectorHeight_ = 0;
 
-        if (sectorDataBuilder_ == null) {
-          sectorData_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000020);
-        } else {
-          sectorDataBuilder_.clear();
-        }
+        internalGetMutableSectorMap().clear();
         birthLocationX_ = 0F;
 
         birthLocationY_ = 0F;
@@ -3575,15 +3662,8 @@ public final class Msg {
         result.worldHeight_ = worldHeight_;
         result.sectorWidth_ = sectorWidth_;
         result.sectorHeight_ = sectorHeight_;
-        if (sectorDataBuilder_ == null) {
-          if (((bitField0_ & 0x00000020) == 0x00000020)) {
-            sectorData_ = java.util.Collections.unmodifiableList(sectorData_);
-            bitField0_ = (bitField0_ & ~0x00000020);
-          }
-          result.sectorData_ = sectorData_;
-        } else {
-          result.sectorData_ = sectorDataBuilder_.build();
-        }
+        result.sectorMap_ = internalGetSectorMap();
+        result.sectorMap_.makeImmutable();
         result.birthLocationX_ = birthLocationX_;
         result.birthLocationY_ = birthLocationY_;
         result.birthOrientation_ = birthOrientation_;
@@ -3645,32 +3725,8 @@ public final class Msg {
         if (other.getSectorHeight() != 0) {
           setSectorHeight(other.getSectorHeight());
         }
-        if (sectorDataBuilder_ == null) {
-          if (!other.sectorData_.isEmpty()) {
-            if (sectorData_.isEmpty()) {
-              sectorData_ = other.sectorData_;
-              bitField0_ = (bitField0_ & ~0x00000020);
-            } else {
-              ensureSectorDataIsMutable();
-              sectorData_.addAll(other.sectorData_);
-            }
-            onChanged();
-          }
-        } else {
-          if (!other.sectorData_.isEmpty()) {
-            if (sectorDataBuilder_.isEmpty()) {
-              sectorDataBuilder_.dispose();
-              sectorDataBuilder_ = null;
-              sectorData_ = other.sectorData_;
-              bitField0_ = (bitField0_ & ~0x00000020);
-              sectorDataBuilder_ = 
-                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
-                   getSectorDataFieldBuilder() : null;
-            } else {
-              sectorDataBuilder_.addAllMessages(other.sectorData_);
-            }
-          }
-        }
+        internalGetMutableSectorMap().mergeFrom(
+            other.internalGetSectorMap());
         if (other.getBirthLocationX() != 0F) {
           setBirthLocationX(other.getBirthLocationX());
         }
@@ -3932,244 +3988,127 @@ public final class Msg {
         return this;
       }
 
-      private java.util.List<org.superbiz.game.proto.Msg.SectorData> sectorData_ =
-        java.util.Collections.emptyList();
-      private void ensureSectorDataIsMutable() {
-        if (!((bitField0_ & 0x00000020) == 0x00000020)) {
-          sectorData_ = new java.util.ArrayList<org.superbiz.game.proto.Msg.SectorData>(sectorData_);
-          bitField0_ |= 0x00000020;
-         }
+      private com.google.protobuf.MapField<
+          java.lang.String, org.superbiz.game.proto.Msg.SectorData> sectorMap_;
+      private com.google.protobuf.MapField<java.lang.String, org.superbiz.game.proto.Msg.SectorData>
+      internalGetSectorMap() {
+        if (sectorMap_ == null) {
+          return com.google.protobuf.MapField.emptyMapField(
+              SectorMapDefaultEntryHolder.defaultEntry);
+        }
+        return sectorMap_;
+      }
+      private com.google.protobuf.MapField<java.lang.String, org.superbiz.game.proto.Msg.SectorData>
+      internalGetMutableSectorMap() {
+        onChanged();;
+        if (sectorMap_ == null) {
+          sectorMap_ = com.google.protobuf.MapField.newMapField(
+              SectorMapDefaultEntryHolder.defaultEntry);
+        }
+        if (!sectorMap_.isMutable()) {
+          sectorMap_ = sectorMap_.copy();
+        }
+        return sectorMap_;
       }
 
-      private com.google.protobuf.RepeatedFieldBuilderV3<
-          org.superbiz.game.proto.Msg.SectorData, org.superbiz.game.proto.Msg.SectorData.Builder, org.superbiz.game.proto.Msg.SectorDataOrBuilder> sectorDataBuilder_;
+      public int getSectorMapCount() {
+        return internalGetSectorMap().getMap().size();
+      }
+      /**
+       * <code>map&lt;string, .SectorData&gt; sectorMap = 6;</code>
+       */
 
-      /**
-       * <code>repeated .SectorData sectorData = 6;</code>
-       */
-      public java.util.List<org.superbiz.game.proto.Msg.SectorData> getSectorDataList() {
-        if (sectorDataBuilder_ == null) {
-          return java.util.Collections.unmodifiableList(sectorData_);
-        } else {
-          return sectorDataBuilder_.getMessageList();
-        }
+      public boolean containsSectorMap(
+          java.lang.String key) {
+        if (key == null) { throw new java.lang.NullPointerException(); }
+        return internalGetSectorMap().getMap().containsKey(key);
       }
       /**
-       * <code>repeated .SectorData sectorData = 6;</code>
+       * Use {@link #getSectorMapMap()} instead.
        */
-      public int getSectorDataCount() {
-        if (sectorDataBuilder_ == null) {
-          return sectorData_.size();
-        } else {
-          return sectorDataBuilder_.getCount();
-        }
+      @java.lang.Deprecated
+      public java.util.Map<java.lang.String, org.superbiz.game.proto.Msg.SectorData> getSectorMap() {
+        return getSectorMapMap();
       }
       /**
-       * <code>repeated .SectorData sectorData = 6;</code>
+       * <code>map&lt;string, .SectorData&gt; sectorMap = 6;</code>
        */
-      public org.superbiz.game.proto.Msg.SectorData getSectorData(int index) {
-        if (sectorDataBuilder_ == null) {
-          return sectorData_.get(index);
-        } else {
-          return sectorDataBuilder_.getMessage(index);
-        }
+
+      public java.util.Map<java.lang.String, org.superbiz.game.proto.Msg.SectorData> getSectorMapMap() {
+        return internalGetSectorMap().getMap();
       }
       /**
-       * <code>repeated .SectorData sectorData = 6;</code>
+       * <code>map&lt;string, .SectorData&gt; sectorMap = 6;</code>
        */
-      public Builder setSectorData(
-          int index, org.superbiz.game.proto.Msg.SectorData value) {
-        if (sectorDataBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          ensureSectorDataIsMutable();
-          sectorData_.set(index, value);
-          onChanged();
-        } else {
-          sectorDataBuilder_.setMessage(index, value);
+
+      public org.superbiz.game.proto.Msg.SectorData getSectorMapOrDefault(
+          java.lang.String key,
+          org.superbiz.game.proto.Msg.SectorData defaultValue) {
+        if (key == null) { throw new java.lang.NullPointerException(); }
+        java.util.Map<java.lang.String, org.superbiz.game.proto.Msg.SectorData> map =
+            internalGetSectorMap().getMap();
+        return map.containsKey(key) ? map.get(key) : defaultValue;
+      }
+      /**
+       * <code>map&lt;string, .SectorData&gt; sectorMap = 6;</code>
+       */
+
+      public org.superbiz.game.proto.Msg.SectorData getSectorMapOrThrow(
+          java.lang.String key) {
+        if (key == null) { throw new java.lang.NullPointerException(); }
+        java.util.Map<java.lang.String, org.superbiz.game.proto.Msg.SectorData> map =
+            internalGetSectorMap().getMap();
+        if (!map.containsKey(key)) {
+          throw new java.lang.IllegalArgumentException();
         }
+        return map.get(key);
+      }
+
+      public Builder clearSectorMap() {
+        internalGetMutableSectorMap().getMutableMap()
+            .clear();
         return this;
       }
       /**
-       * <code>repeated .SectorData sectorData = 6;</code>
+       * <code>map&lt;string, .SectorData&gt; sectorMap = 6;</code>
        */
-      public Builder setSectorData(
-          int index, org.superbiz.game.proto.Msg.SectorData.Builder builderForValue) {
-        if (sectorDataBuilder_ == null) {
-          ensureSectorDataIsMutable();
-          sectorData_.set(index, builderForValue.build());
-          onChanged();
-        } else {
-          sectorDataBuilder_.setMessage(index, builderForValue.build());
-        }
+
+      public Builder removeSectorMap(
+          java.lang.String key) {
+        if (key == null) { throw new java.lang.NullPointerException(); }
+        internalGetMutableSectorMap().getMutableMap()
+            .remove(key);
         return this;
       }
       /**
-       * <code>repeated .SectorData sectorData = 6;</code>
+       * Use alternate mutation accessors instead.
        */
-      public Builder addSectorData(org.superbiz.game.proto.Msg.SectorData value) {
-        if (sectorDataBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          ensureSectorDataIsMutable();
-          sectorData_.add(value);
-          onChanged();
-        } else {
-          sectorDataBuilder_.addMessage(value);
-        }
+      @java.lang.Deprecated
+      public java.util.Map<java.lang.String, org.superbiz.game.proto.Msg.SectorData>
+      getMutableSectorMap() {
+        return internalGetMutableSectorMap().getMutableMap();
+      }
+      /**
+       * <code>map&lt;string, .SectorData&gt; sectorMap = 6;</code>
+       */
+      public Builder putSectorMap(
+          java.lang.String key,
+          org.superbiz.game.proto.Msg.SectorData value) {
+        if (key == null) { throw new java.lang.NullPointerException(); }
+        if (value == null) { throw new java.lang.NullPointerException(); }
+        internalGetMutableSectorMap().getMutableMap()
+            .put(key, value);
         return this;
       }
       /**
-       * <code>repeated .SectorData sectorData = 6;</code>
+       * <code>map&lt;string, .SectorData&gt; sectorMap = 6;</code>
        */
-      public Builder addSectorData(
-          int index, org.superbiz.game.proto.Msg.SectorData value) {
-        if (sectorDataBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          ensureSectorDataIsMutable();
-          sectorData_.add(index, value);
-          onChanged();
-        } else {
-          sectorDataBuilder_.addMessage(index, value);
-        }
+
+      public Builder putAllSectorMap(
+          java.util.Map<java.lang.String, org.superbiz.game.proto.Msg.SectorData> values) {
+        internalGetMutableSectorMap().getMutableMap()
+            .putAll(values);
         return this;
-      }
-      /**
-       * <code>repeated .SectorData sectorData = 6;</code>
-       */
-      public Builder addSectorData(
-          org.superbiz.game.proto.Msg.SectorData.Builder builderForValue) {
-        if (sectorDataBuilder_ == null) {
-          ensureSectorDataIsMutable();
-          sectorData_.add(builderForValue.build());
-          onChanged();
-        } else {
-          sectorDataBuilder_.addMessage(builderForValue.build());
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .SectorData sectorData = 6;</code>
-       */
-      public Builder addSectorData(
-          int index, org.superbiz.game.proto.Msg.SectorData.Builder builderForValue) {
-        if (sectorDataBuilder_ == null) {
-          ensureSectorDataIsMutable();
-          sectorData_.add(index, builderForValue.build());
-          onChanged();
-        } else {
-          sectorDataBuilder_.addMessage(index, builderForValue.build());
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .SectorData sectorData = 6;</code>
-       */
-      public Builder addAllSectorData(
-          java.lang.Iterable<? extends org.superbiz.game.proto.Msg.SectorData> values) {
-        if (sectorDataBuilder_ == null) {
-          ensureSectorDataIsMutable();
-          com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, sectorData_);
-          onChanged();
-        } else {
-          sectorDataBuilder_.addAllMessages(values);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .SectorData sectorData = 6;</code>
-       */
-      public Builder clearSectorData() {
-        if (sectorDataBuilder_ == null) {
-          sectorData_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000020);
-          onChanged();
-        } else {
-          sectorDataBuilder_.clear();
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .SectorData sectorData = 6;</code>
-       */
-      public Builder removeSectorData(int index) {
-        if (sectorDataBuilder_ == null) {
-          ensureSectorDataIsMutable();
-          sectorData_.remove(index);
-          onChanged();
-        } else {
-          sectorDataBuilder_.remove(index);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .SectorData sectorData = 6;</code>
-       */
-      public org.superbiz.game.proto.Msg.SectorData.Builder getSectorDataBuilder(
-          int index) {
-        return getSectorDataFieldBuilder().getBuilder(index);
-      }
-      /**
-       * <code>repeated .SectorData sectorData = 6;</code>
-       */
-      public org.superbiz.game.proto.Msg.SectorDataOrBuilder getSectorDataOrBuilder(
-          int index) {
-        if (sectorDataBuilder_ == null) {
-          return sectorData_.get(index);  } else {
-          return sectorDataBuilder_.getMessageOrBuilder(index);
-        }
-      }
-      /**
-       * <code>repeated .SectorData sectorData = 6;</code>
-       */
-      public java.util.List<? extends org.superbiz.game.proto.Msg.SectorDataOrBuilder> 
-           getSectorDataOrBuilderList() {
-        if (sectorDataBuilder_ != null) {
-          return sectorDataBuilder_.getMessageOrBuilderList();
-        } else {
-          return java.util.Collections.unmodifiableList(sectorData_);
-        }
-      }
-      /**
-       * <code>repeated .SectorData sectorData = 6;</code>
-       */
-      public org.superbiz.game.proto.Msg.SectorData.Builder addSectorDataBuilder() {
-        return getSectorDataFieldBuilder().addBuilder(
-            org.superbiz.game.proto.Msg.SectorData.getDefaultInstance());
-      }
-      /**
-       * <code>repeated .SectorData sectorData = 6;</code>
-       */
-      public org.superbiz.game.proto.Msg.SectorData.Builder addSectorDataBuilder(
-          int index) {
-        return getSectorDataFieldBuilder().addBuilder(
-            index, org.superbiz.game.proto.Msg.SectorData.getDefaultInstance());
-      }
-      /**
-       * <code>repeated .SectorData sectorData = 6;</code>
-       */
-      public java.util.List<org.superbiz.game.proto.Msg.SectorData.Builder> 
-           getSectorDataBuilderList() {
-        return getSectorDataFieldBuilder().getBuilderList();
-      }
-      private com.google.protobuf.RepeatedFieldBuilderV3<
-          org.superbiz.game.proto.Msg.SectorData, org.superbiz.game.proto.Msg.SectorData.Builder, org.superbiz.game.proto.Msg.SectorDataOrBuilder> 
-          getSectorDataFieldBuilder() {
-        if (sectorDataBuilder_ == null) {
-          sectorDataBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
-              org.superbiz.game.proto.Msg.SectorData, org.superbiz.game.proto.Msg.SectorData.Builder, org.superbiz.game.proto.Msg.SectorDataOrBuilder>(
-                  sectorData_,
-                  ((bitField0_ & 0x00000020) == 0x00000020),
-                  getParentForChildren(),
-                  isClean());
-          sectorData_ = null;
-        }
-        return sectorDataBuilder_;
       }
 
       private float birthLocationX_ ;
@@ -11425,6 +11364,11 @@ public final class Msg {
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_PlayerStartResponse_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_PlayerStartResponse_SectorMapEntry_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_PlayerStartResponse_SectorMapEntry_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_SectorData_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
@@ -11489,40 +11433,42 @@ public final class Msg {
       "ateH\000\022-\n\020clientDisconnect\030\t \001(\0132\021.Client" +
       "DisconnectH\000B\005\n\003msg\"a\n\022PlayerStartReques" +
       "t\022\014\n\004name\030\001 \001(\t\022\023\n\013vehicleType\030\002 \001(\t\022\025\n\r" +
-      "vehicleDesign\030\003 \001(\t\022\021\n\tinitiated\030\004 \001(\003\"\204" +
+      "vehicleDesign\030\003 \001(\t\022\021\n\tinitiated\030\004 \001(\003\"\332" +
       "\002\n\023PlayerStartResponse\022\033\n\010timeInfo\030\001 \001(\013" +
       "2\t.TimeInfo\022\022\n\nworldWidth\030\002 \001(\005\022\023\n\013world" +
       "Height\030\003 \001(\005\022\023\n\013sectorWidth\030\004 \001(\005\022\024\n\014sec" +
-      "torHeight\030\005 \001(\005\022\037\n\nsectorData\030\006 \003(\0132\013.Se" +
-      "ctorData\022\026\n\016birthLocationX\030\007 \001(\002\022\026\n\016birt" +
-      "hLocationY\030\010 \001(\002\022\030\n\020birthOrientation\030\t \001" +
-      "(\002\022\021\n\tbaseSpeed\030\n \001(\002\"\356\001\n\nSectorData\022\t\n\001" +
-      "x\030\001 \001(\005\022\t\n\001y\030\002 \001(\005\022#\n\005north\030\003 \001(\0162\024.Sect" +
-      "orData.RoadType\022\"\n\004east\030\004 \001(\0162\024.SectorDa" +
-      "ta.RoadType\022#\n\005south\030\005 \001(\0162\024.SectorData." +
-      "RoadType\022\"\n\004west\030\006 \001(\0162\024.SectorData.Road" +
-      "Type\"8\n\010RoadType\022\010\n\004NONE\020\000\022\n\n\006SINGLE\020\001\022\n" +
-      "\n\006DOUBLE\020\002\022\n\n\006TRIPLE\020\003\"_\n\023PlayerUpdateRe" +
-      "quest\022\034\n\024orientationRequested\030\001 \001(\002\022\027\n\017s" +
-      "peedMultiplier\030\002 \001(\002\022\021\n\tinitiated\030\003 \001(\003\"" +
-      "V\n\024PlayerUpdateResponse\022\033\n\010timeInfo\030\001 \001(" +
-      "\0132\t.TimeInfo\022!\n\013vehicleData\030\002 \001(\0132\014.Vehi" +
-      "cleData\"Q\n\026PeriodicVehiclesUpdate\022\027\n\017ser" +
-      "verTimestamp\030\001 \001(\004\022\036\n\010vehicles\030\002 \003(\0132\014.V" +
-      "ehicleData\"\234\001\n\013VehicleData\022\035\n\025lastProces" +
-      "sedOnServer\030\001 \001(\004\022\"\n\014vehicleParts\030\002 \003(\0132" +
-      "\014.VehiclePart\022\034\n\024orientationRequested\030\003 " +
-      "\001(\002\022\023\n\013orientation\030\004 \001(\002\022\027\n\017speedMultipl" +
-      "ier\030\005 \001(\002\"\302\001\n\013VehiclePart\022\t\n\001x\030\001 \001(\002\022\t\n\001" +
-      "y\030\002 \001(\002\022\020\n\010rotation\030\003 \001(\002\022\'\n\010partType\030\004 " +
-      "\001(\0162\025.VehiclePart.PartType\022\016\n\006partId\030\013 \001" +
-      "(\t\022\016\n\006pivotX\030\014 \001(\005\022\016\n\006pivotY\030\r \001(\005\"2\n\010Pa" +
-      "rtType\022\010\n\004HEAD\020\000\022\013\n\007TRAILER\020\001\022\017\n\013FRONT_W" +
-      "HEEL\020\002\"1\n\010TimeInfo\022\021\n\tinitiated\030\001 \001(\003\022\022\n" +
-      "\nprocessing\030\002 \001(\003\"\'\n\006Resize\022\r\n\005width\030\001 \001" +
-      "(\005\022\016\n\006height\030\002 \001(\005\",\n\020ClientDisconnect\022\n" +
-      "\n\002id\030\001 \001(\t\022\014\n\004name\030\002 \001(\tB\036\n\027org.superbiz" +
-      ".game.protoB\003Msgb\006proto3"
+      "torHeight\030\005 \001(\005\0226\n\tsectorMap\030\006 \003(\0132#.Pla" +
+      "yerStartResponse.SectorMapEntry\022\026\n\016birth" +
+      "LocationX\030\007 \001(\002\022\026\n\016birthLocationY\030\010 \001(\002\022" +
+      "\030\n\020birthOrientation\030\t \001(\002\022\021\n\tbaseSpeed\030\n" +
+      " \001(\002\032=\n\016SectorMapEntry\022\013\n\003key\030\001 \001(\t\022\032\n\005v" +
+      "alue\030\002 \001(\0132\013.SectorData:\0028\001\"\356\001\n\nSectorDa" +
+      "ta\022\t\n\001x\030\001 \001(\005\022\t\n\001y\030\002 \001(\005\022#\n\005north\030\003 \001(\0162" +
+      "\024.SectorData.RoadType\022\"\n\004east\030\004 \001(\0162\024.Se" +
+      "ctorData.RoadType\022#\n\005south\030\005 \001(\0162\024.Secto" +
+      "rData.RoadType\022\"\n\004west\030\006 \001(\0162\024.SectorDat" +
+      "a.RoadType\"8\n\010RoadType\022\010\n\004NONE\020\000\022\n\n\006SING" +
+      "LE\020\001\022\n\n\006DOUBLE\020\002\022\n\n\006TRIPLE\020\003\"_\n\023PlayerUp" +
+      "dateRequest\022\034\n\024orientationRequested\030\001 \001(" +
+      "\002\022\027\n\017speedMultiplier\030\002 \001(\002\022\021\n\tinitiated\030" +
+      "\003 \001(\003\"V\n\024PlayerUpdateResponse\022\033\n\010timeInf" +
+      "o\030\001 \001(\0132\t.TimeInfo\022!\n\013vehicleData\030\002 \001(\0132" +
+      "\014.VehicleData\"Q\n\026PeriodicVehiclesUpdate\022" +
+      "\027\n\017serverTimestamp\030\001 \001(\004\022\036\n\010vehicles\030\002 \003" +
+      "(\0132\014.VehicleData\"\234\001\n\013VehicleData\022\035\n\025last" +
+      "ProcessedOnServer\030\001 \001(\004\022\"\n\014vehicleParts\030" +
+      "\002 \003(\0132\014.VehiclePart\022\034\n\024orientationReques" +
+      "ted\030\003 \001(\002\022\023\n\013orientation\030\004 \001(\002\022\027\n\017speedM" +
+      "ultiplier\030\005 \001(\002\"\302\001\n\013VehiclePart\022\t\n\001x\030\001 \001" +
+      "(\002\022\t\n\001y\030\002 \001(\002\022\020\n\010rotation\030\003 \001(\002\022\'\n\010partT" +
+      "ype\030\004 \001(\0162\025.VehiclePart.PartType\022\016\n\006part" +
+      "Id\030\013 \001(\t\022\016\n\006pivotX\030\014 \001(\005\022\016\n\006pivotY\030\r \001(\005" +
+      "\"2\n\010PartType\022\010\n\004HEAD\020\000\022\013\n\007TRAILER\020\001\022\017\n\013F" +
+      "RONT_WHEEL\020\002\"1\n\010TimeInfo\022\021\n\tinitiated\030\001 " +
+      "\001(\003\022\022\n\nprocessing\030\002 \001(\003\"\'\n\006Resize\022\r\n\005wid" +
+      "th\030\001 \001(\005\022\016\n\006height\030\002 \001(\005\",\n\020ClientDiscon" +
+      "nect\022\n\n\002id\030\001 \001(\t\022\014\n\004name\030\002 \001(\tB\036\n\027org.su" +
+      "perbiz.game.protoB\003Msgb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -11553,7 +11499,13 @@ public final class Msg {
     internal_static_PlayerStartResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_PlayerStartResponse_descriptor,
-        new java.lang.String[] { "TimeInfo", "WorldWidth", "WorldHeight", "SectorWidth", "SectorHeight", "SectorData", "BirthLocationX", "BirthLocationY", "BirthOrientation", "BaseSpeed", });
+        new java.lang.String[] { "TimeInfo", "WorldWidth", "WorldHeight", "SectorWidth", "SectorHeight", "SectorMap", "BirthLocationX", "BirthLocationY", "BirthOrientation", "BaseSpeed", });
+    internal_static_PlayerStartResponse_SectorMapEntry_descriptor =
+      internal_static_PlayerStartResponse_descriptor.getNestedTypes().get(0);
+    internal_static_PlayerStartResponse_SectorMapEntry_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_PlayerStartResponse_SectorMapEntry_descriptor,
+        new java.lang.String[] { "Key", "Value", });
     internal_static_SectorData_descriptor =
       getDescriptor().getMessageTypes().get(3);
     internal_static_SectorData_fieldAccessorTable = new

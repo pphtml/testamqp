@@ -1,6 +1,6 @@
 package org.superbiz;
 
-import org.superbiz.game.SnakePositions;
+import org.superbiz.game.VehiclePositions;
 import org.superbiz.util.LoggingConfig;
 import org.superbiz.util.RxWebpackProcess;
 import org.superbiz.util.ThreadDumpHandler;
@@ -28,7 +28,7 @@ public class TruckingServer {
                         .findBaseDir())
                         //.sysProps()) // not needed
                 .registry(Guice.registry(bindings -> bindings
-                        .bind(SnakePositions.class)
+                        .bind(VehiclePositions.class)
                         .bind(ThreadDumpHandler.class)
                         .bind(GameHandler.class)))
 //                        .moduleConfig(ApplicationModule.class, bindings.getServerConfig().get("/user", ApplicationModule.Config.class))

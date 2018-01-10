@@ -71,6 +71,7 @@ document.body.appendChild(renderer.view);
 loader
     .add('images/spritesheet.json')
     .add("images/background.png")
+    .add("images/background-blur.png")
     //.add("images/background2.png")
     .load(setup);
 

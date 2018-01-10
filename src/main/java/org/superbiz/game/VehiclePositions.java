@@ -6,6 +6,7 @@ import org.superbiz.game.ai.AIService;
 import org.superbiz.game.computation.WormMovement;
 import org.superbiz.game.computation.WormMovementJavascript;
 import org.superbiz.game.model.Part;
+import org.superbiz.game.model.VehicleData;
 import org.superbiz.game.proto.Msg;
 
 import javax.inject.Inject;
@@ -17,23 +18,19 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 @Singleton
-public class SnakePositions {
+public class VehiclePositions {
     @Inject
     Logger logger;
 
     @Inject
     private AIService aiService;
 
-    private static final int LENGTH_PER_PART = 10;
-    private static final int INITIAL_DEFAULT_LENGTH = 150;
-    private static final float INITIAL_PART_DISTANCE = 20.0f;
-    private static final float SPEED_CONSTANT = 5.0f;
 
-    private long snakeUpdateTimestamp = System.currentTimeMillis();
+//    private long snakeUpdateTimestamp = System.currentTimeMillis();
 
     //private AtomicInteger countAISnakes;
 
-    public SnakePositions() {
+    public VehiclePositions() {
     }
 
 //    private final PublishSubject<Msg.SnakesUpdate> observableSnakes = PublishSubject.create();
@@ -42,7 +39,7 @@ public class SnakePositions {
 //        return observableSnakes;
 //    }
 
-    private Map<String, Msg.VehicleData> map = new LinkedHashMap<>();
+    private Map<String, VehicleData> map = new LinkedHashMap<>();
 
     private WormMovement wormMovement = new WormMovementJavascript();
 
@@ -59,6 +56,10 @@ public class SnakePositions {
 //        Msg.SnakesUpdate snakesUpdate = Msg.SnakesUpdate.newBuilder().addAllSnakes(map.values()).build();
 //        observableSnakes.onNext(snakesUpdate);
 //    }
+
+    public VehicleData createVehicle(String type, String design, float x, float y, float orientation) {
+        return null;
+    }
 
     public void remove(String playerId) {
         logger.info(String.format("Removing player: %s", playerId));
@@ -192,7 +193,7 @@ public class SnakePositions {
 //        return this.map.values().stream().filter(SnakeData::isAiDriven).collect(Collectors.toList());
 //    }
 
-    public void registerVehicle(String id, Msg.VehicleData vehicle) {
+    public void registerVehicle(String id, VehicleData vehicle) {
         this.map.put(id, vehicle);
     }
 }

@@ -3,10 +3,9 @@ package org.superbiz.ws;
 import com.google.protobuf.InvalidProtocolBufferException;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.PooledByteBufAllocator;
-import io.netty.buffer.Unpooled;
 import org.superbiz.game.GameDataService;
 import org.superbiz.game.Player;
-import org.superbiz.game.SnakePositions;
+import org.superbiz.game.VehiclePositions;
 import org.superbiz.game.proto.Msg;
 import ratpack.handling.Context;
 import ratpack.handling.Handler;
@@ -27,14 +26,14 @@ import java.util.logging.Logger;
 public class GameHandler implements Handler {
     private static final Logger logger = Logger.getLogger(GameHandler.class.getName());
 
-    private final SnakePositions snakePositions;
+    private final VehiclePositions vehiclePositions;
 
     private GameDataService gameDataService;
 
     @Inject
-    public GameHandler(GameDataService gameDataService, SnakePositions snakePositions) {
+    public GameHandler(GameDataService gameDataService, VehiclePositions vehiclePositions) {
         this.gameDataService = gameDataService;
-        this.snakePositions = snakePositions;
+        this.vehiclePositions = vehiclePositions;
         logger.info(String.format("STREAM: %s", gameDataService.getSnakeUpdate()));
         gameDataService.getSnakeUpdate().subscribe(snakesUpdate -> {
             byte[] msg = Msg.Message.newBuilder()./*setSnakesUpdate(snakesUpdate).*/build().toByteArray();
@@ -97,7 +96,7 @@ public class GameHandler implements Handler {
                 String playerId = ctx.getRequest().getQueryParams().get("id");
 
                 players.remove(playerId);
-                snakePositions.remove(playerId);
+                vehiclePositions.remove(playerId);
 
                 byte[] msg = Msg.Message.newBuilder().setClientDisconnect(
                         Msg.ClientDisconnect.newBuilder().setId(playerId)).build().toByteArray();

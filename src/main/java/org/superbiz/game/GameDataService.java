@@ -1,17 +1,17 @@
 package org.superbiz.game;
 
-import com.github.davidmoten.rtree.RTree;
-import com.github.davidmoten.rtree.geometry.Point;
+import org.superbiz.game.model.VehicleData;
 import org.superbiz.game.proto.Msg;
 import rx.Observable;
 
 import javax.inject.Inject;
 import java.util.logging.Logger;
 
+import static com.github.davidmoten.rtree.geometry.Geometries.point;
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
 public class GameDataService {
-    private final SnakePositions snakePositions;
+    private final VehiclePositions vehiclePositions;
     private final Observable<String> snakesInterval;
     private final Observable<Msg.PeriodicVehiclesUpdate> snakeUpdate;
     @Inject
@@ -23,9 +23,9 @@ public class GameDataService {
     //private RTree<Dot, Point> dotTree;
 
     @Inject
-    public GameDataService(WorldGeometry worldGeometry, SnakePositions snakePositions) {
+    public GameDataService(WorldGeometry worldGeometry, VehiclePositions vehiclePositions) {
         this.worldGeometry = worldGeometry;
-        this.snakePositions = snakePositions;
+        this.vehiclePositions = vehiclePositions;
 //        this.dotTree = RTree.maxChildren(5).create();
 
 //        this.radius = 3000;
@@ -42,7 +42,7 @@ public class GameDataService {
 
         this.snakesInterval = Observable.interval(100, MILLISECONDS).map(x -> "S" + x);
         //this.observablePosition.subscribe(this::onPositionChanged);
-        this.snakeUpdate = this.snakesInterval.map(timer -> snakePositions.getUpdateMessage());
+        this.snakeUpdate = this.snakesInterval.map(timer -> vehiclePositions.getUpdateMessage());
 //
 //        this.snakeUpdate.subscribe(update -> {
 //            logger.info(String.format("%s", update));
@@ -90,23 +90,25 @@ public class GameDataService {
 //    }
 
     public void processMessage(Msg.Message message, Player player) {
-//        if (message.hasResize()) {
-//            player.setViewSize(point(message.getResize().getWidth(), message.getResize().getHeight()));
-//            Msg.DotsUpdate response = getDotsUpdate(player);
-//            //String jsonMsg = MessageBuilder.create().setDotsUpdate(response).toJson();
-//            byte[] msgBytes = Msg.Message.newBuilder().setDotsUpdate(response).build().toByteArray();
-//            //logger.info(String.format("TODO: %s", jsonMsg));
-//            //player.getWebSocket().send(Unpooled.wrappedBuffer(msgBytes));
-//        } else if (message.hasPlayerStartReq()) {
-//            final Msg.PlayerStartReq playerStartReq = message.getPlayerStartReq();
-//            player.setSkin(playerStartReq.getSkin());
-//            final SnakeData snakeData = snakePositions.createAndRegisterSnake(player);
-//            Msg.PlayerResp response = makeCreationResponse(snakeData, playerStartReq);
+        if (message.hasResize()) {
+            player.setViewSize(point(message.getResize().getWidth(), message.getResize().getHeight()));
+            //Msg.DotsUpdate response = getDotsUpdate(player);
+            //byte[] msgBytes = Msg.Message.newBuilder().setDotsUpdate(response).build().toByteArray();
+            //player.getWebSocket().send(Unpooled.wrappedBuffer(msgBytes));
+        } else if (message.hasPlayerStartRequest()) {
+            Msg.PlayerStartRequest playerStartRequest = message.getPlayerStartRequest();
+            player.setName(playerStartRequest.getName());
+
+            VehicleData vehicle = vehiclePositions.createVehicle(playerStartRequest.getVehicleType(),
+                    playerStartRequest.getVehicleDesign(),
+                    0.0f, 0.0f, 0.0f);
+            vehiclePositions.registerVehicle(player.getId(), vehicle);
+//            Msg.PlayerResp response = makeCreationResponse(snakeData, playerStartRequest);
 //            byte[] msgBytes = Msg.Message.newBuilder().setPlayerResp(response).build().toByteArray();
-//            //player.getWebSocket().send(Unpooled.wrappedBuffer(msgBytes));
+            //player.getWebSocket().send(Unpooled.wrappedBuffer(msgBytes));
 //        } else if (message.hasPlayerUpdateReq()) {
 //            Msg.PlayerUpdateReq updateReq = message.getPlayerUpdateReq();
-//            Optional<SnakeData> snakeData = snakePositions.moveSnakeByPlayerUpdate(player.getId(), updateReq);
+//            Optional<SnakeData> snakeData = vehiclePositions.moveSnakeByPlayerUpdate(player.getId(), updateReq);
 //            if (snakeData.isPresent()) {
 //                Part head = snakeData.get().getPath().iterator().next();
 //                Point position = point(head.getX(), head.getY());
@@ -121,7 +123,6 @@ public class GameDataService {
 //                byte[] msgBytes = Msg.Message.newBuilder().setPlayerResp(response).build().toByteArray();
 //                //player.getWebSocket().send(Unpooled.wrappedBuffer(msgBytes));
 //            }
-        if (false) {
         } else {
             logger.info(String.format("UNIMPLEMENTED %s",  message));
         }

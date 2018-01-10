@@ -714,19 +714,12 @@ proto.PlayerStartRequest.prototype.setInitiated = function(value) {
  * @constructor
  */
 proto.PlayerStartResponse = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, proto.PlayerStartResponse.repeatedFields_, null);
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
 goog.inherits(proto.PlayerStartResponse, jspb.Message);
 if (goog.DEBUG && !COMPILED) {
   proto.PlayerStartResponse.displayName = 'proto.PlayerStartResponse';
 }
-/**
- * List of repeated fields within this message type.
- * @private {!Array<number>}
- * @const
- */
-proto.PlayerStartResponse.repeatedFields_ = [6];
-
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
@@ -761,8 +754,7 @@ proto.PlayerStartResponse.toObject = function(includeInstance, msg) {
     worldheight: jspb.Message.getFieldWithDefault(msg, 3, 0),
     sectorwidth: jspb.Message.getFieldWithDefault(msg, 4, 0),
     sectorheight: jspb.Message.getFieldWithDefault(msg, 5, 0),
-    sectordataList: jspb.Message.toObjectList(msg.getSectordataList(),
-    proto.SectorData.toObject, includeInstance),
+    sectormapMap: (f = msg.getSectormapMap()) ? f.toObject(includeInstance, proto.SectorData.toObject) : [],
     birthlocationx: +jspb.Message.getFieldWithDefault(msg, 7, 0.0),
     birthlocationy: +jspb.Message.getFieldWithDefault(msg, 8, 0.0),
     birthorientation: +jspb.Message.getFieldWithDefault(msg, 9, 0.0),
@@ -825,9 +817,10 @@ proto.PlayerStartResponse.deserializeBinaryFromReader = function(msg, reader) {
       msg.setSectorheight(value);
       break;
     case 6:
-      var value = new proto.SectorData;
-      reader.readMessage(value,proto.SectorData.deserializeBinaryFromReader);
-      msg.addSectordata(value);
+      var value = msg.getSectormapMap();
+      reader.readMessage(value, function(message, reader) {
+        jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readString, jspb.BinaryReader.prototype.readMessage, proto.SectorData.deserializeBinaryFromReader);
+         });
       break;
     case 7:
       var value = /** @type {number} */ (reader.readFloat());
@@ -910,13 +903,9 @@ proto.PlayerStartResponse.serializeBinaryToWriter = function(message, writer) {
       f
     );
   }
-  f = message.getSectordataList();
-  if (f.length > 0) {
-    writer.writeRepeatedMessage(
-      6,
-      f,
-      proto.SectorData.serializeBinaryToWriter
-    );
+  f = message.getSectormapMap(true);
+  if (f && f.getLength() > 0) {
+    f.serializeBinary(6, writer, jspb.BinaryWriter.prototype.writeString, jspb.BinaryWriter.prototype.writeMessage, proto.SectorData.serializeBinaryToWriter);
   }
   f = message.getBirthlocationx();
   if (f !== 0.0) {
@@ -1040,33 +1029,20 @@ proto.PlayerStartResponse.prototype.setSectorheight = function(value) {
 
 
 /**
- * repeated SectorData sectorData = 6;
- * @return {!Array.<!proto.SectorData>}
+ * map<string, SectorData> sectorMap = 6;
+ * @param {boolean=} opt_noLazyCreate Do not create the map if
+ * empty, instead returning `undefined`
+ * @return {!jspb.Map<string,!proto.SectorData>}
  */
-proto.PlayerStartResponse.prototype.getSectordataList = function() {
-  return /** @type{!Array.<!proto.SectorData>} */ (
-    jspb.Message.getRepeatedWrapperField(this, proto.SectorData, 6));
+proto.PlayerStartResponse.prototype.getSectormapMap = function(opt_noLazyCreate) {
+  return /** @type {!jspb.Map<string,!proto.SectorData>} */ (
+      jspb.Message.getMapField(this, 6, opt_noLazyCreate,
+      proto.SectorData));
 };
 
 
-/** @param {!Array.<!proto.SectorData>} value */
-proto.PlayerStartResponse.prototype.setSectordataList = function(value) {
-  jspb.Message.setRepeatedWrapperField(this, 6, value);
-};
-
-
-/**
- * @param {!proto.SectorData=} opt_value
- * @param {number=} opt_index
- * @return {!proto.SectorData}
- */
-proto.PlayerStartResponse.prototype.addSectordata = function(opt_value, opt_index) {
-  return jspb.Message.addToRepeatedWrapperField(this, 6, opt_value, proto.SectorData, opt_index);
-};
-
-
-proto.PlayerStartResponse.prototype.clearSectordataList = function() {
-  this.setSectordataList([]);
+proto.PlayerStartResponse.prototype.clearSectormapMap = function() {
+  this.getSectormapMap().clear();
 };
 
 

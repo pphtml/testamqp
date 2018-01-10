@@ -15,9 +15,14 @@ public class Player {
     private final String id;
     private final Observable<String> playerInterval;
     private final Observable<Player> periodicUpdate;
-    private String skin;
+    //private String skin;
     private Point position;
     private Point viewSize;
+
+    private String name;
+//    private String vehicleType;
+//    private String vehicleDesign;
+
 
     private WebSocket webSocket;
 
@@ -81,14 +86,6 @@ public class Player {
         return circle(position.x(), position.y(), 50);
     }
 
-    public String getSkin() {
-        return skin;
-    }
-
-    public void setSkin(String skin) {
-        this.skin = skin;
-    }
-
     public Point getPosition() {
         return position;
     }
@@ -96,4 +93,28 @@ public class Player {
     public void setPosition(Point position) {
         this.position = position;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+//    public String getVehicleType() {
+//        return vehicleType;
+//    }
+//
+//    public void setVehicleType(String vehicleType) {
+//        this.vehicleType = vehicleType;
+//    }
+//
+//    public String getVehicleDesign() {
+//        return vehicleDesign;
+//    }
+//
+//    public void setVehicleDesign(String vehicleDesign) {
+//        this.vehicleDesign = vehicleDesign;
+//    }
 }

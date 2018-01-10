@@ -153,6 +153,16 @@
             <artifactId>protobuf-java</artifactId>
             <version>3.5.1</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>3.17</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>3.17</version>
+        </dependency>
 
         <!--<dependency>-->
             <!--<groupId>org.jooq</groupId>-->

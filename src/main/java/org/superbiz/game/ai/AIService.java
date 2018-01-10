@@ -1,6 +1,6 @@
 package org.superbiz.game.ai;
 
-import org.superbiz.game.SnakePositions;
+import org.superbiz.game.VehiclePositions;
 import org.superbiz.game.computation.WormMovementJava;
 
 import javax.inject.Inject;
@@ -24,12 +24,12 @@ public class AIService {
     private static final float PI_HALF = (float) (Math.PI / 2);
     private static final float PI_DOUBLE = (float) (Math.PI * 2);
 
-    public void update(SnakePositions snakePositions, long elapsedTime) {
-//        Collection<SnakeData> allAISnakes = snakePositions.getAllAISnakes();
+    public void update(VehiclePositions vehiclePositions, long elapsedTime) {
+//        Collection<SnakeData> allAISnakes = vehiclePositions.getAllAISnakes();
 //        if (allAISnakes.size() == 0) {
-//            SnakeData snake = snakePositions.createSnake("14338485", 0, TARGET_DISTANCE);
+//            SnakeData snake = vehiclePositions.createSnake("14338485", 0, TARGET_DISTANCE);
 //            snake.setAiDriven(true);
-//            snakePositions.registerSnake(generateNewId(), snake);
+//            vehiclePositions.registerSnake(generateNewId(), snake);
 //        } else {
 //            for (SnakeData snakeData : allAISnakes) {
 //

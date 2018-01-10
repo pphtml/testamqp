@@ -1,7 +1,8 @@
 class FeatureMatrix {
     constructor(){
         const firefox = /.*Firefox.*/.test(navigator.userAgent);
-        this.webGl = !firefox;
+        //this.webGl = !firefox;
+        this.webGl = true;
         this.googleFont = !firefox;
     }
 

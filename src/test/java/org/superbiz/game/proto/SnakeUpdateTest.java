@@ -3,7 +3,6 @@ package org.superbiz.game.proto;
 import com.google.protobuf.InvalidProtocolBufferException;
 import org.junit.Test;
 import org.superbiz.game.BaseTest;
-import org.superbiz.game.proto.Msg.Part;
 
 import java.util.Arrays;
 import java.util.List;
