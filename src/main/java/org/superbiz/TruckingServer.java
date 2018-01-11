@@ -1,5 +1,6 @@
 package org.superbiz;
 
+import org.superbiz.game.VehicleFactory;
 import org.superbiz.game.VehiclePositions;
 import org.superbiz.util.LoggingConfig;
 import org.superbiz.util.RxWebpackProcess;

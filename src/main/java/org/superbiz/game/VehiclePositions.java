@@ -3,18 +3,17 @@ package org.superbiz.game;
 //import com.google.inject.Singleton;
 
 import org.superbiz.game.ai.AIService;
-import org.superbiz.game.computation.WormMovement;
-import org.superbiz.game.computation.WormMovementJavascript;
-import org.superbiz.game.model.Part;
+import org.superbiz.game.computation.Movement;
+import org.superbiz.game.computation.MovementJavascript;
+import org.superbiz.game.model.MoveVehicleResult;
 import org.superbiz.game.model.VehicleData;
 import org.superbiz.game.proto.Msg;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.logging.Logger;
 
 @Singleton
@@ -41,7 +40,7 @@ public class VehiclePositions {
 
     private Map<String, VehicleData> map = new LinkedHashMap<>();
 
-    private WormMovement wormMovement = new WormMovementJavascript();
+    private Movement movement = new MovementJavascript();
 
 //    public void update(Player player, Msg.PlayerMoved playerMoved) {
 //        Msg.SnakeInfo snakeInfo = Msg.SnakeInfo.newBuilder()
@@ -57,9 +56,6 @@ public class VehiclePositions {
 //        observableSnakes.onNext(snakesUpdate);
 //    }
 
-    public VehicleData createVehicle(String type, String design, float x, float y, float orientation) {
-        return null;
-    }
 
     public void remove(String playerId) {
         logger.info(String.format("Removing player: %s", playerId));
@@ -104,12 +100,12 @@ public class VehiclePositions {
 //
 //            float speed = SPEED_CONSTANT * updateReq.getSpeedMultiplier();   // * elapsedTime * 0.06;
 //
-//            float newRotation = this.wormMovement.computeAllowedAngle(updateReq.getRotationAsked(), // askedAngle
+//            float newRotation = this.movement.computeAllowedAngle(updateReq.getRotationAsked(), // askedAngle
 //                    snakeData.getRotation(), // lastAngle
 //                    elapsedTime, // time
 //                    baseSpeed, // baseSpeed
 //                    speed); //speed
-//            MoveSnakeResult movedSnake = this.wormMovement.moveSnake(snakeData.getPath(), // snakePath
+//            MoveSnakeResult movedSnake = this.movement.moveSnake(snakeData.getPath(), // snakePath
 //                    newRotation, // angle
 //                    speed, // distance
 //                    INITIAL_PART_DISTANCE); // partDistance
@@ -131,13 +127,13 @@ public class VehiclePositions {
 //        float speed = SPEED_CONSTANT;   // * elapsedTime * 0.06;
 //        float distance = (float)(speed * 0.06 * elapsedTime);
 //
-//        float newRotation = this.wormMovement.computeAllowedAngle(snakeData.getRotationAsked(), // askedAngle
+//        float newRotation = this.movement.computeAllowedAngle(snakeData.getRotationAsked(), // askedAngle
 //                snakeData.getRotation(), // lastAngle
 //                elapsedTime, // time
 //                baseSpeed, // baseSpeed
 //                speed); //speed
 //        //List<Part> snakePath, float angle, float distance, float partDistance
-//        MoveSnakeResult movedSnake = this.wormMovement.moveSnake(snakeData.getPath(), // snakePath
+//        MoveSnakeResult movedSnake = this.movement.moveSnake(snakeData.getPath(), // snakePath
 //                newRotation, // angle
 //                distance, // distance
 //                INITIAL_PART_DISTANCE); // partDistance
@@ -195,5 +191,30 @@ public class VehiclePositions {
 
     public void registerVehicle(String id, VehicleData vehicle) {
         this.map.put(id, vehicle);
+    }
+
+    public Optional<VehicleData> moveVehicleByPlayerUpdate(String playerId, Msg.PlayerUpdateRequest playerUpdateRequest) {
+//     float orientationRequested = 1;
+//    float speedMultiplier = 2;
+//    int64 initiated = 3;
+        VehicleData vehicleData = this.map.get(playerId);
+        if (vehicleData == null) {
+            logger.severe(String.format("Couldn't find vehicle for playerId: %s", playerId));
+            return Optional.empty();
+        } else {
+            long now = System.currentTimeMillis();
+            long elapsedTime = now - vehicleData.getLastProcessedOnServer();
+            float newOrientation = this.movement.computeAllowedAngle(playerUpdateRequest.getOrientationRequested(), // askedAngle
+                    vehicleData.getOrientation(),
+                    elapsedTime, // time
+                    playerUpdateRequest.getSpeedMultiplier()); //speed
+            vehicleData.setLastProcessedOnServer(now)
+                    .setOrientation(newOrientation)
+                    .setOrientationRequested(playerUpdateRequest.getOrientationRequested());
+
+            MoveVehicleResult movedVehicle = this.movement.moveVehicle(vehicleData);
+
+            return Optional.of(vehicleData);
+        }
     }
 }

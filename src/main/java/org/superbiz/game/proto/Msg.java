@@ -2944,6 +2944,19 @@ public final class Msg {
      * <code>float baseSpeed = 10;</code>
      */
     float getBaseSpeed();
+
+    /**
+     * <code>.VehicleData vehicleData = 11;</code>
+     */
+    boolean hasVehicleData();
+    /**
+     * <code>.VehicleData vehicleData = 11;</code>
+     */
+    org.superbiz.game.proto.Msg.VehicleData getVehicleData();
+    /**
+     * <code>.VehicleData vehicleData = 11;</code>
+     */
+    org.superbiz.game.proto.Msg.VehicleDataOrBuilder getVehicleDataOrBuilder();
   }
   /**
    * Protobuf type {@code PlayerStartResponse}
@@ -3063,6 +3076,19 @@ public final class Msg {
             case 85: {
 
               baseSpeed_ = input.readFloat();
+              break;
+            }
+            case 90: {
+              org.superbiz.game.proto.Msg.VehicleData.Builder subBuilder = null;
+              if (vehicleData_ != null) {
+                subBuilder = vehicleData_.toBuilder();
+              }
+              vehicleData_ = input.readMessage(org.superbiz.game.proto.Msg.VehicleData.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(vehicleData_);
+                vehicleData_ = subBuilder.buildPartial();
+              }
+
               break;
             }
           }
@@ -3270,6 +3296,27 @@ public final class Msg {
       return baseSpeed_;
     }
 
+    public static final int VEHICLEDATA_FIELD_NUMBER = 11;
+    private org.superbiz.game.proto.Msg.VehicleData vehicleData_;
+    /**
+     * <code>.VehicleData vehicleData = 11;</code>
+     */
+    public boolean hasVehicleData() {
+      return vehicleData_ != null;
+    }
+    /**
+     * <code>.VehicleData vehicleData = 11;</code>
+     */
+    public org.superbiz.game.proto.Msg.VehicleData getVehicleData() {
+      return vehicleData_ == null ? org.superbiz.game.proto.Msg.VehicleData.getDefaultInstance() : vehicleData_;
+    }
+    /**
+     * <code>.VehicleData vehicleData = 11;</code>
+     */
+    public org.superbiz.game.proto.Msg.VehicleDataOrBuilder getVehicleDataOrBuilder() {
+      return getVehicleData();
+    }
+
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
@@ -3314,6 +3361,9 @@ public final class Msg {
       }
       if (baseSpeed_ != 0F) {
         output.writeFloat(10, baseSpeed_);
+      }
+      if (vehicleData_ != null) {
+        output.writeMessage(11, getVehicleData());
       }
       unknownFields.writeTo(output);
     }
@@ -3369,6 +3419,10 @@ public final class Msg {
         size += com.google.protobuf.CodedOutputStream
           .computeFloatSize(10, baseSpeed_);
       }
+      if (vehicleData_ != null) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(11, getVehicleData());
+      }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
@@ -3416,6 +3470,11 @@ public final class Msg {
           java.lang.Float.floatToIntBits(getBaseSpeed())
           == java.lang.Float.floatToIntBits(
               other.getBaseSpeed()));
+      result = result && (hasVehicleData() == other.hasVehicleData());
+      if (hasVehicleData()) {
+        result = result && getVehicleData()
+            .equals(other.getVehicleData());
+      }
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
@@ -3455,6 +3514,10 @@ public final class Msg {
       hash = (37 * hash) + BASESPEED_FIELD_NUMBER;
       hash = (53 * hash) + java.lang.Float.floatToIntBits(
           getBaseSpeed());
+      if (hasVehicleData()) {
+        hash = (37 * hash) + VEHICLEDATA_FIELD_NUMBER;
+        hash = (53 * hash) + getVehicleData().hashCode();
+      }
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -3629,6 +3692,12 @@ public final class Msg {
 
         baseSpeed_ = 0F;
 
+        if (vehicleDataBuilder_ == null) {
+          vehicleData_ = null;
+        } else {
+          vehicleData_ = null;
+          vehicleDataBuilder_ = null;
+        }
         return this;
       }
 
@@ -3668,6 +3737,11 @@ public final class Msg {
         result.birthLocationY_ = birthLocationY_;
         result.birthOrientation_ = birthOrientation_;
         result.baseSpeed_ = baseSpeed_;
+        if (vehicleDataBuilder_ == null) {
+          result.vehicleData_ = vehicleData_;
+        } else {
+          result.vehicleData_ = vehicleDataBuilder_.build();
+        }
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -3738,6 +3812,9 @@ public final class Msg {
         }
         if (other.getBaseSpeed() != 0F) {
           setBaseSpeed(other.getBaseSpeed());
+        }
+        if (other.hasVehicleData()) {
+          mergeVehicleData(other.getVehicleData());
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -4213,6 +4290,123 @@ public final class Msg {
         baseSpeed_ = 0F;
         onChanged();
         return this;
+      }
+
+      private org.superbiz.game.proto.Msg.VehicleData vehicleData_ = null;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          org.superbiz.game.proto.Msg.VehicleData, org.superbiz.game.proto.Msg.VehicleData.Builder, org.superbiz.game.proto.Msg.VehicleDataOrBuilder> vehicleDataBuilder_;
+      /**
+       * <code>.VehicleData vehicleData = 11;</code>
+       */
+      public boolean hasVehicleData() {
+        return vehicleDataBuilder_ != null || vehicleData_ != null;
+      }
+      /**
+       * <code>.VehicleData vehicleData = 11;</code>
+       */
+      public org.superbiz.game.proto.Msg.VehicleData getVehicleData() {
+        if (vehicleDataBuilder_ == null) {
+          return vehicleData_ == null ? org.superbiz.game.proto.Msg.VehicleData.getDefaultInstance() : vehicleData_;
+        } else {
+          return vehicleDataBuilder_.getMessage();
+        }
+      }
+      /**
+       * <code>.VehicleData vehicleData = 11;</code>
+       */
+      public Builder setVehicleData(org.superbiz.game.proto.Msg.VehicleData value) {
+        if (vehicleDataBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          vehicleData_ = value;
+          onChanged();
+        } else {
+          vehicleDataBuilder_.setMessage(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.VehicleData vehicleData = 11;</code>
+       */
+      public Builder setVehicleData(
+          org.superbiz.game.proto.Msg.VehicleData.Builder builderForValue) {
+        if (vehicleDataBuilder_ == null) {
+          vehicleData_ = builderForValue.build();
+          onChanged();
+        } else {
+          vehicleDataBuilder_.setMessage(builderForValue.build());
+        }
+
+        return this;
+      }
+      /**
+       * <code>.VehicleData vehicleData = 11;</code>
+       */
+      public Builder mergeVehicleData(org.superbiz.game.proto.Msg.VehicleData value) {
+        if (vehicleDataBuilder_ == null) {
+          if (vehicleData_ != null) {
+            vehicleData_ =
+              org.superbiz.game.proto.Msg.VehicleData.newBuilder(vehicleData_).mergeFrom(value).buildPartial();
+          } else {
+            vehicleData_ = value;
+          }
+          onChanged();
+        } else {
+          vehicleDataBuilder_.mergeFrom(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.VehicleData vehicleData = 11;</code>
+       */
+      public Builder clearVehicleData() {
+        if (vehicleDataBuilder_ == null) {
+          vehicleData_ = null;
+          onChanged();
+        } else {
+          vehicleData_ = null;
+          vehicleDataBuilder_ = null;
+        }
+
+        return this;
+      }
+      /**
+       * <code>.VehicleData vehicleData = 11;</code>
+       */
+      public org.superbiz.game.proto.Msg.VehicleData.Builder getVehicleDataBuilder() {
+        
+        onChanged();
+        return getVehicleDataFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.VehicleData vehicleData = 11;</code>
+       */
+      public org.superbiz.game.proto.Msg.VehicleDataOrBuilder getVehicleDataOrBuilder() {
+        if (vehicleDataBuilder_ != null) {
+          return vehicleDataBuilder_.getMessageOrBuilder();
+        } else {
+          return vehicleData_ == null ?
+              org.superbiz.game.proto.Msg.VehicleData.getDefaultInstance() : vehicleData_;
+        }
+      }
+      /**
+       * <code>.VehicleData vehicleData = 11;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          org.superbiz.game.proto.Msg.VehicleData, org.superbiz.game.proto.Msg.VehicleData.Builder, org.superbiz.game.proto.Msg.VehicleDataOrBuilder> 
+          getVehicleDataFieldBuilder() {
+        if (vehicleDataBuilder_ == null) {
+          vehicleDataBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              org.superbiz.game.proto.Msg.VehicleData, org.superbiz.game.proto.Msg.VehicleData.Builder, org.superbiz.game.proto.Msg.VehicleDataOrBuilder>(
+                  getVehicleData(),
+                  getParentForChildren(),
+                  isClean());
+          vehicleData_ = null;
+        }
+        return vehicleDataBuilder_;
       }
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
@@ -8587,9 +8781,9 @@ public final class Msg {
     float getY();
 
     /**
-     * <code>float rotation = 3;</code>
+     * <code>float orientation = 3;</code>
      */
-    float getRotation();
+    float getOrientation();
 
     /**
      * <code>.VehiclePart.PartType partType = 4;</code>
@@ -8643,7 +8837,7 @@ public final class Msg {
     private VehiclePart() {
       x_ = 0F;
       y_ = 0F;
-      rotation_ = 0F;
+      orientation_ = 0F;
       partType_ = 0;
       partId_ = "";
       pivotX_ = 0;
@@ -8693,7 +8887,7 @@ public final class Msg {
             }
             case 29: {
 
-              rotation_ = input.readFloat();
+              orientation_ = input.readFloat();
               break;
             }
             case 32: {
@@ -8748,9 +8942,9 @@ public final class Msg {
     public enum PartType
         implements com.google.protobuf.ProtocolMessageEnum {
       /**
-       * <code>HEAD = 0;</code>
+       * <code>FRONT = 0;</code>
        */
-      HEAD(0),
+      FRONT(0),
       /**
        * <code>TRAILER = 1;</code>
        */
@@ -8763,9 +8957,9 @@ public final class Msg {
       ;
 
       /**
-       * <code>HEAD = 0;</code>
+       * <code>FRONT = 0;</code>
        */
-      public static final int HEAD_VALUE = 0;
+      public static final int FRONT_VALUE = 0;
       /**
        * <code>TRAILER = 1;</code>
        */
@@ -8794,7 +8988,7 @@ public final class Msg {
 
       public static PartType forNumber(int value) {
         switch (value) {
-          case 0: return HEAD;
+          case 0: return FRONT;
           case 1: return TRAILER;
           case 2: return FRONT_WHEEL;
           default: return null;
@@ -8867,13 +9061,13 @@ public final class Msg {
       return y_;
     }
 
-    public static final int ROTATION_FIELD_NUMBER = 3;
-    private float rotation_;
+    public static final int ORIENTATION_FIELD_NUMBER = 3;
+    private float orientation_;
     /**
-     * <code>float rotation = 3;</code>
+     * <code>float orientation = 3;</code>
      */
-    public float getRotation() {
-      return rotation_;
+    public float getOrientation() {
+      return orientation_;
     }
 
     public static final int PARTTYPE_FIELD_NUMBER = 4;
@@ -8970,10 +9164,10 @@ public final class Msg {
       if (y_ != 0F) {
         output.writeFloat(2, y_);
       }
-      if (rotation_ != 0F) {
-        output.writeFloat(3, rotation_);
+      if (orientation_ != 0F) {
+        output.writeFloat(3, orientation_);
       }
-      if (partType_ != org.superbiz.game.proto.Msg.VehiclePart.PartType.HEAD.getNumber()) {
+      if (partType_ != org.superbiz.game.proto.Msg.VehiclePart.PartType.FRONT.getNumber()) {
         output.writeEnum(4, partType_);
       }
       if (!getPartIdBytes().isEmpty()) {
@@ -9001,11 +9195,11 @@ public final class Msg {
         size += com.google.protobuf.CodedOutputStream
           .computeFloatSize(2, y_);
       }
-      if (rotation_ != 0F) {
+      if (orientation_ != 0F) {
         size += com.google.protobuf.CodedOutputStream
-          .computeFloatSize(3, rotation_);
+          .computeFloatSize(3, orientation_);
       }
-      if (partType_ != org.superbiz.game.proto.Msg.VehiclePart.PartType.HEAD.getNumber()) {
+      if (partType_ != org.superbiz.game.proto.Msg.VehiclePart.PartType.FRONT.getNumber()) {
         size += com.google.protobuf.CodedOutputStream
           .computeEnumSize(4, partType_);
       }
@@ -9045,9 +9239,9 @@ public final class Msg {
           == java.lang.Float.floatToIntBits(
               other.getY()));
       result = result && (
-          java.lang.Float.floatToIntBits(getRotation())
+          java.lang.Float.floatToIntBits(getOrientation())
           == java.lang.Float.floatToIntBits(
-              other.getRotation()));
+              other.getOrientation()));
       result = result && partType_ == other.partType_;
       result = result && getPartId()
           .equals(other.getPartId());
@@ -9072,9 +9266,9 @@ public final class Msg {
       hash = (37 * hash) + Y_FIELD_NUMBER;
       hash = (53 * hash) + java.lang.Float.floatToIntBits(
           getY());
-      hash = (37 * hash) + ROTATION_FIELD_NUMBER;
+      hash = (37 * hash) + ORIENTATION_FIELD_NUMBER;
       hash = (53 * hash) + java.lang.Float.floatToIntBits(
-          getRotation());
+          getOrientation());
       hash = (37 * hash) + PARTTYPE_FIELD_NUMBER;
       hash = (53 * hash) + partType_;
       hash = (37 * hash) + PARTID_FIELD_NUMBER;
@@ -9216,7 +9410,7 @@ public final class Msg {
 
         y_ = 0F;
 
-        rotation_ = 0F;
+        orientation_ = 0F;
 
         partType_ = 0;
 
@@ -9250,7 +9444,7 @@ public final class Msg {
         org.superbiz.game.proto.Msg.VehiclePart result = new org.superbiz.game.proto.Msg.VehiclePart(this);
         result.x_ = x_;
         result.y_ = y_;
-        result.rotation_ = rotation_;
+        result.orientation_ = orientation_;
         result.partType_ = partType_;
         result.partId_ = partId_;
         result.pivotX_ = pivotX_;
@@ -9302,8 +9496,8 @@ public final class Msg {
         if (other.getY() != 0F) {
           setY(other.getY());
         }
-        if (other.getRotation() != 0F) {
-          setRotation(other.getRotation());
+        if (other.getOrientation() != 0F) {
+          setOrientation(other.getOrientation());
         }
         if (other.partType_ != 0) {
           setPartTypeValue(other.getPartTypeValue());
@@ -9397,28 +9591,28 @@ public final class Msg {
         return this;
       }
 
-      private float rotation_ ;
+      private float orientation_ ;
       /**
-       * <code>float rotation = 3;</code>
+       * <code>float orientation = 3;</code>
        */
-      public float getRotation() {
-        return rotation_;
+      public float getOrientation() {
+        return orientation_;
       }
       /**
-       * <code>float rotation = 3;</code>
+       * <code>float orientation = 3;</code>
        */
-      public Builder setRotation(float value) {
+      public Builder setOrientation(float value) {
         
-        rotation_ = value;
+        orientation_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>float rotation = 3;</code>
+       * <code>float orientation = 3;</code>
        */
-      public Builder clearRotation() {
+      public Builder clearOrientation() {
         
-        rotation_ = 0F;
+        orientation_ = 0F;
         onChanged();
         return this;
       }
@@ -11433,7 +11627,7 @@ public final class Msg {
       "ateH\000\022-\n\020clientDisconnect\030\t \001(\0132\021.Client" +
       "DisconnectH\000B\005\n\003msg\"a\n\022PlayerStartReques" +
       "t\022\014\n\004name\030\001 \001(\t\022\023\n\013vehicleType\030\002 \001(\t\022\025\n\r" +
-      "vehicleDesign\030\003 \001(\t\022\021\n\tinitiated\030\004 \001(\003\"\332" +
+      "vehicleDesign\030\003 \001(\t\022\021\n\tinitiated\030\004 \001(\003\"\375" +
       "\002\n\023PlayerStartResponse\022\033\n\010timeInfo\030\001 \001(\013" +
       "2\t.TimeInfo\022\022\n\nworldWidth\030\002 \001(\005\022\023\n\013world" +
       "Height\030\003 \001(\005\022\023\n\013sectorWidth\030\004 \001(\005\022\024\n\014sec" +
@@ -11441,34 +11635,35 @@ public final class Msg {
       "yerStartResponse.SectorMapEntry\022\026\n\016birth" +
       "LocationX\030\007 \001(\002\022\026\n\016birthLocationY\030\010 \001(\002\022" +
       "\030\n\020birthOrientation\030\t \001(\002\022\021\n\tbaseSpeed\030\n" +
-      " \001(\002\032=\n\016SectorMapEntry\022\013\n\003key\030\001 \001(\t\022\032\n\005v" +
-      "alue\030\002 \001(\0132\013.SectorData:\0028\001\"\356\001\n\nSectorDa" +
-      "ta\022\t\n\001x\030\001 \001(\005\022\t\n\001y\030\002 \001(\005\022#\n\005north\030\003 \001(\0162" +
-      "\024.SectorData.RoadType\022\"\n\004east\030\004 \001(\0162\024.Se" +
-      "ctorData.RoadType\022#\n\005south\030\005 \001(\0162\024.Secto" +
-      "rData.RoadType\022\"\n\004west\030\006 \001(\0162\024.SectorDat" +
-      "a.RoadType\"8\n\010RoadType\022\010\n\004NONE\020\000\022\n\n\006SING" +
-      "LE\020\001\022\n\n\006DOUBLE\020\002\022\n\n\006TRIPLE\020\003\"_\n\023PlayerUp" +
-      "dateRequest\022\034\n\024orientationRequested\030\001 \001(" +
-      "\002\022\027\n\017speedMultiplier\030\002 \001(\002\022\021\n\tinitiated\030" +
-      "\003 \001(\003\"V\n\024PlayerUpdateResponse\022\033\n\010timeInf" +
-      "o\030\001 \001(\0132\t.TimeInfo\022!\n\013vehicleData\030\002 \001(\0132" +
-      "\014.VehicleData\"Q\n\026PeriodicVehiclesUpdate\022" +
-      "\027\n\017serverTimestamp\030\001 \001(\004\022\036\n\010vehicles\030\002 \003" +
-      "(\0132\014.VehicleData\"\234\001\n\013VehicleData\022\035\n\025last" +
-      "ProcessedOnServer\030\001 \001(\004\022\"\n\014vehicleParts\030" +
-      "\002 \003(\0132\014.VehiclePart\022\034\n\024orientationReques" +
-      "ted\030\003 \001(\002\022\023\n\013orientation\030\004 \001(\002\022\027\n\017speedM" +
-      "ultiplier\030\005 \001(\002\"\302\001\n\013VehiclePart\022\t\n\001x\030\001 \001" +
-      "(\002\022\t\n\001y\030\002 \001(\002\022\020\n\010rotation\030\003 \001(\002\022\'\n\010partT" +
-      "ype\030\004 \001(\0162\025.VehiclePart.PartType\022\016\n\006part" +
-      "Id\030\013 \001(\t\022\016\n\006pivotX\030\014 \001(\005\022\016\n\006pivotY\030\r \001(\005" +
-      "\"2\n\010PartType\022\010\n\004HEAD\020\000\022\013\n\007TRAILER\020\001\022\017\n\013F" +
-      "RONT_WHEEL\020\002\"1\n\010TimeInfo\022\021\n\tinitiated\030\001 " +
-      "\001(\003\022\022\n\nprocessing\030\002 \001(\003\"\'\n\006Resize\022\r\n\005wid" +
-      "th\030\001 \001(\005\022\016\n\006height\030\002 \001(\005\",\n\020ClientDiscon" +
-      "nect\022\n\n\002id\030\001 \001(\t\022\014\n\004name\030\002 \001(\tB\036\n\027org.su" +
-      "perbiz.game.protoB\003Msgb\006proto3"
+      " \001(\002\022!\n\013vehicleData\030\013 \001(\0132\014.VehicleData\032" +
+      "=\n\016SectorMapEntry\022\013\n\003key\030\001 \001(\t\022\032\n\005value\030" +
+      "\002 \001(\0132\013.SectorData:\0028\001\"\356\001\n\nSectorData\022\t\n" +
+      "\001x\030\001 \001(\005\022\t\n\001y\030\002 \001(\005\022#\n\005north\030\003 \001(\0162\024.Sec" +
+      "torData.RoadType\022\"\n\004east\030\004 \001(\0162\024.SectorD" +
+      "ata.RoadType\022#\n\005south\030\005 \001(\0162\024.SectorData" +
+      ".RoadType\022\"\n\004west\030\006 \001(\0162\024.SectorData.Roa" +
+      "dType\"8\n\010RoadType\022\010\n\004NONE\020\000\022\n\n\006SINGLE\020\001\022" +
+      "\n\n\006DOUBLE\020\002\022\n\n\006TRIPLE\020\003\"_\n\023PlayerUpdateR" +
+      "equest\022\034\n\024orientationRequested\030\001 \001(\002\022\027\n\017" +
+      "speedMultiplier\030\002 \001(\002\022\021\n\tinitiated\030\003 \001(\003" +
+      "\"V\n\024PlayerUpdateResponse\022\033\n\010timeInfo\030\001 \001" +
+      "(\0132\t.TimeInfo\022!\n\013vehicleData\030\002 \001(\0132\014.Veh" +
+      "icleData\"Q\n\026PeriodicVehiclesUpdate\022\027\n\017se" +
+      "rverTimestamp\030\001 \001(\004\022\036\n\010vehicles\030\002 \003(\0132\014." +
+      "VehicleData\"\234\001\n\013VehicleData\022\035\n\025lastProce" +
+      "ssedOnServer\030\001 \001(\004\022\"\n\014vehicleParts\030\002 \003(\013" +
+      "2\014.VehiclePart\022\034\n\024orientationRequested\030\003" +
+      " \001(\002\022\023\n\013orientation\030\004 \001(\002\022\027\n\017speedMultip" +
+      "lier\030\005 \001(\002\"\306\001\n\013VehiclePart\022\t\n\001x\030\001 \001(\002\022\t\n" +
+      "\001y\030\002 \001(\002\022\023\n\013orientation\030\003 \001(\002\022\'\n\010partTyp" +
+      "e\030\004 \001(\0162\025.VehiclePart.PartType\022\016\n\006partId" +
+      "\030\013 \001(\t\022\016\n\006pivotX\030\014 \001(\005\022\016\n\006pivotY\030\r \001(\005\"3" +
+      "\n\010PartType\022\t\n\005FRONT\020\000\022\013\n\007TRAILER\020\001\022\017\n\013FR" +
+      "ONT_WHEEL\020\002\"1\n\010TimeInfo\022\021\n\tinitiated\030\001 \001" +
+      "(\003\022\022\n\nprocessing\030\002 \001(\003\"\'\n\006Resize\022\r\n\005widt" +
+      "h\030\001 \001(\005\022\016\n\006height\030\002 \001(\005\",\n\020ClientDisconn" +
+      "ect\022\n\n\002id\030\001 \001(\t\022\014\n\004name\030\002 \001(\tB\036\n\027org.sup" +
+      "erbiz.game.protoB\003Msgb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -11499,7 +11694,7 @@ public final class Msg {
     internal_static_PlayerStartResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_PlayerStartResponse_descriptor,
-        new java.lang.String[] { "TimeInfo", "WorldWidth", "WorldHeight", "SectorWidth", "SectorHeight", "SectorMap", "BirthLocationX", "BirthLocationY", "BirthOrientation", "BaseSpeed", });
+        new java.lang.String[] { "TimeInfo", "WorldWidth", "WorldHeight", "SectorWidth", "SectorHeight", "SectorMap", "BirthLocationX", "BirthLocationY", "BirthOrientation", "BaseSpeed", "VehicleData", });
     internal_static_PlayerStartResponse_SectorMapEntry_descriptor =
       internal_static_PlayerStartResponse_descriptor.getNestedTypes().get(0);
     internal_static_PlayerStartResponse_SectorMapEntry_fieldAccessorTable = new
@@ -11541,7 +11736,7 @@ public final class Msg {
     internal_static_VehiclePart_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_VehiclePart_descriptor,
-        new java.lang.String[] { "X", "Y", "Rotation", "PartType", "PartId", "PivotX", "PivotY", });
+        new java.lang.String[] { "X", "Y", "Orientation", "PartType", "PartId", "PivotX", "PivotY", });
     internal_static_TimeInfo_descriptor =
       getDescriptor().getMessageTypes().get(9);
     internal_static_TimeInfo_fieldAccessorTable = new

@@ -1,10 +1,14 @@
 package org.superbiz.game;
 
+import io.netty.buffer.Unpooled;
+import org.superbiz.game.map.MapParser;
 import org.superbiz.game.model.VehicleData;
 import org.superbiz.game.proto.Msg;
 import rx.Observable;
 
 import javax.inject.Inject;
+import java.util.Map;
+import java.util.Optional;
 import java.util.logging.Logger;
 
 import static com.github.davidmoten.rtree.geometry.Geometries.point;
@@ -19,6 +23,9 @@ public class GameDataService {
 
 
     private final WorldGeometry worldGeometry;
+
+    private final Map<String, Msg.SectorData> sectorDataMap = new MapParser().read();
+
 
     //private RTree<Dot, Point> dotTree;
 
@@ -99,30 +106,24 @@ public class GameDataService {
             Msg.PlayerStartRequest playerStartRequest = message.getPlayerStartRequest();
             player.setName(playerStartRequest.getName());
 
-            VehicleData vehicle = vehiclePositions.createVehicle(playerStartRequest.getVehicleType(),
+            final VehicleData vehicle = new VehicleFactory(playerStartRequest.getVehicleType(),
                     playerStartRequest.getVehicleDesign(),
-                    0.0f, 0.0f, 0.0f);
+                    0.0f, 0.0f, 0.0f).createVehicle();
             vehiclePositions.registerVehicle(player.getId(), vehicle);
-//            Msg.PlayerResp response = makeCreationResponse(snakeData, playerStartRequest);
-//            byte[] msgBytes = Msg.Message.newBuilder().setPlayerResp(response).build().toByteArray();
-            //player.getWebSocket().send(Unpooled.wrappedBuffer(msgBytes));
-//        } else if (message.hasPlayerUpdateReq()) {
-//            Msg.PlayerUpdateReq updateReq = message.getPlayerUpdateReq();
-//            Optional<SnakeData> snakeData = vehiclePositions.moveSnakeByPlayerUpdate(player.getId(), updateReq);
-//            if (snakeData.isPresent()) {
-//                Part head = snakeData.get().getPath().iterator().next();
+            Msg.PlayerStartResponse response = makeCreationResponse(vehicle, playerStartRequest);
+            byte[] msgBytes = Msg.Message.newBuilder().setPlayerStartResponse(response).build().toByteArray();
+            player.getWebSocket().send(Unpooled.wrappedBuffer(msgBytes));
+        } else if (message.hasPlayerUpdateRequest()) {
+            Msg.PlayerUpdateRequest playerUpdateRequest = message.getPlayerUpdateRequest();
+            Optional<VehicleData> vehicleData = vehiclePositions.moveVehicleByPlayerUpdate(player.getId(), playerUpdateRequest);
+            if (vehicleData.isPresent()) {
+//                Part head = vehicleData.get().getPath().iterator().next();
 //                Point position = point(head.getX(), head.getY());
-//                player.setPosition(position);
-//                Msg.PlayerResp.Builder response = makePlayerUpdateResponse(snakeData.get(), updateReq);
-//                Collection<Msg.Dot> eatenFood = eatFood(player, position);
-//                if (!eatenFood.isEmpty()) {
-//                    //logger.info(String.format("Je tu zradlo @%s", position));
-//                    response.addAllEatenFood(eatenFood);
-//                }
-//
-//                byte[] msgBytes = Msg.Message.newBuilder().setPlayerResp(response).build().toByteArray();
-//                //player.getWebSocket().send(Unpooled.wrappedBuffer(msgBytes));
-//            }
+//                player.setPosition(position); TODO set position?
+                Msg.PlayerUpdateResponse.Builder response = makePlayerUpdateResponse(vehicleData.get(), playerUpdateRequest);
+                byte[] msgBytes = Msg.Message.newBuilder().setPlayerUpdateResponse(response).build().toByteArray();
+                player.getWebSocket().send(Unpooled.wrappedBuffer(msgBytes));
+            }
         } else {
             logger.info(String.format("UNIMPLEMENTED %s",  message));
         }
@@ -153,34 +154,30 @@ public class GameDataService {
 //        //player.getWebSocket().send(Unpooled.wrappedBuffer(msg));
 //    }
 
-    private Msg.PlayerStartResponse makeCreationResponse(Msg.PlayerStartRequest request) {
-        Msg.PlayerStartResponse response = Msg.PlayerStartResponse.newBuilder()
+    private Msg.PlayerStartResponse makeCreationResponse(VehicleData vehicle, Msg.PlayerStartRequest request) {
+        Msg.PlayerStartResponse.Builder response = Msg.PlayerStartResponse.newBuilder()
                 .setBirthLocationX(0.0f)
                 .setBirthLocationY(0.0f)
                 .setBirthOrientation(0.0f)
-
-                //.addAllSectorData() // TODO pridat sectorData
 
                 .setWorldWidth(worldGeometry.getWorldWidth())
                 .setWorldHeight(worldGeometry.getWorldHeight())
                 .setSectorWidth(worldGeometry.getSectorWidth())
                 .setSectorHeight(worldGeometry.getSectorHeight())
                 .setBaseSpeed(worldGeometry.getBaseSpeed())
-                .setTimeInfo(Msg.TimeInfo.newBuilder().setInitiated(request.getInitiated()).setProcessing(0L))
-                .build();
-        return response;
+                .setTimeInfo(Msg.TimeInfo.newBuilder().setInitiated(request.getInitiated()).setProcessing(0L));
+
+        final Msg.VehicleData vehicleData = vehicle.asProtobufFull();
+        response.setVehicleData(vehicleData);
+        response.putAllSectorMap(sectorDataMap);
+
+        return response.build();
     }
 
-    private Msg.PlayerUpdateResponse.Builder makePlayerUpdateResponse(Msg.PlayerUpdateRequest updateReq) {
+    private Msg.PlayerUpdateResponse.Builder makePlayerUpdateResponse(VehicleData vehicleData, Msg.PlayerUpdateRequest updateReq) {
         Msg.PlayerUpdateResponse.Builder response = Msg.PlayerUpdateResponse.newBuilder();
-//                .setX(snakeData.getX())
-//                .setY(snakeData.getY())
-//                .setRotation(snakeData.getRotation())
-//                .setSpeed(snakeData.getSpeed())
-//                // asked rotation ???
-//                .setLength(snakeData.getLength())
-//                .addAllParts(snakeData.getPathAsProtobuf()) // TODO nechat pocitat klienta
-//                .setTimeInfo(Msg.TimeInfo.newBuilder().setInitiated(updateReq.getInitiated()).setProcessing(0L));
+        response.setVehicleData(vehicleData.asProtobuf())
+                .setTimeInfo(Msg.TimeInfo.newBuilder().setInitiated(updateReq.getInitiated()).setProcessing(0L));
         return response;
     }
 }

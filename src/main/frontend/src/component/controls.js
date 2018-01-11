@@ -34,8 +34,8 @@ class Controls {
 
                 this.scoreUpdateSubject.next({id: msg.getClientdisconnect().getId(), type: 'remove'});
             }
-            if (msg.hasPlayerresp()) {
-                this.handlePlayerResp(msg.getPlayerresp());
+            if (msg.hasPlayerupdateresponse()) {
+                this.handlePlayerUpdateResponse(msg.getPlayerupdateresponse());
             }
         });
 
@@ -131,10 +131,10 @@ class Controls {
     //
     // }
 
-    handlePlayerResp(playerResp) {
-        this.coordinates = {x: playerResp.getX(), y: playerResp.getY()};
+    handlePlayerUpdateResponse(response) {
+        this.coordinates = {x: response.getX(), y: response.getY()};
 
-        const roundTrip = Date.now() - playerResp.getTimeinfo().getInitiated();
+        const roundTrip = Date.now() - response.getTimeinfo().getInitiated();
         this.gameContext.gameInfo.roundTrip = roundTrip;
     }
 }

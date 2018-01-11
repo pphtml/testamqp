@@ -7,7 +7,7 @@ import GameInfo from './component/gameInfo'
 import Controls from './component/controls'
 import Background from './component/background'
 // import NPCS from './component/npcs'
-// import Worms from './component/worms'
+import Vehicles from './component/vehicles'
 import Communication from "./component/communication"
 import FeatureMatrix from './component/featureMatrix'
 
@@ -40,7 +40,7 @@ let color = COLORS[Math.floor(Math.random() * COLORS.length)];
 
 PIXI.utils.skipHello();
 let stage = new Container();
-let renderOptions = {antialias: false, transparent: false, resolution: 1};
+let renderOptions = {antialias: false, transparent: true, resolution: 1};
 let renderer;
 if (!featureMatrix.webGl) {
     console.info(`Using canvas renderer...`);
@@ -72,6 +72,8 @@ loader
     .add('images/spritesheet.json')
     .add("images/background.png")
     .add("images/background-blur.png")
+    .add("images/truck-small.png")
+    .add("images/transp.png")
     //.add("images/background2.png")
     .load(setup);
 
@@ -88,8 +90,8 @@ function setup() {
     // //stage.addChild(player.container);
     // let npcs = new NPCS(gameContext);
     // stage.addChild(npcs.container);
-    // let worms = new Worms(gameContext);
-    // stage.addChild(worms.container);
+    let vehicles = new Vehicles(gameContext);
+    stage.addChild(vehicles.container);
 
     let gameInfo = new GameInfo(gameContext, 10, 10);
     stage.addChild(gameInfo.container);
@@ -111,7 +113,7 @@ function setup() {
         gameInfo.update(angle);
         background.update();
         // npcs.update();
-        // worms.update(elapsedTime);
+        vehicles.update(elapsedTime);
 
         renderer.render(stage);
 

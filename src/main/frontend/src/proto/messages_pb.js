@@ -758,7 +758,8 @@ proto.PlayerStartResponse.toObject = function(includeInstance, msg) {
     birthlocationx: +jspb.Message.getFieldWithDefault(msg, 7, 0.0),
     birthlocationy: +jspb.Message.getFieldWithDefault(msg, 8, 0.0),
     birthorientation: +jspb.Message.getFieldWithDefault(msg, 9, 0.0),
-    basespeed: +jspb.Message.getFieldWithDefault(msg, 10, 0.0)
+    basespeed: +jspb.Message.getFieldWithDefault(msg, 10, 0.0),
+    vehicledata: (f = msg.getVehicledata()) && proto.VehicleData.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -837,6 +838,11 @@ proto.PlayerStartResponse.deserializeBinaryFromReader = function(msg, reader) {
     case 10:
       var value = /** @type {number} */ (reader.readFloat());
       msg.setBasespeed(value);
+      break;
+    case 11:
+      var value = new proto.VehicleData;
+      reader.readMessage(value,proto.VehicleData.deserializeBinaryFromReader);
+      msg.setVehicledata(value);
       break;
     default:
       reader.skipField();
@@ -933,6 +939,14 @@ proto.PlayerStartResponse.serializeBinaryToWriter = function(message, writer) {
     writer.writeFloat(
       10,
       f
+    );
+  }
+  f = message.getVehicledata();
+  if (f != null) {
+    writer.writeMessage(
+      11,
+      f,
+      proto.VehicleData.serializeBinaryToWriter
     );
   }
 };
@@ -1103,6 +1117,36 @@ proto.PlayerStartResponse.prototype.getBasespeed = function() {
 /** @param {number} value */
 proto.PlayerStartResponse.prototype.setBasespeed = function(value) {
   jspb.Message.setProto3FloatField(this, 10, value);
+};
+
+
+/**
+ * optional VehicleData vehicleData = 11;
+ * @return {?proto.VehicleData}
+ */
+proto.PlayerStartResponse.prototype.getVehicledata = function() {
+  return /** @type{?proto.VehicleData} */ (
+    jspb.Message.getWrapperField(this, proto.VehicleData, 11));
+};
+
+
+/** @param {?proto.VehicleData|undefined} value */
+proto.PlayerStartResponse.prototype.setVehicledata = function(value) {
+  jspb.Message.setWrapperField(this, 11, value);
+};
+
+
+proto.PlayerStartResponse.prototype.clearVehicledata = function() {
+  this.setVehicledata(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.PlayerStartResponse.prototype.hasVehicledata = function() {
+  return jspb.Message.getField(this, 11) != null;
 };
 
 
@@ -2312,7 +2356,7 @@ proto.VehiclePart.toObject = function(includeInstance, msg) {
   var f, obj = {
     x: +jspb.Message.getFieldWithDefault(msg, 1, 0.0),
     y: +jspb.Message.getFieldWithDefault(msg, 2, 0.0),
-    rotation: +jspb.Message.getFieldWithDefault(msg, 3, 0.0),
+    orientation: +jspb.Message.getFieldWithDefault(msg, 3, 0.0),
     parttype: jspb.Message.getFieldWithDefault(msg, 4, 0),
     partid: jspb.Message.getFieldWithDefault(msg, 11, ""),
     pivotx: jspb.Message.getFieldWithDefault(msg, 12, 0),
@@ -2363,7 +2407,7 @@ proto.VehiclePart.deserializeBinaryFromReader = function(msg, reader) {
       break;
     case 3:
       var value = /** @type {number} */ (reader.readFloat());
-      msg.setRotation(value);
+      msg.setOrientation(value);
       break;
     case 4:
       var value = /** @type {!proto.VehiclePart.PartType} */ (reader.readEnum());
@@ -2424,7 +2468,7 @@ proto.VehiclePart.serializeBinaryToWriter = function(message, writer) {
       f
     );
   }
-  f = message.getRotation();
+  f = message.getOrientation();
   if (f !== 0.0) {
     writer.writeFloat(
       3,
@@ -2466,7 +2510,7 @@ proto.VehiclePart.serializeBinaryToWriter = function(message, writer) {
  * @enum {number}
  */
 proto.VehiclePart.PartType = {
-  HEAD: 0,
+  FRONT: 0,
   TRAILER: 1,
   FRONT_WHEEL: 2
 };
@@ -2502,16 +2546,16 @@ proto.VehiclePart.prototype.setY = function(value) {
 
 
 /**
- * optional float rotation = 3;
+ * optional float orientation = 3;
  * @return {number}
  */
-proto.VehiclePart.prototype.getRotation = function() {
+proto.VehiclePart.prototype.getOrientation = function() {
   return /** @type {number} */ (+jspb.Message.getFieldWithDefault(this, 3, 0.0));
 };
 
 
 /** @param {number} value */
-proto.VehiclePart.prototype.setRotation = function(value) {
+proto.VehiclePart.prototype.setOrientation = function(value) {
   jspb.Message.setProto3FloatField(this, 3, value);
 };
 

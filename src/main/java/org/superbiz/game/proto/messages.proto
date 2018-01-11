@@ -36,6 +36,7 @@ message PlayerStartResponse {
     float birthLocationY = 8;
     float birthOrientation = 9;
     float baseSpeed = 10;
+    VehicleData vehicleData = 11;
 }
 
 message SectorData {
@@ -96,7 +97,7 @@ message VehicleData {
 message VehiclePart {
     float x = 1;
     float y = 2;
-    float rotation = 3;
+    float orientation = 3;
     PartType partType = 4;
 
     // following needed only once
@@ -105,7 +106,7 @@ message VehiclePart {
     int32 pivotY = 13;
 
     enum PartType {
-        HEAD = 0;
+        FRONT = 0;
         TRAILER = 1;
         FRONT_WHEEL = 2;
     }

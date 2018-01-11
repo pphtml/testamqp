@@ -1,8 +1,8 @@
-- VehicleData POJO
-- 263x113
+- jak se bude auto otacet?
+- posilani PlayerUpdateRequest teprve po PlayerStartResponse
+- float birthLocationX = 7;  // float birthLocationY = 8;   // float birthOrientation = 9; - nevyhodit?
 - jak funguje presne tint
 - excel pro mapu
-  - parser mapy
   - vykreslovani silnice
   - sprite chodnik & obrubnik
   - sprite trava

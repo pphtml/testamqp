@@ -82,8 +82,12 @@ public class MapParser {
         Map<String, Msg.SectorData> map = new MapParser().read();
     }
 
-    private Map<String, Msg.SectorData> read() throws IOException {
-        return read("/map/map.xlsx");
+    public Map<String, Msg.SectorData> read() {
+        try {
+            return read("/map/map.xlsx");
+        } catch (IOException e) {
+            throw new IllegalArgumentException(e);
+        }
     }
 
     private Map<String, Msg.SectorData> read(String location) throws IOException {

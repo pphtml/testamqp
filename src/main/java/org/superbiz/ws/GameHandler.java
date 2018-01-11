@@ -3,6 +3,7 @@ package org.superbiz.ws;
 import com.google.protobuf.InvalidProtocolBufferException;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.PooledByteBufAllocator;
+import io.netty.buffer.Unpooled;
 import org.superbiz.game.GameDataService;
 import org.superbiz.game.Player;
 import org.superbiz.game.VehiclePositions;
@@ -77,8 +78,8 @@ public class GameHandler implements Handler {
 //                        gameDataService.processPeriodicUpdate(player1);
 //                    });
 
-//                    Msg.WorldInfo.Builder worldInfo = Msg.WorldInfo.newBuilder().setRadius(3000);
-//                    byte[] msgBytes = Msg.Message.newBuilder().setWorldInfo(worldInfo).build().toByteArray();
+//                    Msg.Resize.Builder worldInfo = Msg.Resize.newBuilder().setWidth(800).setHeight(600);
+//                    byte[] msgBytes = Msg.Message.newBuilder().setResize(worldInfo).build().toByteArray();
 //                    webSocket.send(Unpooled.wrappedBuffer(msgBytes));
 
 //                    final Subscription subscription = events.subscribe(webSocket::send);

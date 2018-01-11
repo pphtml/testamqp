@@ -12,7 +12,9 @@ function withinPiBounds(angle) {
 
 module.exports.withinPiBounds = withinPiBounds;
 
-// module.exports.moveSnake = function(snakePath, angle, distance, partDistance) {
+module.exports.move = function(snakePath, angle, distance, partDistance) {
+    return 'unimplemented yet';
+}
 //     // returns path, xStep, yStep
 //     const path = JSON.parse(JSON.stringify(snakePath));
 //
@@ -44,19 +46,19 @@ module.exports.withinPiBounds = withinPiBounds;
 //     //return {path: path, x: xStep, y: yStep};
 // };
 
-module.exports.computeAllowedAngle = function(askedAngle, lastAngle, time, baseSpeed, speed) {
-    let allowedDiff = Math.PI / 4200 * time * speed / baseSpeed;
-    let lower = lastAngle - allowedDiff;
-    let upper = lastAngle + allowedDiff;
+module.exports.computeAllowedAngle = function(orientationRequested, orientationLast, time, speedMultiplier) {
+    let allowedDiff = Math.PI / 4200 * time * speedMultiplier;
+    let lower = orientationLast - allowedDiff;
+    let upper = orientationLast + allowedDiff;
     //console.info(lower, upper, askedAngle);
-    let asked2 = askedAngle - Math.PI * 2;
-    let asked3 = askedAngle + Math.PI * 2;
+    let asked2 = orientationRequested - Math.PI * 2;
+    let asked3 = orientationRequested + Math.PI * 2;
     //gameContext.gameInfo.message.text = `lower: ${lower.toFixed(2)}, upper: ${upper.toFixed(2)}, asked: ${askedAngle.toFixed(2)}, a2: ${asked2.toFixed(2)}, a3: ${asked3.toFixed(2)}`;
-    if ((lower <= askedAngle && upper >= askedAngle) || (lower <= asked2 && upper >= asked2) || (lower <= asked3 && upper >= asked3)) {
-        return askedAngle;
+    if ((lower <= orientationRequested && upper >= orientationRequested) || (lower <= asked2 && upper >= asked2) || (lower <= asked3 && upper >= asked3)) {
+        return orientationRequested;
     } else {
-        let fromLower = Math.min(Math.abs(lower - askedAngle), Math.abs(lower - asked2), Math.abs(lower - asked3));
-        let fromUpper = Math.min(Math.abs(upper - askedAngle), Math.abs(upper - asked2), Math.abs(upper - asked3))
+        let fromLower = Math.min(Math.abs(lower - orientationRequested), Math.abs(lower - asked2), Math.abs(lower - asked3));
+        let fromUpper = Math.min(Math.abs(upper - orientationRequested), Math.abs(upper - asked2), Math.abs(upper - asked3))
         //gameContext.gameInfo.message.text = `fromLower: ${fromLower.toFixed(2)}, fromUpper: ${fromUpper.toFixed(2)}`;
         if (fromLower < fromUpper) {
             return withinPiBounds(lower);
@@ -83,9 +85,9 @@ module.exports.computeAllowedAngle = function(askedAngle, lastAngle, time, baseS
 //     return JSON.stringify(result);
 // };
 
-//module.exports.computeAllowedAngle = function(askedAngle, lastAngle, time, baseSpeed, speed) {
+//orientationRequested, orientationLast, time, speedMultiplier
 function computeAllowedAngleJava(jsonArgs) {
     const args = JSON.parse(jsonArgs);
-    const result = module.exports.computeAllowedAngle(args.askedAngle, args.lastAngle, args.time, args.baseSpeed, args.speed);
+    const result = module.exports.computeAllowedAngle(args.orientationRequested, args.orientationLast, args.time, args.speedMultiplier);
     return JSON.stringify(result);
 };
