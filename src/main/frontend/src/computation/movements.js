@@ -12,8 +12,62 @@ function withinPiBounds(angle) {
 
 module.exports.withinPiBounds = withinPiBounds;
 
-module.exports.move = function(snakePath, angle, distance, partDistance) {
-    return 'unimplemented yet';
+module.exports.move = function(orientation, distance, parts) {
+    const resultParts = JSON.parse(JSON.stringify(parts));
+
+    // const xStep = Math.cos(angle) * distance;
+    // const yStep = Math.sin(angle) * distance;
+    const frontPart = resultParts[0];
+    const axisHalfLength = frontPart.axisHalfLength;
+
+    const frontOrientationCos = Math.cos(frontPart.orientation);
+    const frontOrientationSin = Math.sin(frontPart.orientation);
+
+    const frontAxisRatio = frontPart.frontAxis * axisHalfLength;
+    const frontAxisCentre = {x: frontAxisRatio * frontOrientationCos + frontPart.x,
+        y: frontAxisRatio * frontOrientationSin + frontPart.y};
+
+    const rearAxisRatio = frontPart.rearAxis * axisHalfLength;
+    const rearAxisCentre = {x: rearAxisRatio * frontOrientationCos + frontPart.x,
+        y: rearAxisRatio * frontOrientationSin + frontPart.y};
+
+    const xStep = Math.cos(orientation) * distance;
+    const yStep = Math.sin(orientation) * distance;
+
+    const newFrontAxisCentre = {x: frontAxisCentre.x + xStep,
+        y: frontAxisCentre.y + yStep
+    };
+
+    const xDiff = newFrontAxisCentre.x - rearAxisCentre.x, yDiff = newFrontAxisCentre.y - rearAxisCentre.y;
+    let angleDiff = -Math.atan2(xDiff, yDiff) + PI_HALF;
+    if (angleDiff < 0) {
+        angleDiff += PI_DOUBLE;
+    }
+
+    //const axesDistance = (frontPart.frontAxis - frontPart.rearAxis) * axisHalfLength;
+    // const newRearAxisCentre = {x: newFrontAxisCentre.x - Math.cos(angleDiff) * axesDistance,
+    //     y: newFrontAxisCentre.y - Math.sin(angleDiff) * axesDistance};
+
+    const newPartCentre = {x: newFrontAxisCentre.x - Math.cos(angleDiff) * frontAxisRatio,
+        y: newFrontAxisCentre.y - Math.sin(angleDiff) * frontAxisRatio};
+
+    //[{"axisHalfLength":100,"orientation":0,"frontAxis":0.8,"rearAxis":-0.6,"x":0,"y":0}]
+    frontPart.x = newPartCentre.x;
+    frontPart.y = newPartCentre.y;
+    frontPart.orientation = angleDiff;
+
+    // const calculationSteps = {
+    //     frontAxisRatio,
+    //     frontAxisCentre,
+    //     rearAxisRatio,
+    //     rearAxisCentre,
+    //     newFrontAxisCentre,
+    //     newRearAxisCentre,
+    //     newPartCentre
+    // };
+    // console.info(calculationSteps);
+
+    return resultParts;
 }
 //     // returns path, xStep, yStep
 //     const path = JSON.parse(JSON.stringify(snakePath));
@@ -79,11 +133,12 @@ module.exports.computeAllowedAngle = function(orientationRequested, orientationL
     // }
 }
 
-// function moveSnakeJava(jsonArgs) {
-//     const args = JSON.parse(jsonArgs);
-//     const result = module.exports.moveSnake(args.snakePath, args.angle, args.distance, args.partDistance);
-//     return JSON.stringify(result);
-// };
+function moveJava(jsonArgs) {
+    const args = JSON.parse(jsonArgs);
+    // orientation, distance, parts
+    const result = module.exports.move(args.orientation, args.distance, args.parts);
+    return JSON.stringify({parts: result});
+};
 
 //orientationRequested, orientationLast, time, speedMultiplier
 function computeAllowedAngleJava(jsonArgs) {

@@ -212,8 +212,10 @@ public class VehiclePositions {
                     .setOrientation(newOrientation)
                     .setOrientationRequested(playerUpdateRequest.getOrientationRequested());
 
-            MoveVehicleResult movedVehicle = this.movement.moveVehicle(vehicleData);
 
+            float distance = 10.0f; // TODO vypocitat distance ve VehiclePositions
+            MoveVehicleResult movedVehicle = this.movement.moveVehicle(vehicleData.getOrientation(), distance, vehicleData.getVehicleParts());
+            // TODO presypat do vehicleData
             return Optional.of(vehicleData);
         }
     }

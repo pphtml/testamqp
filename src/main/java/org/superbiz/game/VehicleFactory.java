@@ -84,8 +84,8 @@ public class VehicleFactory {
 //    int32 pivotX = 12;
 //    int32 pivotY = 13;
         vehiclePart.setPartId(partDefinition.getCode());
-        vehiclePart.setPivotX(partDefinition.getPivotX());
-        vehiclePart.setPivotY(partDefinition.getPivotY());
+//        vehiclePart.setPivotX(partDefinition.getPivotX());
+//        vehiclePart.setPivotY(partDefinition.getPivotY());
 
         return vehiclePart;
     }

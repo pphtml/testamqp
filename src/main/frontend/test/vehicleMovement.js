@@ -1,42 +1,137 @@
-let expect = require("chai").expect;
-//let converter = require("../src/app/converter");
-//let Worm = require('../src/component/worm');
-let moveSnake = require('../src/component/wormMovement').moveSnake;
+const expect = require("chai").expect;
+const move = require('../src/computation/movements').move;
 
-let distanceCheck = (path, distance) => {
-    var ok = true;
-    for (var index = 0; index < path.length - 1; index++) {
-        let left = path[index], right = path[index + 1];
-        let xDiff = Math.abs(left.x - right.x), yDiff = Math.abs(left.y - right.y);
-        let square = xDiff * xDiff + yDiff * yDiff;
-        let diff = Math.sqrt(square);
-        let distanceOk = Math.abs(diff - distance) < 0.0001;
-        if (!distanceOk) {
-            console.info(`${JSON.stringify(left)} -> ${JSON.stringify(right)}, diff: ${diff}`);
-            ok = false;
-        }
-    }
-    return ok;
-};
+// let distanceCheck = (path, distance) => {
+//     var ok = true;
+//     for (var index = 0; index < path.length - 1; index++) {
+//         let left = path[index], right = path[index + 1];
+//         let xDiff = Math.abs(left.x - right.x), yDiff = Math.abs(left.y - right.y);
+//         let square = xDiff * xDiff + yDiff * yDiff;
+//         let diff = Math.sqrt(square);
+//         let distanceOk = Math.abs(diff - distance) < 0.0001;
+//         if (!distanceOk) {
+//             console.info(`${JSON.stringify(left)} -> ${JSON.stringify(right)}, diff: ${diff}`);
+//             ok = false;
+//         }
+//     }
+//     return ok;
+// };
 
-describe("Worm Movements", () => {
-    describe("Frame Update Calculations", () => {
-        it("moves snake a frame step", () => {
-            let snakePath = [{x: 500.0, y: 100.0, rotation: 0},
-                {x: 490.0, y: 100.0, rotation: 0},
-                {x: 480.0, y: 100.0, rotation: 0},
-                {x: 470.0, y: 100.0, rotation: 0},
-                {x: 470.0, y: 110.0, rotation: 0}
-            ];
-            //let angle = 0, distance = 10.0, moveDistance = 5.0;
-            let angle = Math.PI / 2, distance = 10.0, moveDistance = 10.0;
+describe("Movements", () => {
+    describe("Step Update Calculations", () => {
+        it("move vehicle a bit to the east", () => {
+            const frontPart = {
+                axisHalfLength: 100,
+                orientation: 0.0,
+                frontAxis: 0.8,
+                rearAxis: -0.6,
+                x: 0.0,
+                y: 0.0
+            };
+            const orientation = 0.0;
+            const distance = 1000.0;
 
-            expect(distanceCheck(snakePath, distance)).to.equal(true);
+            const movedVehicleParts = move(orientation, distance, [frontPart]);
+            //console.info(JSON.stringify(movedVehicleParts));
 
-            let newPath = moveSnake(snakePath, angle, moveDistance, distance);
-            console.info(JSON.stringify(newPath));
+            //expect(distanceCheck(newPath, distance)).to.equal(true);
+            expect(movedVehicleParts.length).to.equal(1);
+            const frontPartResult = movedVehicleParts[0];
+            expect(frontPartResult.x).to.be.closeTo(1000, 0.000001);
+            expect(frontPartResult.y).to.be.closeTo(0, 0.000001);
+            expect(frontPartResult.orientation).to.be.closeTo(0, 0.000001);
+        });
 
-            expect(distanceCheck(newPath, distance)).to.equal(true);
+        it("move vehicle a bit to the west", () => {
+            const frontPart = {
+                axisHalfLength: 100,
+                orientation: Math.PI,
+                frontAxis: 0.8,
+                rearAxis: -0.6,
+                x: 0.0,
+                y: 0.0
+            };
+            const orientation = Math.PI;
+            const distance = 1000.0;
+
+            const movedVehicleParts = move(orientation, distance, [frontPart]);
+            //console.info(JSON.stringify(movedVehicleParts));
+
+            //expect(distanceCheck(newPath, distance)).to.equal(true);
+            expect(movedVehicleParts.length).to.equal(1);
+            const frontPartResult = movedVehicleParts[0];
+            expect(frontPartResult.x).to.be.closeTo(-1000, 0.000001);
+            expect(frontPartResult.y).to.be.closeTo(0, 0.000001);
+            expect(frontPartResult.orientation).to.be.closeTo(Math.PI, 0.000001);
+        });
+
+        it("move vehicle a bit to the south", () => {
+            const frontPart = {
+                axisHalfLength: 100,
+                orientation: Math.PI / 2,
+                frontAxis: 0.8,
+                rearAxis: -0.6,
+                x: 0.0,
+                y: 0.0
+            };
+            const orientation = Math.PI / 2;
+            const distance = 1000.0;
+
+            const movedVehicleParts = move(orientation, distance, [frontPart]);
+            //console.info(JSON.stringify(movedVehicleParts));
+
+            //expect(distanceCheck(newPath, distance)).to.equal(true);
+            expect(movedVehicleParts.length).to.equal(1);
+            const frontPartResult = movedVehicleParts[0];
+            expect(frontPartResult.x).to.be.closeTo(0, 0.000001);
+            expect(frontPartResult.y).to.be.closeTo(1000, 0.000001);
+            expect(frontPartResult.orientation).to.be.closeTo(Math.PI / 2, 0.000001);
+        });
+
+        it("move vehicle a bit to the north", () => {
+            const frontPart = {
+                axisHalfLength: 100,
+                orientation: Math.PI / 2 * 3,
+                frontAxis: 0.8,
+                rearAxis: -0.6,
+                x: 0.0,
+                y: 0.0
+            };
+            const orientation = Math.PI / 2 * 3;
+            const distance = 1000.0;
+
+            const movedVehicleParts = move(orientation, distance, [frontPart]);
+            //console.info(JSON.stringify(movedVehicleParts));
+
+            //expect(distanceCheck(newPath, distance)).to.equal(true);
+            expect(movedVehicleParts.length).to.equal(1);
+            const frontPartResult = movedVehicleParts[0];
+            expect(frontPartResult.x).to.be.closeTo(0, 0.000001);
+            expect(frontPartResult.y).to.be.closeTo(-1000, 0.000001);
+            expect(frontPartResult.orientation).to.be.closeTo(Math.PI / 2 * 3, 0.000001);
+        });
+
+        it("move vehicle a small bit to the south-east", () => {
+            const frontPart = {
+                axisHalfLength: 100,
+                orientation: 0.0,
+                frontAxis: 0.8,
+                rearAxis: -0.6,
+                x: 0.0,
+                y: 0.0
+            };
+            const orientation = Math.PI / 2 / 2;
+            const distance = 10.0;
+
+            const movedVehicleParts = move(orientation, distance, [frontPart]);
+            //console.info(JSON.stringify(movedVehicleParts));
+
+            //expect(distanceCheck(newPath, distance)).to.equal(true);
+            expect(movedVehicleParts.length).to.equal(1);
+            const frontPartResult = movedVehicleParts[0];
+            expect(frontPartResult.x).to.be.closeTo(7.163372415070981, 0.000001);
+            expect(frontPartResult.y).to.be.closeTo(3.2291651096737755, 0.000001);
+            expect(frontPartResult.orientation).to.be.closeTo(0.04804226237391673, 0.000001);
         });
     });
 });

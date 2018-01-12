@@ -24,73 +24,109 @@ public class VehiclePart {
     private float x;
     private float y;
     private float orientation;
+    private int axisHalfLength;
+    private float frontAxis;
+    private float rearAxis;
+
     private Msg.VehiclePart.PartType partType;
 
     private String partId;
-    private int pivotX;
-    private int pivotY;
+//    private int pivotX;
+//    private int pivotY;
 
     public float getX() {
         return x;
     }
 
-    public void setX(float x) {
+    public VehiclePart setX(float x) {
         this.x = x;
+        return this;
     }
 
     public float getY() {
         return y;
     }
 
-    public void setY(float y) {
+    public VehiclePart setY(float y) {
         this.y = y;
+        return this;
     }
 
     public Msg.VehiclePart.PartType getPartType() {
         return partType;
     }
 
-    public void setPartType(Msg.VehiclePart.PartType partType) {
+    public VehiclePart setPartType(Msg.VehiclePart.PartType partType) {
         this.partType = partType;
+        return this;
     }
 
     public String getPartId() {
         return partId;
     }
 
-    public void setPartId(String partId) {
+    public VehiclePart setPartId(String partId) {
         this.partId = partId;
+        return this;
     }
 
-    public int getPivotX() {
-        return pivotX;
-    }
-
-    public void setPivotX(int pivotX) {
-        this.pivotX = pivotX;
-    }
-
-    public int getPivotY() {
-        return pivotY;
-    }
-
-    public void setPivotY(int pivotY) {
-        this.pivotY = pivotY;
-    }
+//    public int getPivotX() {
+//        return pivotX;
+//    }
+//
+//    public VehiclePart setPivotX(int pivotX) {
+//        this.pivotX = pivotX;
+//    }
+//
+//    public int getPivotY() {
+//        return pivotY;
+//    }
+//
+//    public VehiclePart setPivotY(int pivotY) {
+//        this.pivotY = pivotY;
+//    }
 
     public float getOrientation() {
         return orientation;
     }
 
-    public void setOrientation(float orientation) {
+    public VehiclePart setOrientation(float orientation) {
         this.orientation = orientation;
+        return this;
+    }
+
+    public int getAxisHalfLength() {
+        return axisHalfLength;
+    }
+
+    public VehiclePart setAxisHalfLength(int axisHalfLength) {
+        this.axisHalfLength = axisHalfLength;
+        return this;
+    }
+
+    public float getFrontAxis() {
+        return frontAxis;
+    }
+
+    public VehiclePart setFrontAxis(float frontAxis) {
+        this.frontAxis = frontAxis;
+        return this;
+    }
+
+    public float getRearAxis() {
+        return rearAxis;
+    }
+
+    public VehiclePart setRearAxis(float rearAxis) {
+        this.rearAxis = rearAxis;
+        return this;
     }
 
     public Msg.VehiclePart.Builder asProtobufFull() {
         return this.asProtobuf()
-                .setPartId(this.getPartId())
-                .setPivotX(this.getPivotX())
-                .setPivotY(this.getPivotY());
+                .setPartId(this.getPartId());
+//                .setPivotX(this.getPivotX())
+//                .setPivotY(this.getPivotY());
     }
 
     public Msg.VehiclePart.Builder asProtobuf() {
@@ -109,5 +145,20 @@ public class VehiclePart {
                 .setOrientation(this.orientation)
                 .setPartType(this.getPartType());
 
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("VehiclePart{");
+        sb.append("x=").append(x);
+        sb.append(", y=").append(y);
+        sb.append(", orientation=").append(orientation);
+        sb.append(", axisHalfLength=").append(axisHalfLength);
+        sb.append(", frontAxis=").append(frontAxis);
+        sb.append(", rearAxis=").append(rearAxis);
+        sb.append(", partType=").append(partType);
+        sb.append(", partId='").append(partId).append('\'');
+        sb.append('}');
+        return sb.toString();
     }
 }

@@ -98,7 +98,11 @@ message VehiclePart {
     float x = 1;
     float y = 2;
     float orientation = 3;
-    PartType partType = 4;
+    float axisHalfLength = 4;
+    float frontAxis = 5;
+    float rearAxis = 6;
+
+    PartType partType = 10;
 
     // following needed only once
     string partId = 11;

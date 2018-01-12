@@ -3,6 +3,7 @@ package org.superbiz.game.computation;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.superbiz.game.model.MoveVehicleResult;
 import org.superbiz.game.model.VehicleData;
+import org.superbiz.game.model.VehiclePart;
 
 import javax.script.Invocable;
 import javax.script.ScriptEngine;
@@ -11,6 +12,7 @@ import javax.script.ScriptException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -91,8 +93,19 @@ public class MovementJavascript implements Movement {
     }
 
     @Override
-    public MoveVehicleResult moveVehicle(VehicleData vehicleData) {
-        return null;
+    public MoveVehicleResult moveVehicle(float orientation, float distance, Collection<VehiclePart> parts) {
+        final Map<String, Object> map = new HashMap<>();
+        map.put("orientation", orientation);
+        map.put("distance", distance);
+        map.put("parts", parts);
+        try {
+            final String json = OBJECT_MAPPER.writeValueAsString(map);
+            final String result = (String) NASHORN_INVOCABLE.invokeFunction("moveJava", json);
+            return OBJECT_MAPPER.readValue(result, MoveVehicleResult.class);
+        } catch (IOException | NoSuchMethodException | ScriptException e) {
+            logger.log(Level.SEVERE, e.getMessage(), e);
+            throw new RuntimeException(e);
+        }
     }
 
 //    final static private Pattern REGEX = Pattern.compile("(module\\.)?exports\\.(\\w+)");
