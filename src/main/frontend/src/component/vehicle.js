@@ -1,6 +1,6 @@
 import { Sprite, Container, loader, BLEND_MODES } from 'pixi.js'
 import layers from './layers'
-const moveSnake = require('../computation/movements').moveSnake;
+const move= require('../computation/movements').move;
 
 
 let resources = loader.resources;
@@ -33,9 +33,11 @@ let resources = loader.resources;
 
 class Vehicle {
     constructor({id, vehicleData, gameContext} = {}) { // co kdyz se vymaze {} ?
+        this.gameContext = gameContext;
         this.frameUpdatedFromServer = true;
-        this.vehicleParts = vehicleData.getVehiclepartsList();
-        const frontPart = this.vehicleParts[0];
+        this.vehicleData = vehicleData;
+        this.vehicleParts = vehicleData.vehicleParts;
+        const frontPart = this.vehicleParts;
         //this.coordinates = {x: frontPart.getX(), y: frontPart.getY()};
         // this.skinColor = skin;
         // this.angle = rotation;
@@ -56,29 +58,11 @@ class Vehicle {
         //frontPart.pivot.set(-5, -4);
         frontPartSprite.anchor.set(0.5, 0.5);
         frontPartSprite.displayGroup = layers.tailLayer;
-        frontPartSprite.position.set(frontPart.getX(), frontPart.getY());
+        frontPartSprite.position.set(frontPart.x, frontPart.y);
+        //frontPartSprite.rotation = Math.PI / 2;
 
-        // "NORMAL": 0,
-        //     "ADD": 1,
-        //     "MULTIPLY": 2,
-        //     "SCREEN": 3,
-        //     "OVERLAY": 4,
-        //     "DARKEN": 5,
-        //     "LIGHTEN": 6,
-        //     "COLOR_DODGE": 7,
-        //     "COLOR_BURN": 8,
-        //     "HARD_LIGHT": 9,
-        //     "SOFT_LIGHT": 10,
-        //     "DIFFERENCE": 11,
-        //     "EXCLUSION": 12,
-        //     "HUE": 13,
-        //     "SATURATION": 14,
-        //     "COLOR": 15,
-        //     "LUMINOSITY": 16
-
-        frontPartSprite.blendMode = BLEND_MODES.NORMAL;
-        //frontPartSprite.blendMode = BLEND_MODES.ADD;
-        frontPartSprite.alpha = 1.0;
+        //frontPartSprite.blendMode = BLEND_MODES.NORMAL;
+        //frontPartSprite.alpha = 1.0;
         this.container.addChild(frontPartSprite);
 
 
@@ -125,26 +109,34 @@ class Vehicle {
     //     head.displayGroup = layers.tailLayer; //layers.headLayer;
     //     return head;
     // }
-    //
-    // tail_sprite_factory = () => {
-    //     const tail = new Sprite(resources['images/spritesheet.json'].textures['tail-mod2-white.png']);
-    //     //let tail = new Sprite(resources["images/sprites.json"].textures[this.spriteNameTail()]);
-    //     tail.anchor.set(0.5, 0.5);
-    //     tail.scale.set(0.4, 0.4);
-    //     tail.displayGroup = layers.tailLayer;
-    //     return tail;
-    // };
 
-    sprite_factory = () => {
-        const sprite = new Sprite(resources['images/spritesheet.json'].textures['tail-mod2-white.png']);
-        //let tail = new Sprite(resources["images/sprites.json"].textures[this.spriteNameTail()]);
-        sprite.anchor.set(0.5, 0.5);
-        sprite.scale.set(0.4, 0.4);
-        sprite.displayGroup = layers.tailLayer;
-        return sprite;
-    };
 
     update(elapsedTime) {
+        // const frontPart = {
+        //     axisHalfLength: 100,
+        //     orientation: 0.0,
+        //     frontAxis: 0.8,
+        //     rearAxis: -0.6,
+        //     x: 0.0,
+        //     y: 0.0
+        // };
+
+        if (this.gameContext.communication.commId == this.id) {
+            const orientation = this.gameContext.controls.angle();
+            const distance = 1.0;
+
+            const movedVehicleParts = move(orientation, distance, this.vehicleParts);
+            this.vehicleParts = movedVehicleParts;
+            //console.info(movedVehicleParts);
+            const frontSprite = this.container.children[0];
+            const x = this.vehicleParts[0].x, y = this.vehicleParts[0].y;
+            frontSprite.position.set(x, y);
+            frontSprite.rotation = this.vehicleParts[0].orientation;
+
+            this.gameContext.controls.coordinates = {x, y};
+        }
+
+
         // if (this.gameContext.communication.commId == this.id) {
         //     this.path[0].x = 0.0, this.path[0].y = 0.0;
         //     debugger;

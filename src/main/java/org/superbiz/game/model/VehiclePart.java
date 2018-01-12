@@ -124,7 +124,10 @@ public class VehiclePart {
 
     public Msg.VehiclePart.Builder asProtobufFull() {
         return this.asProtobuf()
-                .setPartId(this.getPartId());
+                .setPartId(this.getPartId())
+                .setAxisHalfLength(this.axisHalfLength)
+                .setFrontAxis(this.frontAxis)
+                .setRearAxis(this.rearAxis);
 //                .setPivotX(this.getPivotX())
 //                .setPivotY(this.getPivotY());
     }

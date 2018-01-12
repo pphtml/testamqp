@@ -8786,11 +8786,11 @@ public final class Msg {
     float getOrientation();
 
     /**
-     * <code>.VehiclePart.PartType partType = 4;</code>
+     * <code>.VehiclePart.PartType partType = 10;</code>
      */
     int getPartTypeValue();
     /**
-     * <code>.VehiclePart.PartType partType = 4;</code>
+     * <code>.VehiclePart.PartType partType = 10;</code>
      */
     org.superbiz.game.proto.Msg.VehiclePart.PartType getPartType();
 
@@ -8813,14 +8813,24 @@ public final class Msg {
         getPartIdBytes();
 
     /**
-     * <code>int32 pivotX = 12;</code>
+     * <pre>
+     *    int32 pivotX = 12;
+     *    int32 pivotY = 13;
+     * </pre>
+     *
+     * <code>uint32 axisHalfLength = 14;</code>
      */
-    int getPivotX();
+    int getAxisHalfLength();
 
     /**
-     * <code>int32 pivotY = 13;</code>
+     * <code>float frontAxis = 15;</code>
      */
-    int getPivotY();
+    float getFrontAxis();
+
+    /**
+     * <code>float rearAxis = 16;</code>
+     */
+    float getRearAxis();
   }
   /**
    * Protobuf type {@code VehiclePart}
@@ -8840,8 +8850,9 @@ public final class Msg {
       orientation_ = 0F;
       partType_ = 0;
       partId_ = "";
-      pivotX_ = 0;
-      pivotY_ = 0;
+      axisHalfLength_ = 0;
+      frontAxis_ = 0F;
+      rearAxis_ = 0F;
     }
 
     @java.lang.Override
@@ -8890,7 +8901,7 @@ public final class Msg {
               orientation_ = input.readFloat();
               break;
             }
-            case 32: {
+            case 80: {
               int rawValue = input.readEnum();
 
               partType_ = rawValue;
@@ -8902,14 +8913,19 @@ public final class Msg {
               partId_ = s;
               break;
             }
-            case 96: {
+            case 112: {
 
-              pivotX_ = input.readInt32();
+              axisHalfLength_ = input.readUInt32();
               break;
             }
-            case 104: {
+            case 125: {
 
-              pivotY_ = input.readInt32();
+              frontAxis_ = input.readFloat();
+              break;
+            }
+            case 133: {
+
+              rearAxis_ = input.readFloat();
               break;
             }
           }
@@ -9070,16 +9086,16 @@ public final class Msg {
       return orientation_;
     }
 
-    public static final int PARTTYPE_FIELD_NUMBER = 4;
+    public static final int PARTTYPE_FIELD_NUMBER = 10;
     private int partType_;
     /**
-     * <code>.VehiclePart.PartType partType = 4;</code>
+     * <code>.VehiclePart.PartType partType = 10;</code>
      */
     public int getPartTypeValue() {
       return partType_;
     }
     /**
-     * <code>.VehiclePart.PartType partType = 4;</code>
+     * <code>.VehiclePart.PartType partType = 10;</code>
      */
     public org.superbiz.game.proto.Msg.VehiclePart.PartType getPartType() {
       org.superbiz.game.proto.Msg.VehiclePart.PartType result = org.superbiz.game.proto.Msg.VehiclePart.PartType.valueOf(partType_);
@@ -9128,22 +9144,36 @@ public final class Msg {
       }
     }
 
-    public static final int PIVOTX_FIELD_NUMBER = 12;
-    private int pivotX_;
+    public static final int AXISHALFLENGTH_FIELD_NUMBER = 14;
+    private int axisHalfLength_;
     /**
-     * <code>int32 pivotX = 12;</code>
+     * <pre>
+     *    int32 pivotX = 12;
+     *    int32 pivotY = 13;
+     * </pre>
+     *
+     * <code>uint32 axisHalfLength = 14;</code>
      */
-    public int getPivotX() {
-      return pivotX_;
+    public int getAxisHalfLength() {
+      return axisHalfLength_;
     }
 
-    public static final int PIVOTY_FIELD_NUMBER = 13;
-    private int pivotY_;
+    public static final int FRONTAXIS_FIELD_NUMBER = 15;
+    private float frontAxis_;
     /**
-     * <code>int32 pivotY = 13;</code>
+     * <code>float frontAxis = 15;</code>
      */
-    public int getPivotY() {
-      return pivotY_;
+    public float getFrontAxis() {
+      return frontAxis_;
+    }
+
+    public static final int REARAXIS_FIELD_NUMBER = 16;
+    private float rearAxis_;
+    /**
+     * <code>float rearAxis = 16;</code>
+     */
+    public float getRearAxis() {
+      return rearAxis_;
     }
 
     private byte memoizedIsInitialized = -1;
@@ -9168,16 +9198,19 @@ public final class Msg {
         output.writeFloat(3, orientation_);
       }
       if (partType_ != org.superbiz.game.proto.Msg.VehiclePart.PartType.FRONT.getNumber()) {
-        output.writeEnum(4, partType_);
+        output.writeEnum(10, partType_);
       }
       if (!getPartIdBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 11, partId_);
       }
-      if (pivotX_ != 0) {
-        output.writeInt32(12, pivotX_);
+      if (axisHalfLength_ != 0) {
+        output.writeUInt32(14, axisHalfLength_);
       }
-      if (pivotY_ != 0) {
-        output.writeInt32(13, pivotY_);
+      if (frontAxis_ != 0F) {
+        output.writeFloat(15, frontAxis_);
+      }
+      if (rearAxis_ != 0F) {
+        output.writeFloat(16, rearAxis_);
       }
       unknownFields.writeTo(output);
     }
@@ -9201,18 +9234,22 @@ public final class Msg {
       }
       if (partType_ != org.superbiz.game.proto.Msg.VehiclePart.PartType.FRONT.getNumber()) {
         size += com.google.protobuf.CodedOutputStream
-          .computeEnumSize(4, partType_);
+          .computeEnumSize(10, partType_);
       }
       if (!getPartIdBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(11, partId_);
       }
-      if (pivotX_ != 0) {
+      if (axisHalfLength_ != 0) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(12, pivotX_);
+          .computeUInt32Size(14, axisHalfLength_);
       }
-      if (pivotY_ != 0) {
+      if (frontAxis_ != 0F) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(13, pivotY_);
+          .computeFloatSize(15, frontAxis_);
+      }
+      if (rearAxis_ != 0F) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeFloatSize(16, rearAxis_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -9245,10 +9282,16 @@ public final class Msg {
       result = result && partType_ == other.partType_;
       result = result && getPartId()
           .equals(other.getPartId());
-      result = result && (getPivotX()
-          == other.getPivotX());
-      result = result && (getPivotY()
-          == other.getPivotY());
+      result = result && (getAxisHalfLength()
+          == other.getAxisHalfLength());
+      result = result && (
+          java.lang.Float.floatToIntBits(getFrontAxis())
+          == java.lang.Float.floatToIntBits(
+              other.getFrontAxis()));
+      result = result && (
+          java.lang.Float.floatToIntBits(getRearAxis())
+          == java.lang.Float.floatToIntBits(
+              other.getRearAxis()));
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
@@ -9273,10 +9316,14 @@ public final class Msg {
       hash = (53 * hash) + partType_;
       hash = (37 * hash) + PARTID_FIELD_NUMBER;
       hash = (53 * hash) + getPartId().hashCode();
-      hash = (37 * hash) + PIVOTX_FIELD_NUMBER;
-      hash = (53 * hash) + getPivotX();
-      hash = (37 * hash) + PIVOTY_FIELD_NUMBER;
-      hash = (53 * hash) + getPivotY();
+      hash = (37 * hash) + AXISHALFLENGTH_FIELD_NUMBER;
+      hash = (53 * hash) + getAxisHalfLength();
+      hash = (37 * hash) + FRONTAXIS_FIELD_NUMBER;
+      hash = (53 * hash) + java.lang.Float.floatToIntBits(
+          getFrontAxis());
+      hash = (37 * hash) + REARAXIS_FIELD_NUMBER;
+      hash = (53 * hash) + java.lang.Float.floatToIntBits(
+          getRearAxis());
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -9416,9 +9463,11 @@ public final class Msg {
 
         partId_ = "";
 
-        pivotX_ = 0;
+        axisHalfLength_ = 0;
 
-        pivotY_ = 0;
+        frontAxis_ = 0F;
+
+        rearAxis_ = 0F;
 
         return this;
       }
@@ -9447,8 +9496,9 @@ public final class Msg {
         result.orientation_ = orientation_;
         result.partType_ = partType_;
         result.partId_ = partId_;
-        result.pivotX_ = pivotX_;
-        result.pivotY_ = pivotY_;
+        result.axisHalfLength_ = axisHalfLength_;
+        result.frontAxis_ = frontAxis_;
+        result.rearAxis_ = rearAxis_;
         onBuilt();
         return result;
       }
@@ -9506,11 +9556,14 @@ public final class Msg {
           partId_ = other.partId_;
           onChanged();
         }
-        if (other.getPivotX() != 0) {
-          setPivotX(other.getPivotX());
+        if (other.getAxisHalfLength() != 0) {
+          setAxisHalfLength(other.getAxisHalfLength());
         }
-        if (other.getPivotY() != 0) {
-          setPivotY(other.getPivotY());
+        if (other.getFrontAxis() != 0F) {
+          setFrontAxis(other.getFrontAxis());
+        }
+        if (other.getRearAxis() != 0F) {
+          setRearAxis(other.getRearAxis());
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -9619,13 +9672,13 @@ public final class Msg {
 
       private int partType_ = 0;
       /**
-       * <code>.VehiclePart.PartType partType = 4;</code>
+       * <code>.VehiclePart.PartType partType = 10;</code>
        */
       public int getPartTypeValue() {
         return partType_;
       }
       /**
-       * <code>.VehiclePart.PartType partType = 4;</code>
+       * <code>.VehiclePart.PartType partType = 10;</code>
        */
       public Builder setPartTypeValue(int value) {
         partType_ = value;
@@ -9633,14 +9686,14 @@ public final class Msg {
         return this;
       }
       /**
-       * <code>.VehiclePart.PartType partType = 4;</code>
+       * <code>.VehiclePart.PartType partType = 10;</code>
        */
       public org.superbiz.game.proto.Msg.VehiclePart.PartType getPartType() {
         org.superbiz.game.proto.Msg.VehiclePart.PartType result = org.superbiz.game.proto.Msg.VehiclePart.PartType.valueOf(partType_);
         return result == null ? org.superbiz.game.proto.Msg.VehiclePart.PartType.UNRECOGNIZED : result;
       }
       /**
-       * <code>.VehiclePart.PartType partType = 4;</code>
+       * <code>.VehiclePart.PartType partType = 10;</code>
        */
       public Builder setPartType(org.superbiz.game.proto.Msg.VehiclePart.PartType value) {
         if (value == null) {
@@ -9652,7 +9705,7 @@ public final class Msg {
         return this;
       }
       /**
-       * <code>.VehiclePart.PartType partType = 4;</code>
+       * <code>.VehiclePart.PartType partType = 10;</code>
        */
       public Builder clearPartType() {
         
@@ -9750,54 +9803,95 @@ public final class Msg {
         return this;
       }
 
-      private int pivotX_ ;
+      private int axisHalfLength_ ;
       /**
-       * <code>int32 pivotX = 12;</code>
+       * <pre>
+       *    int32 pivotX = 12;
+       *    int32 pivotY = 13;
+       * </pre>
+       *
+       * <code>uint32 axisHalfLength = 14;</code>
        */
-      public int getPivotX() {
-        return pivotX_;
+      public int getAxisHalfLength() {
+        return axisHalfLength_;
       }
       /**
-       * <code>int32 pivotX = 12;</code>
+       * <pre>
+       *    int32 pivotX = 12;
+       *    int32 pivotY = 13;
+       * </pre>
+       *
+       * <code>uint32 axisHalfLength = 14;</code>
        */
-      public Builder setPivotX(int value) {
+      public Builder setAxisHalfLength(int value) {
         
-        pivotX_ = value;
+        axisHalfLength_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>int32 pivotX = 12;</code>
+       * <pre>
+       *    int32 pivotX = 12;
+       *    int32 pivotY = 13;
+       * </pre>
+       *
+       * <code>uint32 axisHalfLength = 14;</code>
        */
-      public Builder clearPivotX() {
+      public Builder clearAxisHalfLength() {
         
-        pivotX_ = 0;
+        axisHalfLength_ = 0;
         onChanged();
         return this;
       }
 
-      private int pivotY_ ;
+      private float frontAxis_ ;
       /**
-       * <code>int32 pivotY = 13;</code>
+       * <code>float frontAxis = 15;</code>
        */
-      public int getPivotY() {
-        return pivotY_;
+      public float getFrontAxis() {
+        return frontAxis_;
       }
       /**
-       * <code>int32 pivotY = 13;</code>
+       * <code>float frontAxis = 15;</code>
        */
-      public Builder setPivotY(int value) {
+      public Builder setFrontAxis(float value) {
         
-        pivotY_ = value;
+        frontAxis_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>int32 pivotY = 13;</code>
+       * <code>float frontAxis = 15;</code>
        */
-      public Builder clearPivotY() {
+      public Builder clearFrontAxis() {
         
-        pivotY_ = 0;
+        frontAxis_ = 0F;
+        onChanged();
+        return this;
+      }
+
+      private float rearAxis_ ;
+      /**
+       * <code>float rearAxis = 16;</code>
+       */
+      public float getRearAxis() {
+        return rearAxis_;
+      }
+      /**
+       * <code>float rearAxis = 16;</code>
+       */
+      public Builder setRearAxis(float value) {
+        
+        rearAxis_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>float rearAxis = 16;</code>
+       */
+      public Builder clearRearAxis() {
+        
+        rearAxis_ = 0F;
         onChanged();
         return this;
       }
@@ -11654,16 +11748,17 @@ public final class Msg {
       "ssedOnServer\030\001 \001(\004\022\"\n\014vehicleParts\030\002 \003(\013" +
       "2\014.VehiclePart\022\034\n\024orientationRequested\030\003" +
       " \001(\002\022\023\n\013orientation\030\004 \001(\002\022\027\n\017speedMultip" +
-      "lier\030\005 \001(\002\"\306\001\n\013VehiclePart\022\t\n\001x\030\001 \001(\002\022\t\n" +
+      "lier\030\005 \001(\002\"\343\001\n\013VehiclePart\022\t\n\001x\030\001 \001(\002\022\t\n" +
       "\001y\030\002 \001(\002\022\023\n\013orientation\030\003 \001(\002\022\'\n\010partTyp" +
-      "e\030\004 \001(\0162\025.VehiclePart.PartType\022\016\n\006partId" +
-      "\030\013 \001(\t\022\016\n\006pivotX\030\014 \001(\005\022\016\n\006pivotY\030\r \001(\005\"3" +
-      "\n\010PartType\022\t\n\005FRONT\020\000\022\013\n\007TRAILER\020\001\022\017\n\013FR" +
-      "ONT_WHEEL\020\002\"1\n\010TimeInfo\022\021\n\tinitiated\030\001 \001" +
-      "(\003\022\022\n\nprocessing\030\002 \001(\003\"\'\n\006Resize\022\r\n\005widt" +
-      "h\030\001 \001(\005\022\016\n\006height\030\002 \001(\005\",\n\020ClientDisconn" +
-      "ect\022\n\n\002id\030\001 \001(\t\022\014\n\004name\030\002 \001(\tB\036\n\027org.sup" +
-      "erbiz.game.protoB\003Msgb\006proto3"
+      "e\030\n \001(\0162\025.VehiclePart.PartType\022\016\n\006partId" +
+      "\030\013 \001(\t\022\026\n\016axisHalfLength\030\016 \001(\r\022\021\n\tfrontA" +
+      "xis\030\017 \001(\002\022\020\n\010rearAxis\030\020 \001(\002\"3\n\010PartType\022" +
+      "\t\n\005FRONT\020\000\022\013\n\007TRAILER\020\001\022\017\n\013FRONT_WHEEL\020\002" +
+      "\"1\n\010TimeInfo\022\021\n\tinitiated\030\001 \001(\003\022\022\n\nproce" +
+      "ssing\030\002 \001(\003\"\'\n\006Resize\022\r\n\005width\030\001 \001(\005\022\016\n\006" +
+      "height\030\002 \001(\005\",\n\020ClientDisconnect\022\n\n\002id\030\001" +
+      " \001(\t\022\014\n\004name\030\002 \001(\tB\036\n\027org.superbiz.game." +
+      "protoB\003Msgb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -11736,7 +11831,7 @@ public final class Msg {
     internal_static_VehiclePart_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_VehiclePart_descriptor,
-        new java.lang.String[] { "X", "Y", "Orientation", "PartType", "PartId", "PivotX", "PivotY", });
+        new java.lang.String[] { "X", "Y", "Orientation", "PartType", "PartId", "AxisHalfLength", "FrontAxis", "RearAxis", });
     internal_static_TimeInfo_descriptor =
       getDescriptor().getMessageTypes().get(9);
     internal_static_TimeInfo_fieldAccessorTable = new

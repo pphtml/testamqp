@@ -98,16 +98,16 @@ message VehiclePart {
     float x = 1;
     float y = 2;
     float orientation = 3;
-    float axisHalfLength = 4;
-    float frontAxis = 5;
-    float rearAxis = 6;
 
     PartType partType = 10;
 
     // following needed only once
     string partId = 11;
-    int32 pivotX = 12;
-    int32 pivotY = 13;
+//    int32 pivotX = 12;
+//    int32 pivotY = 13;
+    uint32 axisHalfLength = 14;
+    float frontAxis = 15;
+    float rearAxis = 16;
 
     enum PartType {
         FRONT = 0;

@@ -2357,10 +2357,11 @@ proto.VehiclePart.toObject = function(includeInstance, msg) {
     x: +jspb.Message.getFieldWithDefault(msg, 1, 0.0),
     y: +jspb.Message.getFieldWithDefault(msg, 2, 0.0),
     orientation: +jspb.Message.getFieldWithDefault(msg, 3, 0.0),
-    parttype: jspb.Message.getFieldWithDefault(msg, 4, 0),
+    parttype: jspb.Message.getFieldWithDefault(msg, 10, 0),
     partid: jspb.Message.getFieldWithDefault(msg, 11, ""),
-    pivotx: jspb.Message.getFieldWithDefault(msg, 12, 0),
-    pivoty: jspb.Message.getFieldWithDefault(msg, 13, 0)
+    axishalflength: jspb.Message.getFieldWithDefault(msg, 14, 0),
+    frontaxis: +jspb.Message.getFieldWithDefault(msg, 15, 0.0),
+    rearaxis: +jspb.Message.getFieldWithDefault(msg, 16, 0.0)
   };
 
   if (includeInstance) {
@@ -2409,7 +2410,7 @@ proto.VehiclePart.deserializeBinaryFromReader = function(msg, reader) {
       var value = /** @type {number} */ (reader.readFloat());
       msg.setOrientation(value);
       break;
-    case 4:
+    case 10:
       var value = /** @type {!proto.VehiclePart.PartType} */ (reader.readEnum());
       msg.setParttype(value);
       break;
@@ -2417,13 +2418,17 @@ proto.VehiclePart.deserializeBinaryFromReader = function(msg, reader) {
       var value = /** @type {string} */ (reader.readString());
       msg.setPartid(value);
       break;
-    case 12:
-      var value = /** @type {number} */ (reader.readInt32());
-      msg.setPivotx(value);
+    case 14:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setAxishalflength(value);
       break;
-    case 13:
-      var value = /** @type {number} */ (reader.readInt32());
-      msg.setPivoty(value);
+    case 15:
+      var value = /** @type {number} */ (reader.readFloat());
+      msg.setFrontaxis(value);
+      break;
+    case 16:
+      var value = /** @type {number} */ (reader.readFloat());
+      msg.setRearaxis(value);
       break;
     default:
       reader.skipField();
@@ -2478,7 +2483,7 @@ proto.VehiclePart.serializeBinaryToWriter = function(message, writer) {
   f = message.getParttype();
   if (f !== 0.0) {
     writer.writeEnum(
-      4,
+      10,
       f
     );
   }
@@ -2489,17 +2494,24 @@ proto.VehiclePart.serializeBinaryToWriter = function(message, writer) {
       f
     );
   }
-  f = message.getPivotx();
+  f = message.getAxishalflength();
   if (f !== 0) {
-    writer.writeInt32(
-      12,
+    writer.writeUint32(
+      14,
       f
     );
   }
-  f = message.getPivoty();
-  if (f !== 0) {
-    writer.writeInt32(
-      13,
+  f = message.getFrontaxis();
+  if (f !== 0.0) {
+    writer.writeFloat(
+      15,
+      f
+    );
+  }
+  f = message.getRearaxis();
+  if (f !== 0.0) {
+    writer.writeFloat(
+      16,
       f
     );
   }
@@ -2561,17 +2573,17 @@ proto.VehiclePart.prototype.setOrientation = function(value) {
 
 
 /**
- * optional PartType partType = 4;
+ * optional PartType partType = 10;
  * @return {!proto.VehiclePart.PartType}
  */
 proto.VehiclePart.prototype.getParttype = function() {
-  return /** @type {!proto.VehiclePart.PartType} */ (jspb.Message.getFieldWithDefault(this, 4, 0));
+  return /** @type {!proto.VehiclePart.PartType} */ (jspb.Message.getFieldWithDefault(this, 10, 0));
 };
 
 
 /** @param {!proto.VehiclePart.PartType} value */
 proto.VehiclePart.prototype.setParttype = function(value) {
-  jspb.Message.setProto3EnumField(this, 4, value);
+  jspb.Message.setProto3EnumField(this, 10, value);
 };
 
 
@@ -2591,32 +2603,47 @@ proto.VehiclePart.prototype.setPartid = function(value) {
 
 
 /**
- * optional int32 pivotX = 12;
+ * optional uint32 axisHalfLength = 14;
  * @return {number}
  */
-proto.VehiclePart.prototype.getPivotx = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 12, 0));
+proto.VehiclePart.prototype.getAxishalflength = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 14, 0));
 };
 
 
 /** @param {number} value */
-proto.VehiclePart.prototype.setPivotx = function(value) {
-  jspb.Message.setProto3IntField(this, 12, value);
+proto.VehiclePart.prototype.setAxishalflength = function(value) {
+  jspb.Message.setProto3IntField(this, 14, value);
 };
 
 
 /**
- * optional int32 pivotY = 13;
+ * optional float frontAxis = 15;
  * @return {number}
  */
-proto.VehiclePart.prototype.getPivoty = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 13, 0));
+proto.VehiclePart.prototype.getFrontaxis = function() {
+  return /** @type {number} */ (+jspb.Message.getFieldWithDefault(this, 15, 0.0));
 };
 
 
 /** @param {number} value */
-proto.VehiclePart.prototype.setPivoty = function(value) {
-  jspb.Message.setProto3IntField(this, 13, value);
+proto.VehiclePart.prototype.setFrontaxis = function(value) {
+  jspb.Message.setProto3FloatField(this, 15, value);
+};
+
+
+/**
+ * optional float rearAxis = 16;
+ * @return {number}
+ */
+proto.VehiclePart.prototype.getRearaxis = function() {
+  return /** @type {number} */ (+jspb.Message.getFieldWithDefault(this, 16, 0.0));
+};
+
+
+/** @param {number} value */
+proto.VehiclePart.prototype.setRearaxis = function(value) {
+  jspb.Message.setProto3FloatField(this, 16, value);
 };
 
 

@@ -1,7 +1,7 @@
 package org.superbiz.game.ai;
 
 import org.superbiz.game.VehiclePositions;
-import org.superbiz.game.computation.WormMovementJava;
+import org.superbiz.game.computation.MovementJava;
 
 import javax.inject.Inject;
 import java.util.logging.Logger;
@@ -13,7 +13,7 @@ public class AIService {
     Logger logger;
 
     @Inject
-    WormMovementJava wormMovement;
+    MovementJava wormMovement;
 
     private long id = 0;
 

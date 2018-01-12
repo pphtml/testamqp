@@ -3,7 +3,6 @@ package org.superbiz.game.computation;
 import org.junit.Test;
 import org.superbiz.game.BaseTest;
 import org.superbiz.game.model.MoveVehicleResult;
-import org.superbiz.game.model.Part;
 import org.superbiz.game.model.VehicleData;
 import org.superbiz.game.model.VehiclePart;
 

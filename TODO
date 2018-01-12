@@ -1,8 +1,6 @@
 - jak se bude auto otacet?
 - protobuf     private int axisHalfLength;               private float frontAxis;               private float rearAxis; do vehicle part
 - TODO vypocitat distance ve VehiclePositions
-- smazat Part
-- prejmenovat WormMovementJava
 - posilani PlayerUpdateRequest teprve po PlayerStartResponse
 - float birthLocationX = 7;  // float birthLocationY = 8;   // float birthOrientation = 9; - nevyhodit?
 - jak funguje presne tint

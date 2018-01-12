@@ -71,63 +71,39 @@ class Vehicles {
 
     update(elapsedTime) {
         this.updatePosition();
-        // for (const [id, worm] of Object.entries(this.map)) {
-        //     //if (this.gameContext.communication.commId == id) {
-        //         worm.update(elapsedTime);
-        //     //}
-        // }
-    }
-
-    handlePlayerResp(response) {
-        const id = this.gameContext.communication.commId;
-
-        //debugger;
-        this.updateWorm({
-            id,
-            path: response.getPartsList(),
-            rotation: response.getRotation(),
-            speed: response.getSpeed(),
-            length: response.getLength(),
-            skin: this.gameContext.controls.skin
-        });
-
-        // TODO zoptimalizovat - staci jenom kdyz se zmeni length, pridat do protobufu lengthChanged priznak?
-        this.gameContext.controls.scoreUpdateSubject.next({id, length: response.getLength(), currentPlayer: true, type: 'update'});
-        // TimeInfo timeInfo = 1;
-        // float x = 2;
-        // float y = 3;
-        // float rotation = 4;
-        // //float rotationAsked = 5;
-        // uint32 length = 6;
-        // repeated Part parts = 7;
-
-    }
-
-    updateWorm({id, path = [], skin, rotation, speed, length} = {}) {
-        // if (id == this.gameContext.communication.commId) {
-        // }
-
-
-        const translatedPath = path.map(part => {
-            return { x: part.getX(), y: part.getY(), r: part.getRotation() };
-        });
-        // const skin = wormData.getSkin();
-        //this.angle = rotation;
-        //debugger;
-        //this.speed = speed;
-        // TODO prenes length
-
-        const existingWorm = this.map[id];
-        if (!existingWorm) {
-            const worm = new Worm({skin, speed, rotation, path: translatedPath, id, length,
-            gameContext: this.gameContext});
-            this.map[id] = worm;
-            this.container.addChild(worm.container);
-        } else {
-            //console.info(`updateFromServer ${path[0].x}, ${path[0].y}`);
-            existingWorm.updateFromServer({speed, rotation, path: translatedPath});
+        for (const [id, vehicle] of Object.entries(this.map)) {
+            //if (this.gameContext.communication.commId == id) {
+                vehicle.update(elapsedTime);
+            //}
         }
     }
+
+//        this.gameContext.controls.scoreUpdateSubject.next({id, length: response.getLength(), currentPlayer: true, type: 'update'});
+
+    // updateWorm({id, path = [], skin, rotation, speed, length} = {}) {
+    //     // if (id == this.gameContext.communication.commId) {
+    //     // }
+    //
+    //
+    //     const translatedPath = path.map(part => {
+    //         return { x: part.getX(), y: part.getY(), r: part.getRotation() };
+    //     });
+    //     // const skin = wormData.getSkin();
+    //     //this.angle = rotation;
+    //     //debugger;
+    //     //this.speed = speed;
+    //
+    //     const existingWorm = this.map[id];
+    //     if (!existingWorm) {
+    //         const worm = new Worm({skin, speed, rotation, path: translatedPath, id, length,
+    //         gameContext: this.gameContext});
+    //         this.map[id] = worm;
+    //         this.container.addChild(worm.container);
+    //     } else {
+    //         //console.info(`updateFromServer ${path[0].x}, ${path[0].y}`);
+    //         existingWorm.updateFromServer({speed, rotation, path: translatedPath});
+    //     }
+    // }
 
     handlePlayerStartResponse(playerStartResponse) {
         const id = this.gameContext.communication.commId;
@@ -144,12 +120,52 @@ class Vehicles {
         // float baseSpeed = 10;
         // VehicleData vehicleData = 11;
 
-        const vehicleData = playerStartResponse.getVehicledata();
+        const vehicleData = this.vehicleDataFromProtobuf(playerStartResponse.getVehicledata());
 
-        const vehicle = new Vehicle({vehicleData, gameContext: this.gameContext});
+        const vehicle = new Vehicle({id, vehicleData, gameContext: this.gameContext});
         this.map[id] = vehicle;
         this.container.addChild(vehicle.container);
+    }
 
+//
+// message VehiclePart {
+//
+// enum PartType {
+//         FRONT = 0;
+//         TRAILER = 1;
+//         FRONT_WHEEL = 2;
+//     }
+// }
+
+    //     message VehicleData {
+// }
+
+
+    vehicleDataFromProtobuf(source) {
+        const vehicleParts = source.getVehiclepartsList().map(part => {
+            return {
+                x: part.getX(),
+                y: part.getY(),
+                orientation: part.getOrientation(),
+                partType: part.getParttype(),
+
+                partId: part.getPartid(),
+                // pivotX: part.getPivotx(),
+                // pivotY: part.getPivoty(),
+                axisHalfLength: part.getAxishalflength(),
+                frontAxis: part.getFrontaxis(),
+                rearAxis: part.getRearaxis()
+                };
+        });
+
+        const result = {
+            lastProcessedOnServer: source.getLastprocessedonserver(),
+            vehicleParts: vehicleParts,
+            orientationRequested: source.getOrientationrequested(),
+            orientation: source.getOrientation(),
+            speedMultiplier: source.getSpeedmultiplier()
+        };
+        return result;
     }
 }
 
