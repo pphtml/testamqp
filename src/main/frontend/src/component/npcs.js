@@ -20,7 +20,7 @@ let resources = loader.resources;
 //
 // const FLASHING_SPEED = 0.0117647;
 
-const ROAD_WIDTH = 160;
+const ROAD_WIDTH = 180;
 const ROAD_LINE_WIDTH = 12;
 
 class NPCS {

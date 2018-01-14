@@ -1,20 +1,23 @@
 - pridavani/odebirani sektorovych dat
-- multiplayer
-- omezeni rejdu
+- koncept zrychlovani / brzdeni / covani
+- zabstraktneni vykreslovani
+- delici cara
+- cary pruhu
+- prechody
+- kulaty rohy silnic
+- sprite chodnik & obrubnik
+- sprite trava
 - omezeni rychlosti otaceni
 - rychlost jizdy
 - stred podle stredu predni osy
 - TODO vypocitat distance ve VehiclePositions
 - posilani PlayerUpdateRequest teprve po PlayerStartResponse
-- float birthLocationX = 7;  // float birthLocationY = 8;   // float birthOrientation = 9; - nevyhodit?
-- jak funguje presne tint
-- excel pro mapu
-  - vykreslovani silnice
-  - sprite chodnik & obrubnik
-  - sprite trava
 - GTA I.
 - sprite nakladaku - https://www.google.de/search?biw=1680&bih=919&tbm=isch&ei=5Z9UWr3AGM-3kwWr-aXIDw&q=truck+2d+above&gws_rd=cr&dcr=0
 - dialog startu hry - jmeno, barva
+  - http://xiaokaike.github.io/vue-color/
+- nove sprity aut
+- multiplayer
 
 - protobuf - oneOf - https://developers.google.com/protocol-buffers/docs/proto3#oneof
 - dynos na heroku - heroku ps -a <app name> - https://devcenter.heroku.com/articles/free-dyno-hours
