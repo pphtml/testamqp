@@ -70,12 +70,12 @@ class Vehicles {
     }
 
     update(elapsedTime) {
-        this.updatePosition();
         for (const [id, vehicle] of Object.entries(this.map)) {
             //if (this.gameContext.communication.commId == id) {
                 vehicle.update(elapsedTime);
             //}
         }
+        this.updatePosition();
     }
 
 //        this.gameContext.controls.scoreUpdateSubject.next({id, length: response.getLength(), currentPlayer: true, type: 'update'});
@@ -154,8 +154,9 @@ class Vehicles {
                 // pivotY: part.getPivoty(),
                 axisHalfLength: part.getAxishalflength(),
                 frontAxis: part.getFrontaxis(),
-                rearAxis: part.getRearaxis()
-                };
+                rearAxis: part.getRearaxis(),
+                wheelDeflection: part.getWheeldeflection()
+            };
         });
 
         const result = {

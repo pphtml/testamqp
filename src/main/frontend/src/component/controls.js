@@ -88,6 +88,7 @@ class Controls {
         return withinPiBounds(angle);
     }
 
+
     // static computeAllowedAngle(askedAngle, lastAngle, time, gameContext, baseSpeed, speed) {
     //     let allowedDiff = Math.PI / 4200 * time * speed / baseSpeed;
     //     let lower = lastAngle - allowedDiff;

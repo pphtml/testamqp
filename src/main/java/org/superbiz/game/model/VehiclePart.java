@@ -27,6 +27,7 @@ public class VehiclePart {
     private int axisHalfLength;
     private float frontAxis;
     private float rearAxis;
+    private float wheelDeflection;
 
     private Msg.VehiclePart.PartType partType;
 
@@ -122,12 +123,22 @@ public class VehiclePart {
         return this;
     }
 
+    public float getWheelDeflection() {
+        return wheelDeflection;
+    }
+
+    public VehiclePart setWheelDeflection(float wheelDeflection) {
+        this.wheelDeflection = wheelDeflection;
+        return this;
+    }
+
     public Msg.VehiclePart.Builder asProtobufFull() {
         return this.asProtobuf()
                 .setPartId(this.getPartId())
                 .setAxisHalfLength(this.axisHalfLength)
                 .setFrontAxis(this.frontAxis)
-                .setRearAxis(this.rearAxis);
+                .setRearAxis(this.rearAxis)
+                .setWheelDeflection(this.wheelDeflection);
 //                .setPivotX(this.getPivotX())
 //                .setPivotY(this.getPivotY());
     }

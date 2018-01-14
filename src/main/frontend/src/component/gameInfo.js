@@ -125,14 +125,14 @@ class GameInfo {
     }
 
     update(angle) {
-        this.message.text = `FPS: ${this.fps}, angle: ${angle.toFixed(2)}, coords: {x: ${this.gameContext.controls.coordinates.x.toFixed(2)}, y: ${this.gameContext.controls.coordinates.y.toFixed(2)}, roundTrip: ${this.roundTrip}`;
+        this.message.text = `FPS: ${this.fps}, angle: ${angle.toFixed(2)}, coords: {x: ${this.gameContext.controls.coordinates.x.toFixed(2)}, y: ${this.gameContext.controls.coordinates.y.toFixed(2)} }, roundTrip: ${this.roundTrip}`;
         this.message.visible = this.infoDisplayed;
 
         //this.scoreInfo.update();
     }
 
     resize() {
-        this.scoreInfo.resize();
+        //this.scoreInfo.resize();
     }
 }
 

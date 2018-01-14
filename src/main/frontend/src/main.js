@@ -6,7 +6,7 @@ import Player from './component/player'
 import GameInfo from './component/gameInfo'
 import Controls from './component/controls'
 import Background from './component/background'
-// import NPCS from './component/npcs'
+import NPCS from './component/npcs'
 import Vehicles from './component/vehicles'
 import Communication from "./component/communication"
 import FeatureMatrix from './component/featureMatrix'
@@ -35,12 +35,12 @@ const featureMatrix = new FeatureMatrix();
 // })();
 
 const COLORS = [894661, 15773325, 5698477, 10066394, 13414733, 12674379, 14893446, 10793534, 14813475, 8733555,
-    11047750, 2009991, 16019053, 4033523, 14338485];
+     11047750, 2009991, 16019053, 4033523, 14338485];
 let color = COLORS[Math.floor(Math.random() * COLORS.length)];
 
 PIXI.utils.skipHello();
 let stage = new Container();
-let renderOptions = {antialias: false, transparent: true, resolution: 1};
+let renderOptions = {antialias: false, transparent: false, resolution: 1};
 let renderer;
 if (!featureMatrix.webGl) {
     console.info(`Using canvas renderer...`);
@@ -51,7 +51,7 @@ if (!featureMatrix.webGl) {
 renderer.view.style.position = "absolute";
 renderer.view.style.display = "block";
 renderer.autoResize = true;
-renderer.backgroundColor = 0x061639;
+//renderer.backgroundColor = 0x061639;
 
 let gameContext = {
     stage: stage,
@@ -70,10 +70,11 @@ document.body.appendChild(renderer.view);
 
 loader
     .add('images/spritesheet.json')
-    .add("images/background.png")
-    .add("images/background-blur.png")
-    .add("images/truck-small.png")
-    .add("images/transp.png")
+    .add('images/background.png')
+    .add('images/background-blur.png')
+    .add('images/truck-small.png')
+    .add('images/transp.png')
+    .add('images/road-line.png')
     //.add("images/background2.png")
     .load(setup);
 
@@ -88,8 +89,8 @@ function setup() {
     gameContext.player = player;
 
     // //stage.addChild(player.container);
-    // let npcs = new NPCS(gameContext);
-    // stage.addChild(npcs.container);
+    let npcs = new NPCS(gameContext);
+    stage.addChild(npcs.container);
     let vehicles = new Vehicles(gameContext);
     stage.addChild(vehicles.container);
 
@@ -109,11 +110,11 @@ function setup() {
 
         let angle = gameContext.controls.angle();
 
+        vehicles.update(elapsedTime);
         player.update(angle, elapsedTime);
         gameInfo.update(angle);
         background.update();
-        // npcs.update();
-        vehicles.update(elapsedTime);
+        npcs.update();
 
         renderer.render(stage);
 

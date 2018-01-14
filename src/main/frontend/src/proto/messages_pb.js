@@ -755,9 +755,6 @@ proto.PlayerStartResponse.toObject = function(includeInstance, msg) {
     sectorwidth: jspb.Message.getFieldWithDefault(msg, 4, 0),
     sectorheight: jspb.Message.getFieldWithDefault(msg, 5, 0),
     sectormapMap: (f = msg.getSectormapMap()) ? f.toObject(includeInstance, proto.SectorData.toObject) : [],
-    birthlocationx: +jspb.Message.getFieldWithDefault(msg, 7, 0.0),
-    birthlocationy: +jspb.Message.getFieldWithDefault(msg, 8, 0.0),
-    birthorientation: +jspb.Message.getFieldWithDefault(msg, 9, 0.0),
     basespeed: +jspb.Message.getFieldWithDefault(msg, 10, 0.0),
     vehicledata: (f = msg.getVehicledata()) && proto.VehicleData.toObject(includeInstance, f)
   };
@@ -822,18 +819,6 @@ proto.PlayerStartResponse.deserializeBinaryFromReader = function(msg, reader) {
       reader.readMessage(value, function(message, reader) {
         jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readString, jspb.BinaryReader.prototype.readMessage, proto.SectorData.deserializeBinaryFromReader);
          });
-      break;
-    case 7:
-      var value = /** @type {number} */ (reader.readFloat());
-      msg.setBirthlocationx(value);
-      break;
-    case 8:
-      var value = /** @type {number} */ (reader.readFloat());
-      msg.setBirthlocationy(value);
-      break;
-    case 9:
-      var value = /** @type {number} */ (reader.readFloat());
-      msg.setBirthorientation(value);
       break;
     case 10:
       var value = /** @type {number} */ (reader.readFloat());
@@ -912,27 +897,6 @@ proto.PlayerStartResponse.serializeBinaryToWriter = function(message, writer) {
   f = message.getSectormapMap(true);
   if (f && f.getLength() > 0) {
     f.serializeBinary(6, writer, jspb.BinaryWriter.prototype.writeString, jspb.BinaryWriter.prototype.writeMessage, proto.SectorData.serializeBinaryToWriter);
-  }
-  f = message.getBirthlocationx();
-  if (f !== 0.0) {
-    writer.writeFloat(
-      7,
-      f
-    );
-  }
-  f = message.getBirthlocationy();
-  if (f !== 0.0) {
-    writer.writeFloat(
-      8,
-      f
-    );
-  }
-  f = message.getBirthorientation();
-  if (f !== 0.0) {
-    writer.writeFloat(
-      9,
-      f
-    );
   }
   f = message.getBasespeed();
   if (f !== 0.0) {
@@ -1057,51 +1021,6 @@ proto.PlayerStartResponse.prototype.getSectormapMap = function(opt_noLazyCreate)
 
 proto.PlayerStartResponse.prototype.clearSectormapMap = function() {
   this.getSectormapMap().clear();
-};
-
-
-/**
- * optional float birthLocationX = 7;
- * @return {number}
- */
-proto.PlayerStartResponse.prototype.getBirthlocationx = function() {
-  return /** @type {number} */ (+jspb.Message.getFieldWithDefault(this, 7, 0.0));
-};
-
-
-/** @param {number} value */
-proto.PlayerStartResponse.prototype.setBirthlocationx = function(value) {
-  jspb.Message.setProto3FloatField(this, 7, value);
-};
-
-
-/**
- * optional float birthLocationY = 8;
- * @return {number}
- */
-proto.PlayerStartResponse.prototype.getBirthlocationy = function() {
-  return /** @type {number} */ (+jspb.Message.getFieldWithDefault(this, 8, 0.0));
-};
-
-
-/** @param {number} value */
-proto.PlayerStartResponse.prototype.setBirthlocationy = function(value) {
-  jspb.Message.setProto3FloatField(this, 8, value);
-};
-
-
-/**
- * optional float birthOrientation = 9;
- * @return {number}
- */
-proto.PlayerStartResponse.prototype.getBirthorientation = function() {
-  return /** @type {number} */ (+jspb.Message.getFieldWithDefault(this, 9, 0.0));
-};
-
-
-/** @param {number} value */
-proto.PlayerStartResponse.prototype.setBirthorientation = function(value) {
-  jspb.Message.setProto3FloatField(this, 9, value);
 };
 
 
@@ -2361,7 +2280,8 @@ proto.VehiclePart.toObject = function(includeInstance, msg) {
     partid: jspb.Message.getFieldWithDefault(msg, 11, ""),
     axishalflength: jspb.Message.getFieldWithDefault(msg, 14, 0),
     frontaxis: +jspb.Message.getFieldWithDefault(msg, 15, 0.0),
-    rearaxis: +jspb.Message.getFieldWithDefault(msg, 16, 0.0)
+    rearaxis: +jspb.Message.getFieldWithDefault(msg, 16, 0.0),
+    wheeldeflection: +jspb.Message.getFieldWithDefault(msg, 17, 0.0)
   };
 
   if (includeInstance) {
@@ -2429,6 +2349,10 @@ proto.VehiclePart.deserializeBinaryFromReader = function(msg, reader) {
     case 16:
       var value = /** @type {number} */ (reader.readFloat());
       msg.setRearaxis(value);
+      break;
+    case 17:
+      var value = /** @type {number} */ (reader.readFloat());
+      msg.setWheeldeflection(value);
       break;
     default:
       reader.skipField();
@@ -2512,6 +2436,13 @@ proto.VehiclePart.serializeBinaryToWriter = function(message, writer) {
   if (f !== 0.0) {
     writer.writeFloat(
       16,
+      f
+    );
+  }
+  f = message.getWheeldeflection();
+  if (f !== 0.0) {
+    writer.writeFloat(
+      17,
       f
     );
   }
@@ -2644,6 +2575,21 @@ proto.VehiclePart.prototype.getRearaxis = function() {
 /** @param {number} value */
 proto.VehiclePart.prototype.setRearaxis = function(value) {
   jspb.Message.setProto3FloatField(this, 16, value);
+};
+
+
+/**
+ * optional float wheelDeflection = 17;
+ * @return {number}
+ */
+proto.VehiclePart.prototype.getWheeldeflection = function() {
+  return /** @type {number} */ (+jspb.Message.getFieldWithDefault(this, 17, 0.0));
+};
+
+
+/** @param {number} value */
+proto.VehiclePart.prototype.setWheeldeflection = function(value) {
+  jspb.Message.setProto3FloatField(this, 17, value);
 };
 
 

@@ -1,6 +1,7 @@
 import { Sprite, Container, loader, BLEND_MODES } from 'pixi.js'
 import layers from './layers'
-const move= require('../computation/movements').move;
+const move = require('../computation/movements').move;
+const allowedAngle = require('../computation/movements').allowedAngle;
 
 
 let resources = loader.resources;
@@ -122,8 +123,11 @@ class Vehicle {
         // };
 
         if (this.gameContext.communication.commId == this.id) {
-            const orientation = this.gameContext.controls.angle();
-            const distance = 1.0;
+            const wheelDeflection = this.vehicleParts[0].wheelDeflection;
+            const originalFrontPart = this.vehicleParts[0];
+            const askedAngle = this.gameContext.controls.angle();
+            const orientation = allowedAngle(askedAngle, originalFrontPart.orientation, wheelDeflection);
+            const distance = 0.06 * elapsedTime * this.gameContext.controls.isMouseDown() ? 5.0 : 1.0;
 
             const movedVehicleParts = move(orientation, distance, this.vehicleParts);
             this.vehicleParts = movedVehicleParts;

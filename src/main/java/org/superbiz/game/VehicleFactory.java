@@ -83,10 +83,12 @@ public class VehicleFactory {
 //    string partId = 11;
 //    int32 pivotX = 12;
 //    int32 pivotY = 13;
-        vehiclePart.setPartId(partDefinition.getCode());
-        vehiclePart.setAxisHalfLength(partDefinition.getAxisHalfLength());
-        vehiclePart.setFrontAxis(partDefinition.getFrontAxis());
-        vehiclePart.setRearAxis(partDefinition.getRearAxis());
+        vehiclePart.setPartId(partDefinition.getCode())
+            .setAxisHalfLength(partDefinition.getAxisHalfLength())
+            .setFrontAxis(partDefinition.getFrontAxis())
+            .setRearAxis(partDefinition.getRearAxis())
+            .setWheelDeflection(partDefinition.getWheelDeflection());
+
 
 //        vehiclePart.setPivotX(partDefinition.getPivotX());
 //        vehiclePart.setPivotY(partDefinition.getPivotY());

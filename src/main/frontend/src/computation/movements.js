@@ -100,6 +100,29 @@ module.exports.move = function(orientation, distance, parts) {
 //     //return {path: path, x: xStep, y: yStep};
 // };
 
+function allowedAngle(askedAngle, lastAngle/*orientation*/, wheelDeflection) {
+    //let allowedDiff = Math.PI / 4200 * time * speed / baseSpeed;
+
+    const allowedDiff = wheelDeflection;
+    const lower = lastAngle - allowedDiff;
+    const upper = lastAngle + allowedDiff;
+    //console.info(lower, upper, askedAngle);
+    let asked2 = askedAngle - Math.PI * 2;
+    let asked3 = askedAngle + Math.PI * 2;
+    if ((lower <= askedAngle && upper >= askedAngle) || (lower <= asked2 && upper >= asked2) || (lower <= asked3 && upper >= asked3)) {
+        return askedAngle;
+    } else {
+        let fromLower = Math.min(Math.abs(lower - askedAngle), Math.abs(lower - asked2), Math.abs(lower - asked3));
+        let fromUpper = Math.min(Math.abs(upper - askedAngle), Math.abs(upper - asked2), Math.abs(upper - asked3))
+        if (fromLower < fromUpper) {
+            return withinPiBounds(lower);
+        } else {
+            return withinPiBounds(upper);
+        }
+    }
+}
+module.exports.allowedAngle = allowedAngle;
+
 module.exports.computeAllowedAngle = function(orientationRequested, orientationLast, time, speedMultiplier) {
     let allowedDiff = Math.PI / 4200 * time * speedMultiplier;
     let lower = orientationLast - allowedDiff;

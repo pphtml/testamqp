@@ -32,9 +32,9 @@ message PlayerStartResponse {
     int32 sectorWidth = 4;
     int32 sectorHeight = 5;
     map <string, SectorData> sectorMap = 6;
-    float birthLocationX = 7;
-    float birthLocationY = 8;
-    float birthOrientation = 9;
+//    float birthLocationX = 7;
+//    float birthLocationY = 8;
+//    float birthOrientation = 9;
     float baseSpeed = 10;
     VehicleData vehicleData = 11;
 }
@@ -108,6 +108,7 @@ message VehiclePart {
     uint32 axisHalfLength = 14;
     float frontAxis = 15;
     float rearAxis = 16;
+    float wheelDeflection = 17;
 
     enum PartType {
         FRONT = 0;

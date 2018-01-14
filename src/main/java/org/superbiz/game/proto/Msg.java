@@ -2926,21 +2926,12 @@ public final class Msg {
         java.lang.String key);
 
     /**
-     * <code>float birthLocationX = 7;</code>
-     */
-    float getBirthLocationX();
-
-    /**
-     * <code>float birthLocationY = 8;</code>
-     */
-    float getBirthLocationY();
-
-    /**
-     * <code>float birthOrientation = 9;</code>
-     */
-    float getBirthOrientation();
-
-    /**
+     * <pre>
+     *    float birthLocationX = 7;
+     *    float birthLocationY = 8;
+     *    float birthOrientation = 9;
+     * </pre>
+     *
      * <code>float baseSpeed = 10;</code>
      */
     float getBaseSpeed();
@@ -2975,9 +2966,6 @@ public final class Msg {
       worldHeight_ = 0;
       sectorWidth_ = 0;
       sectorHeight_ = 0;
-      birthLocationX_ = 0F;
-      birthLocationY_ = 0F;
-      birthOrientation_ = 0F;
       baseSpeed_ = 0F;
     }
 
@@ -3056,21 +3044,6 @@ public final class Msg {
                   SectorMapDefaultEntryHolder.defaultEntry.getParserForType(), extensionRegistry);
               sectorMap_.getMutableMap().put(
                   sectorMap__.getKey(), sectorMap__.getValue());
-              break;
-            }
-            case 61: {
-
-              birthLocationX_ = input.readFloat();
-              break;
-            }
-            case 69: {
-
-              birthLocationY_ = input.readFloat();
-              break;
-            }
-            case 77: {
-
-              birthOrientation_ = input.readFloat();
               break;
             }
             case 85: {
@@ -3260,36 +3233,15 @@ public final class Msg {
       return map.get(key);
     }
 
-    public static final int BIRTHLOCATIONX_FIELD_NUMBER = 7;
-    private float birthLocationX_;
-    /**
-     * <code>float birthLocationX = 7;</code>
-     */
-    public float getBirthLocationX() {
-      return birthLocationX_;
-    }
-
-    public static final int BIRTHLOCATIONY_FIELD_NUMBER = 8;
-    private float birthLocationY_;
-    /**
-     * <code>float birthLocationY = 8;</code>
-     */
-    public float getBirthLocationY() {
-      return birthLocationY_;
-    }
-
-    public static final int BIRTHORIENTATION_FIELD_NUMBER = 9;
-    private float birthOrientation_;
-    /**
-     * <code>float birthOrientation = 9;</code>
-     */
-    public float getBirthOrientation() {
-      return birthOrientation_;
-    }
-
     public static final int BASESPEED_FIELD_NUMBER = 10;
     private float baseSpeed_;
     /**
+     * <pre>
+     *    float birthLocationX = 7;
+     *    float birthLocationY = 8;
+     *    float birthOrientation = 9;
+     * </pre>
+     *
      * <code>float baseSpeed = 10;</code>
      */
     public float getBaseSpeed() {
@@ -3350,15 +3302,6 @@ public final class Msg {
           internalGetSectorMap(),
           SectorMapDefaultEntryHolder.defaultEntry,
           6);
-      if (birthLocationX_ != 0F) {
-        output.writeFloat(7, birthLocationX_);
-      }
-      if (birthLocationY_ != 0F) {
-        output.writeFloat(8, birthLocationY_);
-      }
-      if (birthOrientation_ != 0F) {
-        output.writeFloat(9, birthOrientation_);
-      }
       if (baseSpeed_ != 0F) {
         output.writeFloat(10, baseSpeed_);
       }
@@ -3403,18 +3346,6 @@ public final class Msg {
         size += com.google.protobuf.CodedOutputStream
             .computeMessageSize(6, sectorMap__);
       }
-      if (birthLocationX_ != 0F) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeFloatSize(7, birthLocationX_);
-      }
-      if (birthLocationY_ != 0F) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeFloatSize(8, birthLocationY_);
-      }
-      if (birthOrientation_ != 0F) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeFloatSize(9, birthOrientation_);
-      }
       if (baseSpeed_ != 0F) {
         size += com.google.protobuf.CodedOutputStream
           .computeFloatSize(10, baseSpeed_);
@@ -3455,18 +3386,6 @@ public final class Msg {
       result = result && internalGetSectorMap().equals(
           other.internalGetSectorMap());
       result = result && (
-          java.lang.Float.floatToIntBits(getBirthLocationX())
-          == java.lang.Float.floatToIntBits(
-              other.getBirthLocationX()));
-      result = result && (
-          java.lang.Float.floatToIntBits(getBirthLocationY())
-          == java.lang.Float.floatToIntBits(
-              other.getBirthLocationY()));
-      result = result && (
-          java.lang.Float.floatToIntBits(getBirthOrientation())
-          == java.lang.Float.floatToIntBits(
-              other.getBirthOrientation()));
-      result = result && (
           java.lang.Float.floatToIntBits(getBaseSpeed())
           == java.lang.Float.floatToIntBits(
               other.getBaseSpeed()));
@@ -3502,15 +3421,6 @@ public final class Msg {
         hash = (37 * hash) + SECTORMAP_FIELD_NUMBER;
         hash = (53 * hash) + internalGetSectorMap().hashCode();
       }
-      hash = (37 * hash) + BIRTHLOCATIONX_FIELD_NUMBER;
-      hash = (53 * hash) + java.lang.Float.floatToIntBits(
-          getBirthLocationX());
-      hash = (37 * hash) + BIRTHLOCATIONY_FIELD_NUMBER;
-      hash = (53 * hash) + java.lang.Float.floatToIntBits(
-          getBirthLocationY());
-      hash = (37 * hash) + BIRTHORIENTATION_FIELD_NUMBER;
-      hash = (53 * hash) + java.lang.Float.floatToIntBits(
-          getBirthOrientation());
       hash = (37 * hash) + BASESPEED_FIELD_NUMBER;
       hash = (53 * hash) + java.lang.Float.floatToIntBits(
           getBaseSpeed());
@@ -3684,12 +3594,6 @@ public final class Msg {
         sectorHeight_ = 0;
 
         internalGetMutableSectorMap().clear();
-        birthLocationX_ = 0F;
-
-        birthLocationY_ = 0F;
-
-        birthOrientation_ = 0F;
-
         baseSpeed_ = 0F;
 
         if (vehicleDataBuilder_ == null) {
@@ -3733,9 +3637,6 @@ public final class Msg {
         result.sectorHeight_ = sectorHeight_;
         result.sectorMap_ = internalGetSectorMap();
         result.sectorMap_.makeImmutable();
-        result.birthLocationX_ = birthLocationX_;
-        result.birthLocationY_ = birthLocationY_;
-        result.birthOrientation_ = birthOrientation_;
         result.baseSpeed_ = baseSpeed_;
         if (vehicleDataBuilder_ == null) {
           result.vehicleData_ = vehicleData_;
@@ -3801,15 +3702,6 @@ public final class Msg {
         }
         internalGetMutableSectorMap().mergeFrom(
             other.internalGetSectorMap());
-        if (other.getBirthLocationX() != 0F) {
-          setBirthLocationX(other.getBirthLocationX());
-        }
-        if (other.getBirthLocationY() != 0F) {
-          setBirthLocationY(other.getBirthLocationY());
-        }
-        if (other.getBirthOrientation() != 0F) {
-          setBirthOrientation(other.getBirthOrientation());
-        }
         if (other.getBaseSpeed() != 0F) {
           setBaseSpeed(other.getBaseSpeed());
         }
@@ -4188,92 +4080,26 @@ public final class Msg {
         return this;
       }
 
-      private float birthLocationX_ ;
-      /**
-       * <code>float birthLocationX = 7;</code>
-       */
-      public float getBirthLocationX() {
-        return birthLocationX_;
-      }
-      /**
-       * <code>float birthLocationX = 7;</code>
-       */
-      public Builder setBirthLocationX(float value) {
-        
-        birthLocationX_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>float birthLocationX = 7;</code>
-       */
-      public Builder clearBirthLocationX() {
-        
-        birthLocationX_ = 0F;
-        onChanged();
-        return this;
-      }
-
-      private float birthLocationY_ ;
-      /**
-       * <code>float birthLocationY = 8;</code>
-       */
-      public float getBirthLocationY() {
-        return birthLocationY_;
-      }
-      /**
-       * <code>float birthLocationY = 8;</code>
-       */
-      public Builder setBirthLocationY(float value) {
-        
-        birthLocationY_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>float birthLocationY = 8;</code>
-       */
-      public Builder clearBirthLocationY() {
-        
-        birthLocationY_ = 0F;
-        onChanged();
-        return this;
-      }
-
-      private float birthOrientation_ ;
-      /**
-       * <code>float birthOrientation = 9;</code>
-       */
-      public float getBirthOrientation() {
-        return birthOrientation_;
-      }
-      /**
-       * <code>float birthOrientation = 9;</code>
-       */
-      public Builder setBirthOrientation(float value) {
-        
-        birthOrientation_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>float birthOrientation = 9;</code>
-       */
-      public Builder clearBirthOrientation() {
-        
-        birthOrientation_ = 0F;
-        onChanged();
-        return this;
-      }
-
       private float baseSpeed_ ;
       /**
+       * <pre>
+       *    float birthLocationX = 7;
+       *    float birthLocationY = 8;
+       *    float birthOrientation = 9;
+       * </pre>
+       *
        * <code>float baseSpeed = 10;</code>
        */
       public float getBaseSpeed() {
         return baseSpeed_;
       }
       /**
+       * <pre>
+       *    float birthLocationX = 7;
+       *    float birthLocationY = 8;
+       *    float birthOrientation = 9;
+       * </pre>
+       *
        * <code>float baseSpeed = 10;</code>
        */
       public Builder setBaseSpeed(float value) {
@@ -4283,6 +4109,12 @@ public final class Msg {
         return this;
       }
       /**
+       * <pre>
+       *    float birthLocationX = 7;
+       *    float birthLocationY = 8;
+       *    float birthOrientation = 9;
+       * </pre>
+       *
        * <code>float baseSpeed = 10;</code>
        */
       public Builder clearBaseSpeed() {
@@ -8831,6 +8663,11 @@ public final class Msg {
      * <code>float rearAxis = 16;</code>
      */
     float getRearAxis();
+
+    /**
+     * <code>float wheelDeflection = 17;</code>
+     */
+    float getWheelDeflection();
   }
   /**
    * Protobuf type {@code VehiclePart}
@@ -8853,6 +8690,7 @@ public final class Msg {
       axisHalfLength_ = 0;
       frontAxis_ = 0F;
       rearAxis_ = 0F;
+      wheelDeflection_ = 0F;
     }
 
     @java.lang.Override
@@ -8926,6 +8764,11 @@ public final class Msg {
             case 133: {
 
               rearAxis_ = input.readFloat();
+              break;
+            }
+            case 141: {
+
+              wheelDeflection_ = input.readFloat();
               break;
             }
           }
@@ -9176,6 +9019,15 @@ public final class Msg {
       return rearAxis_;
     }
 
+    public static final int WHEELDEFLECTION_FIELD_NUMBER = 17;
+    private float wheelDeflection_;
+    /**
+     * <code>float wheelDeflection = 17;</code>
+     */
+    public float getWheelDeflection() {
+      return wheelDeflection_;
+    }
+
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
@@ -9211,6 +9063,9 @@ public final class Msg {
       }
       if (rearAxis_ != 0F) {
         output.writeFloat(16, rearAxis_);
+      }
+      if (wheelDeflection_ != 0F) {
+        output.writeFloat(17, wheelDeflection_);
       }
       unknownFields.writeTo(output);
     }
@@ -9250,6 +9105,10 @@ public final class Msg {
       if (rearAxis_ != 0F) {
         size += com.google.protobuf.CodedOutputStream
           .computeFloatSize(16, rearAxis_);
+      }
+      if (wheelDeflection_ != 0F) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeFloatSize(17, wheelDeflection_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -9292,6 +9151,10 @@ public final class Msg {
           java.lang.Float.floatToIntBits(getRearAxis())
           == java.lang.Float.floatToIntBits(
               other.getRearAxis()));
+      result = result && (
+          java.lang.Float.floatToIntBits(getWheelDeflection())
+          == java.lang.Float.floatToIntBits(
+              other.getWheelDeflection()));
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
@@ -9324,6 +9187,9 @@ public final class Msg {
       hash = (37 * hash) + REARAXIS_FIELD_NUMBER;
       hash = (53 * hash) + java.lang.Float.floatToIntBits(
           getRearAxis());
+      hash = (37 * hash) + WHEELDEFLECTION_FIELD_NUMBER;
+      hash = (53 * hash) + java.lang.Float.floatToIntBits(
+          getWheelDeflection());
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -9469,6 +9335,8 @@ public final class Msg {
 
         rearAxis_ = 0F;
 
+        wheelDeflection_ = 0F;
+
         return this;
       }
 
@@ -9499,6 +9367,7 @@ public final class Msg {
         result.axisHalfLength_ = axisHalfLength_;
         result.frontAxis_ = frontAxis_;
         result.rearAxis_ = rearAxis_;
+        result.wheelDeflection_ = wheelDeflection_;
         onBuilt();
         return result;
       }
@@ -9564,6 +9433,9 @@ public final class Msg {
         }
         if (other.getRearAxis() != 0F) {
           setRearAxis(other.getRearAxis());
+        }
+        if (other.getWheelDeflection() != 0F) {
+          setWheelDeflection(other.getWheelDeflection());
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -9892,6 +9764,32 @@ public final class Msg {
       public Builder clearRearAxis() {
         
         rearAxis_ = 0F;
+        onChanged();
+        return this;
+      }
+
+      private float wheelDeflection_ ;
+      /**
+       * <code>float wheelDeflection = 17;</code>
+       */
+      public float getWheelDeflection() {
+        return wheelDeflection_;
+      }
+      /**
+       * <code>float wheelDeflection = 17;</code>
+       */
+      public Builder setWheelDeflection(float value) {
+        
+        wheelDeflection_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>float wheelDeflection = 17;</code>
+       */
+      public Builder clearWheelDeflection() {
+        
+        wheelDeflection_ = 0F;
         onChanged();
         return this;
       }
@@ -11721,44 +11619,43 @@ public final class Msg {
       "ateH\000\022-\n\020clientDisconnect\030\t \001(\0132\021.Client" +
       "DisconnectH\000B\005\n\003msg\"a\n\022PlayerStartReques" +
       "t\022\014\n\004name\030\001 \001(\t\022\023\n\013vehicleType\030\002 \001(\t\022\025\n\r" +
-      "vehicleDesign\030\003 \001(\t\022\021\n\tinitiated\030\004 \001(\003\"\375" +
+      "vehicleDesign\030\003 \001(\t\022\021\n\tinitiated\030\004 \001(\003\"\263" +
       "\002\n\023PlayerStartResponse\022\033\n\010timeInfo\030\001 \001(\013" +
       "2\t.TimeInfo\022\022\n\nworldWidth\030\002 \001(\005\022\023\n\013world" +
       "Height\030\003 \001(\005\022\023\n\013sectorWidth\030\004 \001(\005\022\024\n\014sec" +
       "torHeight\030\005 \001(\005\0226\n\tsectorMap\030\006 \003(\0132#.Pla" +
-      "yerStartResponse.SectorMapEntry\022\026\n\016birth" +
-      "LocationX\030\007 \001(\002\022\026\n\016birthLocationY\030\010 \001(\002\022" +
-      "\030\n\020birthOrientation\030\t \001(\002\022\021\n\tbaseSpeed\030\n" +
-      " \001(\002\022!\n\013vehicleData\030\013 \001(\0132\014.VehicleData\032" +
-      "=\n\016SectorMapEntry\022\013\n\003key\030\001 \001(\t\022\032\n\005value\030" +
-      "\002 \001(\0132\013.SectorData:\0028\001\"\356\001\n\nSectorData\022\t\n" +
-      "\001x\030\001 \001(\005\022\t\n\001y\030\002 \001(\005\022#\n\005north\030\003 \001(\0162\024.Sec" +
-      "torData.RoadType\022\"\n\004east\030\004 \001(\0162\024.SectorD" +
-      "ata.RoadType\022#\n\005south\030\005 \001(\0162\024.SectorData" +
-      ".RoadType\022\"\n\004west\030\006 \001(\0162\024.SectorData.Roa" +
-      "dType\"8\n\010RoadType\022\010\n\004NONE\020\000\022\n\n\006SINGLE\020\001\022" +
-      "\n\n\006DOUBLE\020\002\022\n\n\006TRIPLE\020\003\"_\n\023PlayerUpdateR" +
-      "equest\022\034\n\024orientationRequested\030\001 \001(\002\022\027\n\017" +
-      "speedMultiplier\030\002 \001(\002\022\021\n\tinitiated\030\003 \001(\003" +
-      "\"V\n\024PlayerUpdateResponse\022\033\n\010timeInfo\030\001 \001" +
-      "(\0132\t.TimeInfo\022!\n\013vehicleData\030\002 \001(\0132\014.Veh" +
-      "icleData\"Q\n\026PeriodicVehiclesUpdate\022\027\n\017se" +
-      "rverTimestamp\030\001 \001(\004\022\036\n\010vehicles\030\002 \003(\0132\014." +
-      "VehicleData\"\234\001\n\013VehicleData\022\035\n\025lastProce" +
-      "ssedOnServer\030\001 \001(\004\022\"\n\014vehicleParts\030\002 \003(\013" +
-      "2\014.VehiclePart\022\034\n\024orientationRequested\030\003" +
-      " \001(\002\022\023\n\013orientation\030\004 \001(\002\022\027\n\017speedMultip" +
-      "lier\030\005 \001(\002\"\343\001\n\013VehiclePart\022\t\n\001x\030\001 \001(\002\022\t\n" +
-      "\001y\030\002 \001(\002\022\023\n\013orientation\030\003 \001(\002\022\'\n\010partTyp" +
-      "e\030\n \001(\0162\025.VehiclePart.PartType\022\016\n\006partId" +
-      "\030\013 \001(\t\022\026\n\016axisHalfLength\030\016 \001(\r\022\021\n\tfrontA" +
-      "xis\030\017 \001(\002\022\020\n\010rearAxis\030\020 \001(\002\"3\n\010PartType\022" +
-      "\t\n\005FRONT\020\000\022\013\n\007TRAILER\020\001\022\017\n\013FRONT_WHEEL\020\002" +
-      "\"1\n\010TimeInfo\022\021\n\tinitiated\030\001 \001(\003\022\022\n\nproce" +
-      "ssing\030\002 \001(\003\"\'\n\006Resize\022\r\n\005width\030\001 \001(\005\022\016\n\006" +
-      "height\030\002 \001(\005\",\n\020ClientDisconnect\022\n\n\002id\030\001" +
-      " \001(\t\022\014\n\004name\030\002 \001(\tB\036\n\027org.superbiz.game." +
-      "protoB\003Msgb\006proto3"
+      "yerStartResponse.SectorMapEntry\022\021\n\tbaseS" +
+      "peed\030\n \001(\002\022!\n\013vehicleData\030\013 \001(\0132\014.Vehicl" +
+      "eData\032=\n\016SectorMapEntry\022\013\n\003key\030\001 \001(\t\022\032\n\005" +
+      "value\030\002 \001(\0132\013.SectorData:\0028\001\"\356\001\n\nSectorD" +
+      "ata\022\t\n\001x\030\001 \001(\005\022\t\n\001y\030\002 \001(\005\022#\n\005north\030\003 \001(\016" +
+      "2\024.SectorData.RoadType\022\"\n\004east\030\004 \001(\0162\024.S" +
+      "ectorData.RoadType\022#\n\005south\030\005 \001(\0162\024.Sect" +
+      "orData.RoadType\022\"\n\004west\030\006 \001(\0162\024.SectorDa" +
+      "ta.RoadType\"8\n\010RoadType\022\010\n\004NONE\020\000\022\n\n\006SIN" +
+      "GLE\020\001\022\n\n\006DOUBLE\020\002\022\n\n\006TRIPLE\020\003\"_\n\023PlayerU" +
+      "pdateRequest\022\034\n\024orientationRequested\030\001 \001" +
+      "(\002\022\027\n\017speedMultiplier\030\002 \001(\002\022\021\n\tinitiated" +
+      "\030\003 \001(\003\"V\n\024PlayerUpdateResponse\022\033\n\010timeIn" +
+      "fo\030\001 \001(\0132\t.TimeInfo\022!\n\013vehicleData\030\002 \001(\013" +
+      "2\014.VehicleData\"Q\n\026PeriodicVehiclesUpdate" +
+      "\022\027\n\017serverTimestamp\030\001 \001(\004\022\036\n\010vehicles\030\002 " +
+      "\003(\0132\014.VehicleData\"\234\001\n\013VehicleData\022\035\n\025las" +
+      "tProcessedOnServer\030\001 \001(\004\022\"\n\014vehicleParts" +
+      "\030\002 \003(\0132\014.VehiclePart\022\034\n\024orientationReque" +
+      "sted\030\003 \001(\002\022\023\n\013orientation\030\004 \001(\002\022\027\n\017speed" +
+      "Multiplier\030\005 \001(\002\"\374\001\n\013VehiclePart\022\t\n\001x\030\001 " +
+      "\001(\002\022\t\n\001y\030\002 \001(\002\022\023\n\013orientation\030\003 \001(\002\022\'\n\010p" +
+      "artType\030\n \001(\0162\025.VehiclePart.PartType\022\016\n\006" +
+      "partId\030\013 \001(\t\022\026\n\016axisHalfLength\030\016 \001(\r\022\021\n\t" +
+      "frontAxis\030\017 \001(\002\022\020\n\010rearAxis\030\020 \001(\002\022\027\n\017whe" +
+      "elDeflection\030\021 \001(\002\"3\n\010PartType\022\t\n\005FRONT\020" +
+      "\000\022\013\n\007TRAILER\020\001\022\017\n\013FRONT_WHEEL\020\002\"1\n\010TimeI" +
+      "nfo\022\021\n\tinitiated\030\001 \001(\003\022\022\n\nprocessing\030\002 \001" +
+      "(\003\"\'\n\006Resize\022\r\n\005width\030\001 \001(\005\022\016\n\006height\030\002 " +
+      "\001(\005\",\n\020ClientDisconnect\022\n\n\002id\030\001 \001(\t\022\014\n\004n" +
+      "ame\030\002 \001(\tB\036\n\027org.superbiz.game.protoB\003Ms" +
+      "gb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -11789,7 +11686,7 @@ public final class Msg {
     internal_static_PlayerStartResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_PlayerStartResponse_descriptor,
-        new java.lang.String[] { "TimeInfo", "WorldWidth", "WorldHeight", "SectorWidth", "SectorHeight", "SectorMap", "BirthLocationX", "BirthLocationY", "BirthOrientation", "BaseSpeed", "VehicleData", });
+        new java.lang.String[] { "TimeInfo", "WorldWidth", "WorldHeight", "SectorWidth", "SectorHeight", "SectorMap", "BaseSpeed", "VehicleData", });
     internal_static_PlayerStartResponse_SectorMapEntry_descriptor =
       internal_static_PlayerStartResponse_descriptor.getNestedTypes().get(0);
     internal_static_PlayerStartResponse_SectorMapEntry_fieldAccessorTable = new
@@ -11831,7 +11728,7 @@ public final class Msg {
     internal_static_VehiclePart_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_VehiclePart_descriptor,
-        new java.lang.String[] { "X", "Y", "Orientation", "PartType", "PartId", "AxisHalfLength", "FrontAxis", "RearAxis", });
+        new java.lang.String[] { "X", "Y", "Orientation", "PartType", "PartId", "AxisHalfLength", "FrontAxis", "RearAxis", "WheelDeflection", });
     internal_static_TimeInfo_descriptor =
       getDescriptor().getMessageTypes().get(9);
     internal_static_TimeInfo_fieldAccessorTable = new

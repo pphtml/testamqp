@@ -156,9 +156,9 @@ public class GameDataService {
 
     private Msg.PlayerStartResponse makeCreationResponse(VehicleData vehicle, Msg.PlayerStartRequest request) {
         Msg.PlayerStartResponse.Builder response = Msg.PlayerStartResponse.newBuilder()
-                .setBirthLocationX(0.0f)
-                .setBirthLocationY(0.0f)
-                .setBirthOrientation(0.0f)
+//                .setBirthLocationX(0.0f)
+//                .setBirthLocationY(0.0f)
+//                .setBirthOrientation(0.0f)
 
                 .setWorldWidth(worldGeometry.getWorldWidth())
                 .setWorldHeight(worldGeometry.getWorldHeight())

@@ -1,8 +1,8 @@
 package org.superbiz.game;
 
 public class WorldGeometry {
-    private final int sectorWidth = 1024;
-    private final int sectorHeight = 1024;
+    private final int sectorWidth = 2048;
+    private final int sectorHeight = 2048;
     private final int worldWidth = sectorWidth * 18;
     private final int worldHeight = sectorHeight * 9;
 
