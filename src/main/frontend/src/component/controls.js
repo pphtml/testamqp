@@ -41,6 +41,7 @@ class Controls {
 
         this.mouseActions.subscribe(event => {
             //console.info(event);
+            // https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/buttons
             this.mouseDown = event.buttons > 0;
         });
     }

@@ -1,5 +1,4 @@
-- pridavani/odebirani sektorovych dat
-- koncept zrychlovani / brzdeni / covani
+- koncept zrychlovani / brzdeni / couvani
 - zabstraktneni vykreslovani
 - delici cara
 - cary pruhu
@@ -18,6 +17,7 @@
   - http://xiaokaike.github.io/vue-color/
 - nove sprity aut
 - multiplayer
+- http://2ality.com/2015/01/es6-destructuring.html
 
 - protobuf - oneOf - https://developers.google.com/protocol-buffers/docs/proto3#oneof
 - dynos na heroku - heroku ps -a <app name> - https://devcenter.heroku.com/articles/free-dyno-hours

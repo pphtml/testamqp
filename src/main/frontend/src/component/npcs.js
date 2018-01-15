@@ -27,6 +27,9 @@ class NPCS {
     constructor(gameContext) {
         this.gameContext = gameContext;
         this.container = new Container();
+        this.sectorMap = {};
+        this.sectorActiveSet = new Set();
+        this.isSetsEqual = (a, b) => a.size === b.size && [...a].every(value => b.has(value));
 
         this.gameContext.communication.subject.subscribe(msg => {
             if (msg.hasPlayerstartresponse()) {
@@ -113,22 +116,71 @@ class NPCS {
     //     return COLORS[color];
     // }
 
+
     update() {
         let middleCoordinates = this.gameContext.middleCoordinates();
         this.container.position.set(middleCoordinates.x, middleCoordinates.y);
-        //
-        // for (let i = this.container.children.length - 1; i >= 0; i--) {
-        //     const dot = this.container.children[i];
-        //     if (dot.hasOwnProperty('intensity')) {
-        //         dot.intensity += dot.tintDir;
-        //         if (dot.intensity >= 1.0) {
-        //             dot.tintDir = -FLASHING_SPEED;
-        //         } else if (dot.intensity <= 0.5) {
-        //             dot.tintDir = FLASHING_SPEED;
-        //         }
-        //         dot.tint = rgbDimmer(dot.baseColor, dot.intensity);
-        //     }
-        // }
+
+        if (this.worldOffsetX) {
+            const sectorCoordinates = this.translateToSector(this.gameContext.controls.coordinates.x, this.gameContext.controls.coordinates.y);
+            //const sectorKey = sectorKey(sectorCoordinates);
+            const sectorKeysEligibleForActive = this.sectorKeysEligibleForActive(sectorCoordinates);
+            if (!this.isSetsEqual(this.sectorActiveSet, sectorKeysEligibleForActive)) {
+                //const removalSet = new Set();
+                let removalRequested = false;
+                for (let existingSectorKey of this.sectorActiveSet) {
+                    if (!sectorKeysEligibleForActive.has(existingSectorKey)) {
+                        console.info(`candidate for deletion: ${existingSectorKey}`);
+                        // this.sectorActiveSet.delete(existingSectorKey);
+                        // console.info(`after delete ${existingSectorKey}`);
+                        removalRequested = true;
+                    }
+                }
+
+                if (removalRequested) {
+                    this.removeSectorRoads(sectorKeysEligibleForActive);
+                }
+                for (let eligibleKey of sectorKeysEligibleForActive) {
+                    if (!this.sectorActiveSet.has(eligibleKey)) {
+                        console.info(`drawing sector ${eligibleKey}`);
+                        const sectorIndexes = this.sectorIndexes(eligibleKey);
+                        this.drawSectorRoads(sectorIndexes);
+                    }
+                }
+
+                this.sectorActiveSet = sectorKeysEligibleForActive;
+            }
+            //
+            // for (let i = this.container.children.length - 1; i >= 0; i--) {
+            //     const dot = this.container.children[i];
+            //     if (dot.hasOwnProperty('intensity')) {
+            //         dot.intensity += dot.tintDir;
+            //         if (dot.intensity >= 1.0) {
+            //             dot.tintDir = -FLASHING_SPEED;
+            //         } else if (dot.intensity <= 0.5) {
+            //             dot.tintDir = FLASHING_SPEED;
+            //         }
+            //         dot.tint = rgbDimmer(dot.baseColor, dot.intensity);
+            //     }
+            // }
+        }
+    }
+
+    sectorKeysEligibleForActive(sectorCoordinates) {
+        const paddingSectorCount = 1;
+        const result = new Set();
+        for (let yOffset = -paddingSectorCount; yOffset <= paddingSectorCount; yOffset++) {
+            for (let xOffset = -paddingSectorCount; xOffset <= paddingSectorCount; xOffset++) {
+                const x = sectorCoordinates.x + xOffset;
+                const y = sectorCoordinates.y + yOffset;
+                if (x >= 0 && x < this.sectorHorizontalCount &&
+                        y >= 0 && y < this.sectorVerticalCount) {
+                    const sectorKey = this.sectorKey({x, y});
+                    result.add(sectorKey);
+                }
+            }
+        }
+        return result;
     }
 
     handlePlayerStartResponse(playerStartResponse) {
@@ -151,14 +203,12 @@ class NPCS {
         this.sectorHeight = playerStartResponse.getSectorheight();
         this.sectorWidthHalf = this.sectorWidth / 2;
         this.sectorHeightHalf = this.sectorHeight / 2;
-        this.sectorMap = {};
         this.sectorHorizontalCount = this.worldWidth / this.sectorWidth;
         this.sectorVerticalCount = this.worldHeight / this.sectorHeight;
         for (let y = 0; y < this.sectorVerticalCount; y++) {
             for (let x = 0; x < this.sectorHorizontalCount; x++) {
-                const key = `${x},${y}`;
+                const key = this.sectorKey({x, y});
                 this.sectorMap[key] = playerStartResponse.getSectormapMap().get(key);
-                this.drawSectorRoads({x, y});
             }
         }
         //this.sectorMap = playerStartResponse.getSectormapMap();
@@ -191,8 +241,15 @@ class NPCS {
         return `${coordinates.x},${coordinates.y}`;
     }
 
+    sectorIndexes(key) {
+        const regex = /(\d+),(\d+)/;
+        const match = regex.exec(key);
+        return {x: parseInt(match[1], 10), y: parseInt(match[2], 10)};
+    }
+
     drawSectorRoads(sectorIndexes) {
-        const sectorData = this.sectorMap[this.sectorKey(sectorIndexes)];
+        const sectorKey = this.sectorKey(sectorIndexes);
+        const sectorData = this.sectorMap[sectorKey];
 
         const north = sectorData.getNorth();
         const east = sectorData.getEast();
@@ -274,10 +331,22 @@ class NPCS {
         circle.y = middleY;
         circle.alpha = 0.15;
         circle.displayGroup = layers.npcLayer;
+        circle._sector = sectorKey;
         this.container.addChild(circle);
 
         rectangle.displayGroup = layers.npcLayer;
+        rectangle._sector = sectorKey;
         this.container.addChild(rectangle);
+    }
+
+    removeSectorRoads(sectorKeysEligibleForActive) {
+        for (let i = this.container.children.length - 1; i >= 0; i--) {
+            const sprite = this.container.children[i];
+            if (!sectorKeysEligibleForActive.has(sprite._sector)) {
+                console.info(`removing sprite for sector ${sprite._sector}`);
+                this.container.removeChild(sprite);
+            }
+        }
     }
 }
 
