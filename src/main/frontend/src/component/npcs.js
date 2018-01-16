@@ -38,85 +38,6 @@ class NPCS {
         });
     }
 
-    // eatPositions(positions) {
-    //     const removals = new Set();
-    //     positions.forEach(position => {
-    //         const key = `${position.getX()},${position.getY()}`;
-    //         removals.add(key);
-    //     });
-    //
-    //     for (let i = this.container.children.length - 1; i >= 0; i--) {
-    //         const sprite = this.container.children[i];
-    //         // let x = sprite.x, y = sprite.y;
-    //         // let key = `${x},${y}`;
-    //         if (removals.has(sprite._key)) {
-    //             delete this.dots[sprite._key];
-    //             this.container.removeChild(sprite);
-    //         }
-    //     }
-    // }
-    //
-    // addPositions(positions) {
-    //     positions.forEach(position => {
-    //         let key = `${position.getX()},${position.getY()}`;
-    //         if (!(key in this.dots)) {
-    //             const color = this.translateColor(position.getColor());
-    //
-    //             const outer = new Sprite(resources['images/spritesheet.json'].textures['myfood-outer.png']);
-    //             outer._key = key;
-    //             outer._type = 'circle';
-    //             outer.position.set(position.getX(), position.getY());
-    //             outer.anchor.set(0.5, 0.5);
-    //             outer.scale.set(1.5, 1.5);
-    //             outer.tint = color;
-    //             outer.alpha = 0.02;
-    //             // dot.intensity = (Math.random() * 0.5) + 0.5;
-    //             // dot.tintDir = [-FLASHING_SPEED, FLASHING_SPEED][Math.floor((Math.random() * 2))];
-    //             outer.blendMode = BLEND_MODES.ADD;
-    //             outer.displayGroup = layers.npcLayer;
-    //             this.container.addChild(outer);
-    //
-    //             const dot = new Sprite(resources['images/spritesheet.json'].textures['myfood.png']);
-    //             dot._key = key;
-    //             dot._type = 'dot';
-    //             dot.position.set(position.getX(), position.getY());
-    //             dot.anchor.set(0.5, 0.5);
-    //             dot.scale.set(0.15, 0.15);
-    //             dot.baseColor = color;
-    //             dot.intensity = (Math.random() * 0.5) + 0.5;
-    //             dot.tintDir = [-FLASHING_SPEED, FLASHING_SPEED][Math.floor((Math.random() * 2))];
-    //             dot.blendMode = BLEND_MODES.ADD;
-    //             //dot.blendMode = BLEND_MODES.ADD_NPM;
-    //             //dot.blendMode = BLEND_MODES.SCREEN_NPM;
-    //             dot.displayGroup = layers.npcLayer;
-    //             this.container.addChild(dot);
-    //             this.dots[key] = dot;
-    //         }
-    //     });
-    //
-    //     const viewPortDots = new Set();
-    //     positions.forEach(position => {
-    //         const key = `${position.getX()},${position.getY()}`;
-    //         viewPortDots.add(key);
-    //     });
-    //
-    //     for (let i = this.container.children.length - 1; i >= 0; i--) {
-    //         const sprite = this.container.children[i];
-    //         // let x = sprite.x, y = sprite.y;
-    //         // let key = `${x},${y}`;
-    //         if (!viewPortDots.has(sprite._key)) {
-    //             //console.info('')
-    //             delete this.dots[sprite._key];
-    //             this.container.removeChild(sprite);
-    //         }
-    //     }
-    // }
-    //
-    // translateColor(color) {
-    //     return COLORS[color];
-    // }
-
-
     update() {
         let middleCoordinates = this.gameContext.middleCoordinates();
         this.container.position.set(middleCoordinates.x, middleCoordinates.y);
@@ -211,18 +132,6 @@ class NPCS {
                 this.sectorMap[key] = playerStartResponse.getSectormapMap().get(key);
             }
         }
-        //this.sectorMap = playerStartResponse.getSectormapMap();
-        //const sectorIndexes = this.translateToSector(playerStartResponse.getBirthlocationx(), playerStartResponse.getBirthlocationy());
-        // this.drawSectorRoads(sectorIndexes);
-        // this.drawSectorRoads({x: sectorIndexes.x - 1, y: sectorIndexes.y});
-/*        this.drawSectorRoads({x: sectorIndexes.x - 2, y: sectorIndexes.y});
-        this.drawSectorRoads({x: sectorIndexes.x - 3, y: sectorIndexes.y});
-        this.drawSectorRoads({x: sectorIndexes.x - 1, y: sectorIndexes.y + 1});
-        this.drawSectorRoads({x: sectorIndexes.x - 2, y: sectorIndexes.y + 1});
-        this.drawSectorRoads({x: sectorIndexes.x - 3, y: sectorIndexes.y + 1});
-        this.drawSectorRoads({x: sectorIndexes.x - 1, y: sectorIndexes.y + 2});
-        this.drawSectorRoads({x: sectorIndexes.x - 2, y: sectorIndexes.y + 2});
-        this.drawSectorRoads({x: sectorIndexes.x - 3, y: sectorIndexes.y + 2});*/
     }
 
     translateToSector(worldX, worldY) {
@@ -269,55 +178,68 @@ class NPCS {
         const rectangle = new Graphics();
         rectangle.beginFill(0xffffff);
 
-        if (west > 0) {
-            //rectangle.drawRect(topLeft.x, topLeft.y + westWidth - ROAD_LINE_WIDTH, northWidth, ROAD_LINE_WIDTH);
+        //rectangle.drawRect(topLeft.x, topLeft.y + westWidth - ROAD_LINE_WIDTH, northWidth, ROAD_LINE_WIDTH);
 
-            // const outer = new Sprite(resources['images/road-line.png'].texture);
-            // //outer._key = key;
-            // //outer._type = 'circle';
-            // outer.position.set(topLeft.x, topLeft.y + this.sectorHeight - westWidth);
-            // outer.anchor.set(0.0, 0.0);
-            // //outer.scale.set(1.5, 1.5);
-            // //outer.tint = color;
-            // outer.alpha = 0.5;
-            // // dot.intensity = (Math.random() * 0.5) + 0.5;
-            // // dot.tintDir = [-FLASHING_SPEED, FLASHING_SPEED][Math.floor((Math.random() * 2))];
-            // //outer.blendMode = BLEND_MODES.ADD;
-            // outer.displayGroup = layers.npcLayer;
-            // this.container.addChild(outer);
+        // const outer = new Sprite(resources['images/road-line.png'].texture);
+        // //outer._key = key;
+        // //outer._type = 'circle';
+        // outer.position.set(topLeft.x, topLeft.y + this.sectorHeight - westWidth);
+        // outer.anchor.set(0.0, 0.0);
+        // //outer.scale.set(1.5, 1.5);
+        // //outer.tint = color;
+        // outer.alpha = 0.5;
+        // // dot.intensity = (Math.random() * 0.5) + 0.5;
+        // // dot.tintDir = [-FLASHING_SPEED, FLASHING_SPEED][Math.floor((Math.random() * 2))];
+        // //outer.blendMode = BLEND_MODES.ADD;
+        // outer.displayGroup = layers.npcLayer;
+        // this.container.addChild(outer);
 
-            //rectangle.drawRect(topLeft.x, topLeft.y + this.sectorHeight - westWidth, southWidth, ROAD_LINE_WIDTH);
+        const mainRoadSide = (width, height, type) => {
+            let left = topLeft.x;
+            let top = topLeft.y;
+            if (type == 'H') {
+                //rectangle.drawRect(topLeft.x, topLeft.y + westWidth - ROAD_LINE_WIDTH, northWidth, ROAD_LINE_WIDTH);
+                let rectWidth = Math.abs(width);
+                let rectHeight = ROAD_LINE_WIDTH;
+                if (height > 0) {
+                    top += height - ROAD_LINE_WIDTH;
+                } else {
+                    top += this.sectorHeight + height;
+                }
+                if (width < 0) {
+                    left += this.sectorWidth + width;
+                }
+                rectangle.drawRect(left, top, rectWidth, rectHeight);
+            } else {
+                let rectWidth = ROAD_LINE_WIDTH;
+                let rectHeight = Math.abs(height);
+                if (width > 0) {
+                    left += width - ROAD_LINE_WIDTH;
+                } else {
+                    left += this.sectorWidth + width;
+                }
+                if (height < 0) {
+                    top += this.sectorHeight + height;
+                }
+                rectangle.drawRect(left, top, rectWidth, rectHeight);
+            }
         }
-        // if (east > 0) {
-        //     rectangle.drawRect(topLeft.x + this.sectorWidth - northWidth, topLeft.y + eastWidth - ROAD_LINE_WIDTH, northWidth, ROAD_LINE_WIDTH);
-        //     rectangle.drawRect(topLeft.x + this.sectorWidth - southWidth, topLeft.y + this.sectorHeight - eastWidth, southWidth, ROAD_LINE_WIDTH);
-        // }
-        // if (north > 0) {
-        //     rectangle.drawRect(topLeft.x + northWidth, topLeft.y, ROAD_LINE_WIDTH, westWidth); // nema by 2. northWidth?
-        //     rectangle.drawRect(topLeft.x + this.sectorWidth - northWidth, topLeft.y, ROAD_LINE_WIDTH, eastWidth);
-        // }
-        // if (south > 0) {
-        //     rectangle.drawRect(topLeft.x + southWidth, topLeft.y + this.sectorHeight - westWidth, ROAD_LINE_WIDTH, westWidth);
-        //     rectangle.drawRect(topLeft.x + this.sectorWidth - southWidth, topLeft.y + this.sectorHeight - eastWidth, ROAD_LINE_WIDTH, eastWidth);
-        // }
-
-
 
         if (west > 0) {
-            rectangle.drawRect(topLeft.x, topLeft.y + westWidth - ROAD_LINE_WIDTH, northWidth, ROAD_LINE_WIDTH);
-            rectangle.drawRect(topLeft.x, topLeft.y + this.sectorHeight - westWidth, southWidth, ROAD_LINE_WIDTH);
+            mainRoadSide(northWidth, westWidth, 'H');
+            mainRoadSide(southWidth, -westWidth, 'H');
         }
         if (east > 0) {
-            rectangle.drawRect(topLeft.x + this.sectorWidth - northWidth, topLeft.y + eastWidth - ROAD_LINE_WIDTH, northWidth, ROAD_LINE_WIDTH);
-            rectangle.drawRect(topLeft.x + this.sectorWidth - southWidth, topLeft.y + this.sectorHeight - eastWidth, southWidth, ROAD_LINE_WIDTH);
+            mainRoadSide(-northWidth, eastWidth, 'H');
+            mainRoadSide(-southWidth, -eastWidth, 'H');
         }
         if (north > 0) {
-            rectangle.drawRect(topLeft.x + northWidth, topLeft.y, ROAD_LINE_WIDTH, westWidth); // nema by 2. northWidth?
-            rectangle.drawRect(topLeft.x + this.sectorWidth - northWidth, topLeft.y, ROAD_LINE_WIDTH, eastWidth);
+            mainRoadSide(northWidth, westWidth, 'V');
+            mainRoadSide(-northWidth, eastWidth, 'V');
         }
         if (south > 0) {
-            rectangle.drawRect(topLeft.x + southWidth, topLeft.y + this.sectorHeight - westWidth, ROAD_LINE_WIDTH, westWidth);
-            rectangle.drawRect(topLeft.x + this.sectorWidth - southWidth, topLeft.y + this.sectorHeight - eastWidth, ROAD_LINE_WIDTH, eastWidth);
+            mainRoadSide(southWidth, -westWidth, 'V');
+            mainRoadSide(-southWidth, -eastWidth, 'V');
         }
 
         rectangle.endFill();

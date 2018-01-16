@@ -79,10 +79,10 @@ class Controls {
     }
 
     angle() {
-        let mousePosition = this.gameContext.renderer.plugins.interaction.mouse.global;
-        let cursor_diff_x = mousePosition.x - this.gameContext.middle.x;
-        let cursor_diff_y = mousePosition.y - this.gameContext.middle.y;
-        var angle = -Math.atan2(cursor_diff_x, cursor_diff_y) + this.piHalf;
+        const mousePosition = this.gameContext.renderer.plugins.interaction.mouse.global;
+        const cursorDiffX = mousePosition.x - this.gameContext.middle.x;
+        const cursorDiffY = mousePosition.y - this.gameContext.middle.y;
+        let angle = -Math.atan2(cursorDiffX, cursorDiffY) + this.piHalf;
         if (angle < 0) {
             angle += this.piDouble;
         }
