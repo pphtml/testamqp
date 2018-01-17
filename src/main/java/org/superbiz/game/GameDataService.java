@@ -106,6 +106,9 @@ public class GameDataService {
             Msg.PlayerStartRequest playerStartRequest = message.getPlayerStartRequest();
             player.setName(playerStartRequest.getName());
 
+//            final VehicleData vehicle = new VehicleFactory(playerStartRequest.getVehicleType(),
+//                    playerStartRequest.getVehicleDesign(),
+//                    -17200f, -7800f, 0.0f).createVehicle();
             final VehicleData vehicle = new VehicleFactory(playerStartRequest.getVehicleType(),
                     playerStartRequest.getVehicleDesign(),
                     0.0f, 0.0f, 0.0f).createVehicle();

@@ -1,8 +1,6 @@
-- koncept zrychlovani / brzdeni / couvani
-- zabstraktneni vykreslovani
+- koncept zrychlovani / brzdeni / couvani - https://undergroundmathematics.org/thinking-about-functions/curve-match
 - delici cara
 - cary pruhu
-- prechody
 - kulaty rohy silnic
 - sprite chodnik & obrubnik
 - sprite trava
@@ -12,7 +10,7 @@
 - TODO vypocitat distance ve VehiclePositions
 - posilani PlayerUpdateRequest teprve po PlayerStartResponse
 - GTA I.
-- sprite nakladaku - https://www.google.de/search?biw=1680&bih=919&tbm=isch&ei=5Z9UWr3AGM-3kwWr-aXIDw&q=truck+2d+above&gws_rd=cr&dcr=0
+- sprite nakladaku - https://www.google.com/search?biw=1680&bih=919&tbm=isch&ei=5Z9UWr3AGM-3kwWr-aXIDw&q=truck+2d+above&gws_rd=cr&dcr=0
 - dialog startu hry - jmeno, barva
   - http://xiaokaike.github.io/vue-color/
 - nove sprity aut
