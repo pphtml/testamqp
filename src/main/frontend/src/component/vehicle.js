@@ -127,7 +127,7 @@ class Vehicle {
             const originalFrontPart = this.vehicleParts[0];
             const askedAngle = this.gameContext.controls.angle();
             const orientation = allowedAngle(askedAngle, originalFrontPart.orientation, wheelDeflection);
-            const distance = 0.06 * elapsedTime * this.gameContext.controls.isMouseDown() ? 10.0 : 2.0;
+            const distance = 0.06 * elapsedTime * this.gameContext.controls.speed;
 
             const movedVehicleParts = move(orientation, distance, this.vehicleParts);
             this.vehicleParts = movedVehicleParts;

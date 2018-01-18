@@ -1,9 +1,16 @@
 - koncept zrychlovani / brzdeni / couvani - https://undergroundmathematics.org/thinking-about-functions/curve-match
+- ovladani sipkama
+- naves
 - delici cara
 - cary pruhu
 - kulaty rohy silnic
 - sprite chodnik & obrubnik
+- normalizovany viewport - scale - window.screen - Screen {availWidth: 1680, availHeight: 1010, width: 1680, height: 1050, colorDepth: 24, …}
+- lampy
+- napisy slow
+- odbocovaci sipky
 - sprite trava
+- parkoviste - inspirace - https://www.google.com/imgres?imgurl=https%3A%2F%2Fimage.shutterstock.com%2Fdisplay_pic_with_logo%2F305047%2F373818496%2Fstock-vector-top-view-of-the-city-urban-crossroads-with-cars-and-houses-pedestrians-background-town-map-373818496.jpg&imgrefurl=https%3A%2F%2Fwww.vecteezy.com%2Fvector-art%2F91748-car-aerial-view-vector&docid=j5XB5MET249V7M&tbnid=jSDPvlE3hTWXnM%3A&vet=10ahUKEwiq_5yX2MvYAhWE-aQKHQK2DvMQMwhuKCYwJg..i&w=450&h=444&bih=987&biw=1920&q=truck%202d%20top%20view&ved=0ahUKEwiq_5yX2MvYAhWE-aQKHQK2DvMQMwhuKCYwJg&iact=mrc&uact=8#h=444&imgdii=s7d__9DmknyP0M:&vet=10ahUKEwiq_5yX2MvYAhWE-aQKHQK2DvMQMwhuKCYwJg..i&w=450
 - omezeni rychlosti otaceni
 - rychlost jizdy
 - stred podle stredu predni osy
@@ -29,6 +36,8 @@ protoc -I=src/main/java/org/superbiz/game/proto --js_out=import_style=commonjs,b
 grafika:
 https://opengameart.org/content/free-top-down-car-sprites-by-unlucky-studio
 https://www.google.com/imgres?imgurl=https%3A%2F%2Fthumbs.dreamstime.com%2Fb%2Fhighway-road-construction-map-top-view-vector-elements-part-illustration-traffic-74671237.jpg&imgrefurl=https%3A%2F%2Fwww.dreamstime.com%2Fstock-illustration-highway-road-construction-map-top-view-vector-elements-part-illustration-traffic-image74671237&docid=Dv3Vh5qy6lSqnM&tbnid=oXAViz4dKkGhpM%3A
+https://www.dreamstime.com/stock-illustration-road-map-toolkit-part-crossroads-pedestrian-crossings-image46536708
+https://www.dreamstime.com/stock-illustration-road-map-toolkit-part-turns-roads-roundabouts-image46536716
 https://www.dreamstime.com/stock-illustration-road-map-toolkit-part-basic-elements-marking-image46536702
 https://www.google.com/imgres?imgurl=https%3A%2F%2Fimage.shutterstock.com%2Fdisplay_pic_with_logo%2F305047%2F373818496%2Fstock-vector-top-view-of-the-city-urban-crossroads-with-cars-and-houses-pedestrians-background-town-map-373818496.jpg&imgrefurl=https%3A%2F%2Fwww.vecteezy.com%2Fvector-art%2F91748-car-aerial-view-vector&docid=j5XB5MET249V7M&tbnid=jSDPvlE3hTWXnM%3A&vet=10ahUKEwiq_5yX2MvYAhWE-aQKHQK2DvMQMwhuKCYwJg..i&w=450&h=444&bih=987&biw=1920&q=truck%202d%20top%20view&ved=0ahUKEwiq_5yX2MvYAhWE-aQKHQK2DvMQMwhuKCYwJg&iact=mrc&uact=8#h=444&imgdii=s7d__9DmknyP0M:&vet=10ahUKEwiq_5yX2MvYAhWE-aQKHQK2DvMQMwhuKCYwJg..i&w=450
 https://www.google.com/imgres?imgurl=http%3A%2F%2Funluckystudio.com%2Fwp-content%2Fuploads%2F2015%2F01%2Fpreview_carspritespack.jpg&imgrefurl=https%3A%2F%2Fopengameart.org%2Fcontent%2Ffree-top-down-car-sprites-by-unlucky-studio&docid=AhCgkoCczm7tcM&tbnid=GR0do5_HluUMnM%3A&vet=10ahUKEwjOt4Dz18vYAhVB3KQKHT1tDHIQMwhrKCMwIw..i&w=700&h=1271&bih=987&biw=1920&q=truck%202d%20top%20view

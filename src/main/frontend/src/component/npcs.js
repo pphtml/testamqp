@@ -20,10 +20,16 @@ let resources = loader.resources;
 //
 // const FLASHING_SPEED = 0.0117647;
 
+//const PADDING_SECTOR_COUNT = 0;
 const PADDING_SECTOR_COUNT = 1;
 const ROAD_WIDTH = 180;
+const ROAD_ROUNDING_RADIUS = 40;
 const ROAD_LINE_WIDTH = 12;
+const ROAD_MIDDLE_LINE_BASIC = 12;
+const ROAD_MIDLLE_LINE_DOUBLE = 24;
+const ROAD_MIDLLE_LINE_DOUBLE_THICKNESS = 8;
 const XING_WIDENESS = 200;
+const XING_WIDENESS_PADDED = 240;
 const XING_MINIMAL_DISTANCE = 50;
 const XING_STRIPE_RATIO = 0.6;
 
@@ -181,6 +187,8 @@ class NPCS {
         const south = sectorData.getSouth();
         const west = sectorData.getWest();
 
+        //const subtractRoadWidthWithCornerRadius = (roadWidth) => { roadWidth == 0 ? 0 : ROAD_WIDTH * roadWidth + ROAD_ROUNDING_RADIUS };
+
         const northWidth = this.sectorWidthHalf - ROAD_WIDTH * north;
         const southWidth = this.sectorWidthHalf - ROAD_WIDTH * south;
         const eastWidth = this.sectorHeightHalf - ROAD_WIDTH * east;
@@ -265,6 +273,48 @@ class NPCS {
             }
         };
 
+        const innerRoadLine = (x, y, width, height, type) => {
+            if (type == 'H') {
+                if (height == ROAD_MIDLLE_LINE_DOUBLE) {
+                    rectangle.drawRect(x, y, width, ROAD_MIDLLE_LINE_DOUBLE_THICKNESS);
+                    rectangle.drawRect(x, y + height - ROAD_MIDLLE_LINE_DOUBLE_THICKNESS, width, ROAD_MIDLLE_LINE_DOUBLE_THICKNESS);
+                } else {
+                    rectangle.drawRect(x, y, width, height);
+                }
+            } else {
+                if (width == ROAD_MIDLLE_LINE_DOUBLE) {
+                    rectangle.drawRect(x, y, ROAD_MIDLLE_LINE_DOUBLE_THICKNESS, height);
+                    rectangle.drawRect(x + width - ROAD_MIDLLE_LINE_DOUBLE_THICKNESS, y, ROAD_MIDLLE_LINE_DOUBLE_THICKNESS, height);
+                } else {
+                    rectangle.drawRect(x, y, width, height);
+                }
+            }
+        };
+
+        const mainRoadMiddleLine = (size, roadWidth, type) => {
+            const stripesWidth = roadWidth > 1 ? ROAD_MIDLLE_LINE_DOUBLE : ROAD_MIDDLE_LINE_BASIC;
+            const stripesWidthHalf = stripesWidth / 2;
+            if (type == 'H') {
+                let top = topLeft.y + this.sectorHeightHalf - stripesWidthHalf;
+                let left = topLeft.x;
+                let width = Math.abs(size);
+                if (size < 0) {
+                    left += this.sectorWidth + size;
+                }
+                //xingGraphics.drawRect(left, top, width, stripesWidth);
+                innerRoadLine(left, top, width, stripesWidth, type);
+            } else {
+                let top = topLeft.y;
+                let left = topLeft.x + this.sectorWidthHalf - stripesWidthHalf;
+                let height = Math.abs(size);
+                if (size < 0) {
+                    top += this.sectorHeight + size;
+                }
+                //xingGraphics.drawRect(left, top, stripesWidth, height);
+                innerRoadLine(left, top, stripesWidth, height, type);
+            }
+        };
+
         const mainRoadSide = (width, height, type) => {
             let left = topLeft.x;
             let top = topLeft.y;
@@ -296,52 +346,51 @@ class NPCS {
             }
         };
 
-        if (west > 0) {
-            mainRoadSide(northWidth, westWidth, 'H');
-            mainRoadSide(southWidth, -westWidth, 'H');
-        }
-        if (east > 0) {
-            mainRoadSide(-northWidth, eastWidth, 'H');
-            mainRoadSide(-southWidth, -eastWidth, 'H');
-        }
-        if (north > 0) {
-            mainRoadSide(northWidth, westWidth, 'V');
-            mainRoadSide(-northWidth, eastWidth, 'V');
-        }
-        if (south > 0) {
-            mainRoadSide(southWidth, -westWidth, 'V');
-            mainRoadSide(-southWidth, -eastWidth, 'V');
-        }
-
         const binaryNorth = Math.min(north, 1);
         const binarySouth = Math.min(south, 1);
         const binaryWest = Math.min(west, 1);
         const binaryEast = Math.min(east, 1);
         const binarySum  = binaryNorth + binarySouth + binaryWest + binaryEast;
-        if (west > 0 && binarySum > 2) {
-            xing(Math.min(northWidth, southWidth), westWidth, 'H');
+        if (west > 0) {
+            mainRoadSide(northWidth, westWidth, 'H');
+            mainRoadSide(southWidth, -westWidth, 'H');
+            let minWidth = Math.min(northWidth, southWidth);
+            if (binarySum > 2) {
+                xing(minWidth, westWidth, 'H');
+                minWidth -= XING_WIDENESS_PADDED;
+            }
+            mainRoadMiddleLine(minWidth, west, 'H');
         }
-        if (east > 0 && binarySum > 2) {
-            xing(-Math.min(northWidth, southWidth), eastWidth, 'H');
+        if (east > 0) {
+            mainRoadSide(-northWidth, eastWidth, 'H');
+            mainRoadSide(-southWidth, -eastWidth, 'H');
+            let minWidth  = -Math.min(northWidth, southWidth);
+            if (binarySum > 2) {
+                xing(minWidth, eastWidth, 'H');
+                minWidth += XING_WIDENESS_PADDED;
+            }
+            mainRoadMiddleLine(minWidth, east, 'H');
         }
-        if (north > 0 && binarySum > 2) {
-            xing(northWidth, Math.min(westWidth, eastWidth), 'V');
+        if (north > 0) {
+            mainRoadSide(northWidth, westWidth, 'V');
+            mainRoadSide(-northWidth, eastWidth, 'V');
+            let minHeight = Math.min(westWidth, eastWidth);
+            if (binarySum > 2) {
+                xing(northWidth, minHeight, 'V');
+                minHeight -= XING_WIDENESS_PADDED;
+            }
+            mainRoadMiddleLine(minHeight, north, 'V');
         }
-        if (south > 0 && binarySum > 2) {
-            xing(southWidth, -Math.min(westWidth, eastWidth), 'V');
+        if (south > 0) {
+            mainRoadSide(southWidth, -westWidth, 'V');
+            mainRoadSide(-southWidth, -eastWidth, 'V');
+            let minHeight = -Math.min(westWidth, eastWidth);
+            if (binarySum > 2) {
+                xing(southWidth, minHeight, 'V');
+                minHeight += XING_WIDENESS_PADDED;
+            }
+            mainRoadMiddleLine(minHeight, south, 'V');
         }
-        // if (west > 0 && (north > 0 || south > 0)) {
-        //     xing(Math.min(northWidth, southWidth), westWidth, 'H');
-        // }
-        // if (east > 0 && (north > 0 || south > 0)) {
-        //     xing(-Math.min(northWidth, southWidth), eastWidth, 'H');
-        // }
-        // if (north > 0 && (west > 0 || east > 0)) {
-        //     xing(northWidth, Math.min(westWidth, eastWidth), 'V');
-        // }
-        // if (south > 0 && (west > 0 || east > 0)) {
-        //     xing(southWidth, -Math.min(westWidth, eastWidth), 'V');
-        // }
 
 
         rectangle.endFill();

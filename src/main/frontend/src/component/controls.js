@@ -4,11 +4,14 @@ const withinPiBounds = require('../computation/movements').withinPiBounds;
 class Controls {
     constructor(gameContext) {
         this.gameContext = gameContext;
-        this.mouseDown = false;
         /*document.body.onmousedown = () => this.mouseDown++;
         document.body.onmouseup = () => this.mouseDown--;*/
         this.coordinates = {x: 0.0, y: 0.0};
         this.skin = 'SET ME UP!';
+        this.speed = 0.0;
+        this.baseSpeed = 1.0;
+        this.speedAccelerator = false;
+        this.speedBrake = false;
 
         let mouseDowns = rx.Observable.fromEvent(document, 'mousedown');
         let mouseUps = rx.Observable.fromEvent(document, 'mouseup');
@@ -21,7 +24,9 @@ class Controls {
         this.piDouble = Math.PI * 2;
 
         let resizeStream = rx.Observable.fromEvent(window, 'resize');
-        rx.Observable.merge(resizeStream.debounceTime(500), resizeStream.throttleTime(500)).distinct().subscribe(event => { this.resizedHandler(); });
+        rx.Observable.merge(resizeStream.debounceTime(500), resizeStream.throttleTime(500)).distinct().subscribe(event => {
+            this.resizedHandler();
+        });
         //.debounceTime(1000).subscribe(event => { this.resizedHandler(); });
 
         this.fpsSubject = new rx.Subject();
@@ -33,16 +38,20 @@ class Controls {
                 console.info('vyhodit hada z top ten');
 
                 this.scoreUpdateSubject.next({id: msg.getClientdisconnect().getId(), type: 'remove'});
-            }
-            if (msg.hasPlayerupdateresponse()) {
+            } else if (msg.hasPlayerupdateresponse()) {
                 this.handlePlayerUpdateResponse(msg.getPlayerupdateresponse());
+            } else if (msg.hasPlayerstartresponse()) {
+                this.handlePlayerStartResponse(msg.getPlayerstartresponse());
             }
         });
 
         this.mouseActions.subscribe(event => {
             //console.info(event);
             // https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/buttons
-            this.mouseDown = event.buttons > 0;
+            //this.mouseDown = event.buttons > 0;
+            this.speedAccelerator = (event.buttons & 1) > 0;
+            this.speedBrake = (event.buttons & 2) > 0;
+            console.info(`buttons: ${event.buttons}, acc: ${this.speedAccelerator}, brake: ${this.speedBrake}`);
         });
     }
 
@@ -50,7 +59,7 @@ class Controls {
         //console.info('resized handler');
         this.gameContext.width = window.innerWidth;
         this.gameContext.height = window.innerHeight;
-        this.gameContext.middle = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+        this.gameContext.middle = {x: window.innerWidth / 2, y: window.innerHeight / 2};
         this.gameContext.renderer.resize(this.gameContext.width, this.gameContext.height);
         if (this.gameContext.background) {
             this.gameContext.background.initSprite(this.gameContext.width, this.gameContext.height);
@@ -74,10 +83,6 @@ class Controls {
         this.gameContext.communication.subject.next(bytes);
     }
 
-    isMouseDown() {
-        return this.mouseDown;
-    }
-
     angle() {
         const mousePosition = this.gameContext.renderer.plugins.interaction.mouse.global;
         const cursorDiffX = mousePosition.x - this.gameContext.middle.x;
@@ -89,55 +94,31 @@ class Controls {
         return withinPiBounds(angle);
     }
 
-
-    // static computeAllowedAngle(askedAngle, lastAngle, time, gameContext, baseSpeed, speed) {
-    //     let allowedDiff = Math.PI / 4200 * time * speed / baseSpeed;
-    //     let lower = lastAngle - allowedDiff;
-    //     let upper = lastAngle + allowedDiff;
-    //     //console.info(lower, upper, askedAngle);
-    //     let asked2 = askedAngle - Math.PI * 2;
-    //     let asked3 = askedAngle + Math.PI * 2;
-    //     //gameContext.gameInfo.message.text = `lower: ${lower.toFixed(2)}, upper: ${upper.toFixed(2)}, asked: ${askedAngle.toFixed(2)}, a2: ${asked2.toFixed(2)}, a3: ${asked3.toFixed(2)}`;
-    //     if ((lower <= askedAngle && upper >= askedAngle) || (lower <= asked2 && upper >= asked2) || (lower <= asked3 && upper >= asked3)) {
-    //         return askedAngle;
-    //     } else {
-    //         let fromLower = Math.min(Math.abs(lower - askedAngle), Math.abs(lower - asked2), Math.abs(lower - asked3));
-    //         let fromUpper = Math.min(Math.abs(upper - askedAngle), Math.abs(upper - asked2), Math.abs(upper - asked3))
-    //         //gameContext.gameInfo.message.text = `fromLower: ${fromLower.toFixed(2)}, fromUpper: ${fromUpper.toFixed(2)}`;
-    //         if (fromLower < fromUpper) {
-    //             return Controls.withinPiBounds(lower);
-    //         } else {
-    //             return Controls.withinPiBounds(upper);
-    //         }
-    //     }
-    //     // let lower = Controls.withinPiBounds(lastAngle - allowedDiff);
-    //     // let upper = Controls.withinPiBounds(lastAngle + allowedDiff);
-    //     // if (lower < upper) {
-    //     //     if (lower <= askedAngle && upper >= askedAngle) {
-    //     //         return askedAngle;
-    //     //     } else {
-    //     //
-    //     //     }
-    //     // } else {
-    //     //
-    //     // }
-    // }
-    //
-    // static withinPiBounds(angle) {
-    //     // while (angle < 0.0) {
-    //     //     angle += Math.PI * 2;
-    //     // }
-    //     // return angle % Math.PI * 2;
-    //     return angle < 0.0 ? angle + Math.PI * 2 :   // TODO pouzij konstantu
-    //         angle >= Math.PI * 2 ? angle - Math.PI * 2 : angle;
-    //
-    // }
-
     handlePlayerUpdateResponse(response) {
         this.coordinates = {x: response.getX(), y: response.getY()};
 
         const roundTrip = Date.now() - response.getTimeinfo().getInitiated();
         this.gameContext.gameInfo.roundTrip = roundTrip;
+    }
+
+    handlePlayerStartResponse(response) {
+        this.baseSpeed = response.getBasespeed();
+    }
+
+    updateSpeed(elapsedTime) {
+        if (this.speedAccelerator) {
+            let accelerationTimeFrom0 = Math.pow(this.speed, 2) / this.baseSpeed;
+            accelerationTimeFrom0 += elapsedTime / 1000;
+            this.speed = Math.sqrt(accelerationTimeFrom0 * this.baseSpeed);
+        }
+        if (this.speedBrake) {
+            const deceleration = 1.0 * this.baseSpeed * elapsedTime / 1000;
+            this.speed = Math.max(0.0, this.speed - deceleration);
+        }
+    }
+
+    update(elapsedTime) {
+        this.updateSpeed(elapsedTime);
     }
 }
 

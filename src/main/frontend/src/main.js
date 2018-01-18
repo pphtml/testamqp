@@ -110,6 +110,7 @@ function setup() {
 
         let angle = gameContext.controls.angle();
 
+        gameContext.controls.update(elapsedTime);
         vehicles.update(elapsedTime);
         player.update(angle, elapsedTime);
         gameInfo.update(angle);
