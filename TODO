@@ -1,18 +1,18 @@
 - koncept zrychlovani / brzdeni / couvani - https://undergroundmathematics.org/thinking-about-functions/curve-match
 - ovladani sipkama
+- zpomaleni auta pri riznuti zatacky
 - naves
-- delici cara
 - cary pruhu
 - kulaty rohy silnic
 - sprite chodnik & obrubnik
 - normalizovany viewport - scale - window.screen - Screen {availWidth: 1680, availHeight: 1010, width: 1680, height: 1050, colorDepth: 24, …}
+  - http://ezelia.com/2013/pixi-tutorial
 - lampy
 - napisy slow
 - odbocovaci sipky
 - sprite trava
 - parkoviste - inspirace - https://www.google.com/imgres?imgurl=https%3A%2F%2Fimage.shutterstock.com%2Fdisplay_pic_with_logo%2F305047%2F373818496%2Fstock-vector-top-view-of-the-city-urban-crossroads-with-cars-and-houses-pedestrians-background-town-map-373818496.jpg&imgrefurl=https%3A%2F%2Fwww.vecteezy.com%2Fvector-art%2F91748-car-aerial-view-vector&docid=j5XB5MET249V7M&tbnid=jSDPvlE3hTWXnM%3A&vet=10ahUKEwiq_5yX2MvYAhWE-aQKHQK2DvMQMwhuKCYwJg..i&w=450&h=444&bih=987&biw=1920&q=truck%202d%20top%20view&ved=0ahUKEwiq_5yX2MvYAhWE-aQKHQK2DvMQMwhuKCYwJg&iact=mrc&uact=8#h=444&imgdii=s7d__9DmknyP0M:&vet=10ahUKEwiq_5yX2MvYAhWE-aQKHQK2DvMQMwhuKCYwJg..i&w=450
 - omezeni rychlosti otaceni
-- rychlost jizdy
 - stred podle stredu predni osy
 - TODO vypocitat distance ve VehiclePositions
 - posilani PlayerUpdateRequest teprve po PlayerStartResponse

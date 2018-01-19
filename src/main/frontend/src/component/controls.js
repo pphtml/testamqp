@@ -107,12 +107,13 @@ class Controls {
 
     updateSpeed(elapsedTime) {
         if (this.speedAccelerator) {
+            const maxElapsedTime = Math.min(elapsedTime, 100);
             let accelerationTimeFrom0 = Math.pow(this.speed, 2) / this.baseSpeed;
-            accelerationTimeFrom0 += elapsedTime / 1000;
+            accelerationTimeFrom0 += maxElapsedTime / 1000;
             this.speed = Math.sqrt(accelerationTimeFrom0 * this.baseSpeed);
         }
         if (this.speedBrake) {
-            const deceleration = 1.0 * this.baseSpeed * elapsedTime / 1000;
+            const deceleration = 2.0 * this.baseSpeed * elapsedTime / 1000;
             this.speed = Math.max(0.0, this.speed - deceleration);
         }
     }

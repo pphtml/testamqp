@@ -28,8 +28,8 @@ const ROAD_LINE_WIDTH = 12;
 const ROAD_MIDDLE_LINE_BASIC = 12;
 const ROAD_MIDLLE_LINE_DOUBLE = 24;
 const ROAD_MIDLLE_LINE_DOUBLE_THICKNESS = 8;
-const XING_WIDENESS = 200;
-const XING_WIDENESS_PADDED = 240;
+const XING_WIDENESS = 140;
+const XING_WIDENESS_PADDED = 170;
 const XING_MINIMAL_DISTANCE = 50;
 const XING_STRIPE_RATIO = 0.6;
 
@@ -346,15 +346,51 @@ class NPCS {
             }
         };
 
+        const roadRounding = (roadType) => roadType > 0 ? ROAD_ROUNDING_RADIUS : 0;
+
         const binaryNorth = Math.min(north, 1);
         const binarySouth = Math.min(south, 1);
         const binaryWest = Math.min(west, 1);
         const binaryEast = Math.min(east, 1);
         const binarySum  = binaryNorth + binarySouth + binaryWest + binaryEast;
+
+        if (west > 0 && north > 0) {
+            const arc = new Graphics();
+            arc.lineStyle(ROAD_LINE_WIDTH, 0xffffff, 0.5);
+            arc.arc(topLeft.x + northWidth - ROAD_ROUNDING_RADIUS, topLeft.y + westWidth - ROAD_ROUNDING_RADIUS, ROAD_ROUNDING_RADIUS - ROAD_LINE_WIDTH / 2, 0, Math.PI / 2, false);
+            arc.displayGroup = layers.npcLayer;
+            arc._sector = sectorKey;
+            this.container.addChild(arc);
+        }
+        if (north > 0 && east > 0) {
+            const arc = new Graphics();
+            arc.lineStyle(ROAD_LINE_WIDTH, 0xffffff, 0.5);
+            arc.arc(topLeft.x + this.sectorWidth - northWidth + ROAD_ROUNDING_RADIUS, topLeft.y + eastWidth - ROAD_ROUNDING_RADIUS, ROAD_ROUNDING_RADIUS - ROAD_LINE_WIDTH / 2, Math.PI / 2, Math.PI, false);
+            arc.displayGroup = layers.npcLayer;
+            arc._sector = sectorKey;
+            this.container.addChild(arc);
+        }
+        if (east > 0 && south > 0) {
+            const arc = new Graphics();
+            arc.lineStyle(ROAD_LINE_WIDTH, 0xffffff, 0.5);
+            arc.arc(topLeft.x + this.sectorWidth - southWidth + ROAD_ROUNDING_RADIUS, topLeft.y  + this.sectorHeight - eastWidth + ROAD_ROUNDING_RADIUS, ROAD_ROUNDING_RADIUS - ROAD_LINE_WIDTH / 2, Math.PI, Math.PI * 3 / 2, false);
+            arc.displayGroup = layers.npcLayer;
+            arc._sector = sectorKey;
+            this.container.addChild(arc);
+        }
+        if (south > 0 && west > 0) {
+            const arc = new Graphics();
+            arc.lineStyle(ROAD_LINE_WIDTH, 0xffffff, 0.5);
+            arc.arc(topLeft.x + southWidth - ROAD_ROUNDING_RADIUS, topLeft.y  + this.sectorHeight - westWidth + ROAD_ROUNDING_RADIUS, ROAD_ROUNDING_RADIUS - ROAD_LINE_WIDTH / 2, Math.PI * 3 / 2, 0, false);
+            arc.displayGroup = layers.npcLayer;
+            arc._sector = sectorKey;
+            this.container.addChild(arc);
+        }
+
         if (west > 0) {
-            mainRoadSide(northWidth, westWidth, 'H');
-            mainRoadSide(southWidth, -westWidth, 'H');
-            let minWidth = Math.min(northWidth, southWidth);
+            mainRoadSide(northWidth - roadRounding(north), westWidth, 'H');
+            mainRoadSide(southWidth - roadRounding(south), -westWidth, 'H');
+            let minWidth = Math.min(northWidth, southWidth) - Math.max(roadRounding(north), Math.max(roadRounding(south)));
             if (binarySum > 2) {
                 xing(minWidth, westWidth, 'H');
                 minWidth -= XING_WIDENESS_PADDED;
@@ -362,9 +398,9 @@ class NPCS {
             mainRoadMiddleLine(minWidth, west, 'H');
         }
         if (east > 0) {
-            mainRoadSide(-northWidth, eastWidth, 'H');
-            mainRoadSide(-southWidth, -eastWidth, 'H');
-            let minWidth  = -Math.min(northWidth, southWidth);
+            mainRoadSide(-northWidth + roadRounding(north), eastWidth, 'H');
+            mainRoadSide(-southWidth + roadRounding(south), -eastWidth, 'H');
+            let minWidth  = -Math.min(northWidth, southWidth) + Math.max(roadRounding(north), Math.max(roadRounding(south)));
             if (binarySum > 2) {
                 xing(minWidth, eastWidth, 'H');
                 minWidth += XING_WIDENESS_PADDED;
@@ -372,9 +408,9 @@ class NPCS {
             mainRoadMiddleLine(minWidth, east, 'H');
         }
         if (north > 0) {
-            mainRoadSide(northWidth, westWidth, 'V');
-            mainRoadSide(-northWidth, eastWidth, 'V');
-            let minHeight = Math.min(westWidth, eastWidth);
+            mainRoadSide(northWidth, westWidth - roadRounding(west), 'V');
+            mainRoadSide(-northWidth, eastWidth - roadRounding(east), 'V');
+            let minHeight = Math.min(westWidth, eastWidth) - Math.max(roadRounding(west), Math.max(roadRounding(east)));
             if (binarySum > 2) {
                 xing(northWidth, minHeight, 'V');
                 minHeight -= XING_WIDENESS_PADDED;
@@ -382,16 +418,15 @@ class NPCS {
             mainRoadMiddleLine(minHeight, north, 'V');
         }
         if (south > 0) {
-            mainRoadSide(southWidth, -westWidth, 'V');
-            mainRoadSide(-southWidth, -eastWidth, 'V');
-            let minHeight = -Math.min(westWidth, eastWidth);
+            mainRoadSide(southWidth, -westWidth + roadRounding(west), 'V');
+            mainRoadSide(-southWidth, -eastWidth + roadRounding(east), 'V');
+            let minHeight = -Math.min(westWidth, eastWidth) + Math.max(roadRounding(west), Math.max(roadRounding(east)));
             if (binarySum > 2) {
                 xing(southWidth, minHeight, 'V');
                 minHeight += XING_WIDENESS_PADDED;
             }
             mainRoadMiddleLine(minHeight, south, 'V');
         }
-
 
         rectangle.endFill();
         rectangle.alpha = 0.5;
