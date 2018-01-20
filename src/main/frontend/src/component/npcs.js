@@ -254,6 +254,16 @@ class NPCS {
             sectorContainer.y = topLeft.y + offsetY;
             sectorContainer._sector = sectorKey;
             sectorContainer.addChild(gContext);
+
+            if (currentRoadType > 0 && leftRoadType > 0) {
+                const arc = new Graphics();
+                arc.lineStyle(ROAD_LINE_WIDTH, 0xffffff, 0.5);
+                arc.arc(leftRoadWidth - ROAD_ROUNDING_RADIUS, currentRoadWidth - ROAD_ROUNDING_RADIUS, ROAD_ROUNDING_RADIUS - ROAD_LINE_WIDTH / 2, 0, Math.PI / 2, false);
+                arc.displayGroup = layers.npcLayer;
+                arc._sector = sectorKey;
+                sectorContainer.addChild(arc);
+            }
+
             this.container.addChild(sectorContainer);
         };
 

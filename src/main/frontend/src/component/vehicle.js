@@ -133,7 +133,7 @@ class Vehicle {
             this.vehicleParts = movedVehicleParts;
             //console.info(movedVehicleParts);
             const frontSprite = this.container.children[0];
-            const x = this.vehicleParts[0].x, y = this.vehicleParts[0].y;
+            const x = Math.floor(this.vehicleParts[0].x), y = Math.floor(this.vehicleParts[0].y);
             frontSprite.position.set(x, y);
             frontSprite.rotation = this.vehicleParts[0].orientation;
 
