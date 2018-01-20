@@ -7,5 +7,4 @@ export default {
     npcLayer: new DisplayGroup(10, false),
     borderLayer: new DisplayGroup(5, false),
     backgroundLayer: new DisplayGroup(0, false)
-
 }

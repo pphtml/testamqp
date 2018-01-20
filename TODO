@@ -1,4 +1,6 @@
 - koncept zrychlovani / brzdeni / couvani - https://undergroundmathematics.org/thinking-about-functions/curve-match
+- recyklace kontextu - closePath() ? , new Graphics(true)
+- http://www.html5gamedevs.com/topic/30536-pixi-positioning-flickering-questions/
 - ovladani sipkama
 - zpomaleni auta pri riznuti zatacky
 - naves

@@ -1,22 +1,6 @@
 const expect = require("chai").expect;
 const move = require('../src/computation/movements').move;
 
-// let distanceCheck = (path, distance) => {
-//     var ok = true;
-//     for (var index = 0; index < path.length - 1; index++) {
-//         let left = path[index], right = path[index + 1];
-//         let xDiff = Math.abs(left.x - right.x), yDiff = Math.abs(left.y - right.y);
-//         let square = xDiff * xDiff + yDiff * yDiff;
-//         let diff = Math.sqrt(square);
-//         let distanceOk = Math.abs(diff - distance) < 0.0001;
-//         if (!distanceOk) {
-//             console.info(`${JSON.stringify(left)} -> ${JSON.stringify(right)}, diff: ${diff}`);
-//             ok = false;
-//         }
-//     }
-//     return ok;
-// };
-
 describe("Movements", () => {
     describe("Step Update Calculations", () => {
         it("move vehicle a bit to the east", () => {

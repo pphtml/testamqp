@@ -1,6 +1,6 @@
 import * as PIXI from 'pixi.js' // for pixi-display import
 import 'pixi-display'
-import 'pixi-filters'
+//import 'pixi-filters'
 import { Container, autoDetectRenderer, CanvasRenderer, loader, DisplayList, DisplayGroup } from 'pixi.js'
 import Player from './component/player'
 import GameInfo from './component/gameInfo'
