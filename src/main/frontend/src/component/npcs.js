@@ -197,7 +197,7 @@ class NPCS {
             const currentRoadWidth = sectorHeight / 2 - ROAD_WIDTH * currentRoadType;
             const leftRoadWidth = sectorWidth / 2 - ROAD_WIDTH * leftRoadType;
             const rightRoadWidth = sectorWidth / 2 - ROAD_WIDTH * rightRoadType;
-            const opositeRoadWidth = sectorHeight / 2 - ROAD_WIDTH * oppositeRoadType;
+            //const opositeRoadWidth = sectorHeight / 2 - ROAD_WIDTH * oppositeRoadType;
 
             const leftRoadWidthWORounding = leftRoadWidth - ((leftRoadType < 1) ? 0 : ROAD_ROUNDING_RADIUS);
             const rightRoadWidthWORounding = rightRoadWidth - ((rightRoadType < 1) ? 0 : ROAD_ROUNDING_RADIUS);
@@ -245,10 +245,16 @@ class NPCS {
             gContext.alpha = 0.5;
             gContext.displayGroup = layers.npcLayer;
             gContext._sector = sectorKey;
-            gContext.x = topLeft.x + offsetX;
-            gContext.y = topLeft.y + offsetY;
-            gContext.rotation = rotate;
-            this.container.addChild(gContext);
+            // gContext.x = topLeft.x + offsetX;
+            // gContext.y = topLeft.y + offsetY;
+            //gContext.rotation = rotate;
+            const sectorContainer = new Container();
+            sectorContainer.rotation = rotate;
+            sectorContainer.x = topLeft.x + offsetX;
+            sectorContainer.y = topLeft.y + offsetY;
+            sectorContainer._sector = sectorKey;
+            sectorContainer.addChild(gContext);
+            this.container.addChild(sectorContainer);
         };
 
         drawSectorQuadrant(west, north, south, east, 0, 0, 0, this.sectorWidth, this.sectorHeight);
@@ -522,10 +528,18 @@ class NPCS {
 
     removeSectorRoads(sectorKeysEligibleForActive) {
         for (let i = this.container.children.length - 1; i >= 0; i--) {
-            const sprite = this.container.children[i];
-            if (!sectorKeysEligibleForActive.has(sprite._sector)) {
+            const child = this.container.children[i];
+            if (!sectorKeysEligibleForActive.has(child._sector)) {
                 //console.info(`removing sprite for sector ${sprite._sector}`);
-                this.container.removeChild(sprite);
+                this.container.removeChild(child);
+                if (child.constructor.name == 'Container') {
+                    for (let j = child.children.length - 1; j >= 0; j--) {
+                        const sprite = child.children[j];
+                        child.removeChild(sprite);
+                        //delete sprite;
+                    }
+                }
+                //delete child;
             }
         }
     }
