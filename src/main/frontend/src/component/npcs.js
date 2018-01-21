@@ -1,7 +1,9 @@
-import { Sprite, Container, Graphics, loader, filters, BLEND_MODES } from 'pixi.js'
+import * as PIXI from 'pixi.js'
+import {Sprite, Container, Graphics, loader, filters, BLEND_MODES} from 'pixi.js' // , default as PIXI
 import layers from './layers'
-const rgbDimmer = require('../computation/rgbColor').rgbDimmer;
+//const rgbDimmer = require('../computation/rgbColor').rgbDimmer;
 let resources = loader.resources;
+let TilingSprite = PIXI.extras.TilingSprite;
 
 // const COLORS = [
 //     0xff0000,
@@ -229,6 +231,15 @@ class NPCS {
                 }
             };
 
+            const grass = (x, y, width, height) => {
+                const grassSprite = new TilingSprite(resources['images/spritesheet.json'].textures['grass-tile.png'], width, height);
+                //const grassSprite = new TilingSprite(resources['images/grass-tile.png'].texture, width, height);
+                grassSprite.position.set(x, y);
+                grassSprite.displayGroup = layers.npcLayer;
+                grassSprite._sector = sectorKey;
+                sectorContainer.addChild(grassSprite);
+            };
+
             if (currentRoadType > 0) {
                 gContext.drawRect(0, currentRoadWidth - ROAD_LINE_WIDTH, leftRoadWidthWORounding, ROAD_LINE_WIDTH);
                 gContext.drawRect(0, sectorHeight - currentRoadWidth, rightRoadWidthWORounding, ROAD_LINE_WIDTH);
@@ -256,13 +267,22 @@ class NPCS {
             sectorContainer.addChild(gContext);
 
             if (currentRoadType > 0 && leftRoadType > 0) {
+                grass(0, 0, leftRoadWidth - ROAD_LINE_WIDTH, currentRoadWidth - ROAD_LINE_WIDTH);
+
                 const arc = new Graphics();
                 arc.lineStyle(ROAD_LINE_WIDTH, 0xffffff, 0.5);
                 arc.arc(leftRoadWidth - ROAD_ROUNDING_RADIUS, currentRoadWidth - ROAD_ROUNDING_RADIUS, ROAD_ROUNDING_RADIUS - ROAD_LINE_WIDTH / 2, 0, Math.PI / 2, false);
                 arc.displayGroup = layers.npcLayer;
                 arc._sector = sectorKey;
                 sectorContainer.addChild(arc);
+            } else if (currentRoadType == 0 && binarySum == 2 && oppositeRoadType == 0) {
+                //grass(0, 0, sectorWidth, currentRoadWidth - ROAD_LINE_WIDTH);
+                grass(0, 0, leftRoadWidth - ROAD_LINE_WIDTH, sectorHeight / 2);
+                grass(0, sectorHeight / 2, rightRoadWidth - ROAD_LINE_WIDTH, sectorHeight / 2);
+            } else if (currentRoadType == 0 && binarySum >= 2 && oppositeRoadType > 0) {
+                grass(0, 0, Math.min(leftRoadWidth, rightRoadWidth) - ROAD_LINE_WIDTH, sectorHeight);
             }
+
 
             this.container.addChild(sectorContainer);
         };

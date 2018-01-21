@@ -38,7 +38,7 @@ class Vehicle {
         this.frameUpdatedFromServer = true;
         this.vehicleData = vehicleData;
         this.vehicleParts = vehicleData.vehicleParts;
-        const frontPart = this.vehicleParts;
+        const frontPart = this.vehicleParts[0];
         //this.coordinates = {x: frontPart.getX(), y: frontPart.getY()};
         // this.skinColor = skin;
         // this.angle = rotation;
@@ -52,7 +52,10 @@ class Vehicle {
 
 
         //const frontPartSprite = new Sprite(resources['images/truck-small.png'].texture);
-        const frontPartSprite = new Sprite(resources['images/transp.png'].texture);
+        //const frontPartSprite = new Sprite(resources['images/transp.png'].texture);
+        const spriteName = `${frontPart.sprite}.png`;
+        //console.info(frontPart.sprite);
+        const frontPartSprite = new Sprite(resources['images/spritesheet.json'].textures[spriteName]);
         //frontPartSprite.tint = 0x802020;
         //frontPart.metaInf = 'eye';
         //frontPart.scale.set(0.4, 0.4);

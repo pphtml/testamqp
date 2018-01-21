@@ -1,10 +1,8 @@
-- koncept zrychlovani / brzdeni / couvani - https://undergroundmathematics.org/thinking-about-functions/curve-match
-- recyklace kontextu - closePath() ? , new Graphics(true)
-- http://www.html5gamedevs.com/topic/30536-pixi-positioning-flickering-questions/
+- zpomalovani samo od sebe / zpomalovani pri prujezdu zatackou / couvani - https://undergroundmathematics.org/thinking-about-functions/curve-match
+- Uncaught Error: Texture Error: frame does not fit inside the base Texture dimensions: X: 2 + 2048 = 2050 > 776 or Y: 2 + 12 = 14 > 516
 - ovladani sipkama
-- zpomaleni auta pri riznuti zatacky
 - naves
-- cary pruhu
+- cary pruhu - vyzkouset png sprajty
 - kulaty rohy silnic
 - sprite chodnik & obrubnik
 - normalizovany viewport - scale - window.screen - Screen {availWidth: 1680, availHeight: 1010, width: 1680, height: 1050, colorDepth: 24, …}
@@ -18,20 +16,22 @@
 - stred podle stredu predni osy
 - TODO vypocitat distance ve VehiclePositions
 - posilani PlayerUpdateRequest teprve po PlayerStartResponse
-- GTA I.
 - sprite nakladaku - https://www.google.com/search?biw=1680&bih=919&tbm=isch&ei=5Z9UWr3AGM-3kwWr-aXIDw&q=truck+2d+above&gws_rd=cr&dcr=0
 - dialog startu hry - jmeno, barva
   - http://xiaokaike.github.io/vue-color/
-- nove sprity aut
 - multiplayer
+- hlavicky pro staticky data
 - http://2ality.com/2015/01/es6-destructuring.html
+- https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame#Notes
+  - http://www.javascriptkit.com/javatutors/requestanimationframe.shtml
 
 - protobuf - oneOf - https://developers.google.com/protocol-buffers/docs/proto3#oneof
 - dynos na heroku - heroku ps -a <app name> - https://devcenter.heroku.com/articles/free-dyno-hours
 g queues
 node/node node_modules/.bin/mocha --reporter spec
 node/node node/node_modules/npm/bin/npm-cli.js run build
-node index.js --padding 2 ~/Documents/ZizalyGrafika/TextureSource2/*.png
+npm install spritesheet-js --save-dev
+node index.js --padding 2 ~/Documents/TruckingGrafika/source/*.png
 protoc -I=src/main/java/org/superbiz/game/proto --java_out=src/main/java messages.proto
 protoc -I=src/main/java/org/superbiz/game/proto --js_out=import_style=commonjs,binary:src/main/frontend/src/proto messages.proto
 

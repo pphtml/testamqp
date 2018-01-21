@@ -85,6 +85,8 @@ public class VehicleFactory {
 //    int32 pivotY = 13;
         vehiclePart.setPartId(partDefinition.getCode())
             .setAxisHalfLength(partDefinition.getAxisHalfLength())
+            .setSprite(partDefinition.getSprite())
+            .setScale(partDefinition.getScale())
             .setFrontAxis(partDefinition.getFrontAxis())
             .setRearAxis(partDefinition.getRearAxis())
             .setWheelDeflection(partDefinition.getWheelDeflection());

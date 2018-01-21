@@ -16,7 +16,7 @@ public class VehicleFactoryTest {
 
         final VehicleData vehicle = vehicleFactory.createVehicle();
         assertNotNull(vehicle);
-        assertEquals(ModelType.TRUCK_SMALL, vehicle.getModelType());
+        assertEquals(ModelType.TRUCK, vehicle.getModelType());
 
         final VehiclePart frontPart = vehicle.getVehicleParts().iterator().next();
         assertNotNull(frontPart);

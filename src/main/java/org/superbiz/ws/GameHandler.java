@@ -116,31 +116,35 @@ public class GameHandler implements Handler {
 
             @Override
             public void onMessage(WebSocketMessage<ByteBuf> frame) {
-                WebSocketBinaryMessage binaryFrame = (WebSocketBinaryMessage)frame;
-                String playerId = ctx.getRequest().getQueryParams().get("id");
-                Player player = players.get(playerId);
-                if (player == null) {
-                    logger.warning(String.format("Player '%s' cannot be found.", playerId));
-                } else {
-                    //logger.info(String.format("Incoming frame -->: %s", frame));
-                    try {
-                        ByteBuf buf = binaryFrame.getContent();
-                        byte[] bytes;
-                        int length = buf.readableBytes();
+                try {
+                    WebSocketBinaryMessage binaryFrame = (WebSocketBinaryMessage)frame;
+                    String playerId = ctx.getRequest().getQueryParams().get("id");
+                    Player player = players.get(playerId);
+                    if (player == null) {
+                        logger.warning(String.format("Player '%s' cannot be found.", playerId));
+                    } else {
+                        //logger.info(String.format("Incoming frame -->: %s", frame));
+                        try {
+                            ByteBuf buf = binaryFrame.getContent();
+                            byte[] bytes;
+                            int length = buf.readableBytes();
 
-                        if (buf.hasArray()) {
-                            bytes = buf.array();
-                        } else {
-                            bytes = new byte[length];
-                            buf.getBytes(buf.readerIndex(), bytes);
+                            if (buf.hasArray()) {
+                                bytes = buf.array();
+                            } else {
+                                bytes = new byte[length];
+                                buf.getBytes(buf.readerIndex(), bytes);
+                            }
+
+                            Msg.Message message = Msg.Message.parseFrom(bytes);
+                            //logger.info(String.format("Incoming message -->: %s", bytes));
+                            gameDataService.processMessage(message, player);
+                        } catch (InvalidProtocolBufferException e) {
+                            logger.log(Level.SEVERE, e.getMessage(), e);
                         }
-                                
-                        Msg.Message message = Msg.Message.parseFrom(bytes);
-                        //logger.info(String.format("Incoming message -->: %s", bytes));
-                        gameDataService.processMessage(message, player);
-                    } catch (InvalidProtocolBufferException e) {
-                        logger.log(Level.SEVERE, e.getMessage(), e);
                     }
+                } catch (Exception e) {
+                    logger.log(Level.SEVERE, e.getMessage(), e);
                 }
             }
         });

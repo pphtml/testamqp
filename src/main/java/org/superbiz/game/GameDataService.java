@@ -108,6 +108,9 @@ public class GameDataService {
 
 //            final VehicleData vehicle = new VehicleFactory(playerStartRequest.getVehicleType(),
 //                    playerStartRequest.getVehicleDesign(),
+//                    -14820f, 8200f, 0.0f).createVehicle();
+//            final VehicleData vehicle = new VehicleFactory(playerStartRequest.getVehicleType(),
+//                    playerStartRequest.getVehicleDesign(),
 //                    -17200f, -7800f, 0.0f).createVehicle();
             final VehicleData vehicle = new VehicleFactory(playerStartRequest.getVehicleType(),
                     playerStartRequest.getVehicleDesign(),

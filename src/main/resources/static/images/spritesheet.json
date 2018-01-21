@@ -1,49 +1,97 @@
 {
 	"meta": {
 		"image": "spritesheet.png",
-		"size": {"w":776,"h":516},
+		"size": {"w":701,"h":463},
 		"scale": "1"
 	},
 	"frames": {
-		"background3.png":
+		"taxi.png":
 		{
-			"frame": {"x":2,"y":2,"w":512,"h":512},
+			"frame": {"x":262,"y":2,"w":224,"h":114},
 			"rotated": false,
 			"trimmed": false,
-			"spriteSourceSize": {"x":0,"y":0,"w":512,"h":512},
-			"sourceSize": {"w":512,"h":512}
+			"spriteSourceSize": {"x":0,"y":0,"w":224,"h":114},
+			"sourceSize": {"w":224,"h":114}
 		},
-		"myfood.png":
+		"background-blur.png":
 		{
-			"frame": {"x":518,"y":2,"w":256,"h":256},
+			"frame": {"x":2,"y":2,"w":256,"h":256},
 			"rotated": false,
 			"trimmed": false,
 			"spriteSourceSize": {"x":0,"y":0,"w":256,"h":256},
 			"sourceSize": {"w":256,"h":256}
 		},
-		"tail-mod2-white.png":
+		"Black_viper.png":
 		{
-			"frame": {"x":518,"y":262,"w":128,"h":128},
+			"frame": {"x":262,"y":120,"w":218,"h":105},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {"x":0,"y":0,"w":218,"h":105},
+			"sourceSize": {"w":218,"h":105}
+		},
+		"Car.png":
+		{
+			"frame": {"x":2,"y":262,"w":217,"h":94},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {"x":0,"y":0,"w":217,"h":94},
+			"sourceSize": {"w":217,"h":94}
+		},
+		"Audi.png":
+		{
+			"frame": {"x":2,"y":360,"w":216,"h":101},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {"x":0,"y":0,"w":216,"h":101},
+			"sourceSize": {"w":216,"h":101}
+		},
+		"grass-tile.png":
+		{
+			"frame": {"x":490,"y":324,"w":128,"h":128},
 			"rotated": false,
 			"trimmed": false,
 			"spriteSourceSize": {"x":0,"y":0,"w":128,"h":128},
 			"sourceSize": {"w":128,"h":128}
 		},
-		"myfood-outer.png":
+		"truck.png":
 		{
-			"frame": {"x":650,"y":262,"w":55,"h":55},
+			"frame": {"x":223,"y":262,"w":216,"h":89},
 			"rotated": false,
 			"trimmed": false,
-			"spriteSourceSize": {"x":0,"y":0,"w":55,"h":55},
-			"sourceSize": {"w":55,"h":55}
+			"spriteSourceSize": {"x":0,"y":0,"w":216,"h":89},
+			"sourceSize": {"w":216,"h":89}
 		},
-		"eye.png":
+		"Ambulance.png":
 		{
-			"frame": {"x":709,"y":262,"w":42,"h":42},
+			"frame": {"x":490,"y":2,"w":209,"h":102},
 			"rotated": false,
 			"trimmed": false,
-			"spriteSourceSize": {"x":0,"y":0,"w":42,"h":42},
-			"sourceSize": {"w":42,"h":42}
+			"spriteSourceSize": {"x":0,"y":0,"w":209,"h":102},
+			"sourceSize": {"w":209,"h":102}
+		},
+		"Mini_truck.png":
+		{
+			"frame": {"x":490,"y":108,"w":206,"h":113},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {"x":0,"y":0,"w":206,"h":113},
+			"sourceSize": {"w":206,"h":113}
+		},
+		"Mini_van.png":
+		{
+			"frame": {"x":490,"y":225,"w":198,"h":95},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {"x":0,"y":0,"w":198,"h":95},
+			"sourceSize": {"w":198,"h":95}
+		},
+		"Police.png":
+		{
+			"frame": {"x":222,"y":360,"w":216,"h":100},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {"x":0,"y":0,"w":216,"h":100},
+			"sourceSize": {"w":216,"h":100}
 		}
 	}
 }

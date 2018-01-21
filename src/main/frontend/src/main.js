@@ -70,11 +70,11 @@ document.body.appendChild(renderer.view);
 
 loader
     .add('images/spritesheet.json')
-    .add('images/background.png')
-    .add('images/background-blur.png')
-    .add('images/truck-small.png')
-    .add('images/transp.png')
-    .add('images/road-line.png')
+    //.add('images/grass-tile.png')
+    // .add('images/background-blur.png')
+    // .add('images/truck-small.png')
+    // .add('images/transp.png')
+    // .add('images/road-line.png')
     //.add("images/background2.png")
     .load(setup);
 
@@ -101,10 +101,9 @@ function setup() {
     // var frameTimeHistory = [];
     // var frameTimeIndex = 0;
     // var totalTimeForFrames = 0;
-    var before = Date.now();
-    function gameLoop() {
-        var now = Date.now();
-        var elapsedTime = now - before;
+    let before = 0;
+    function gameLoop(now) {
+        let elapsedTime = (now - before);
         before = now;
         gameContext.controls.fpsSubject.next('a');
 
@@ -121,6 +120,6 @@ function setup() {
 
         requestAnimationFrame(gameLoop);
     }
-    gameLoop();
+    gameLoop(0);
 }
 

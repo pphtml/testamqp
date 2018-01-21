@@ -155,7 +155,9 @@ class Vehicles {
                 axisHalfLength: part.getAxishalflength(),
                 frontAxis: part.getFrontaxis(),
                 rearAxis: part.getRearaxis(),
-                wheelDeflection: part.getWheeldeflection()
+                wheelDeflection: part.getWheeldeflection(),
+                sprite: part.getSprite(),
+                scale: part.getScale()
             };
         });
 

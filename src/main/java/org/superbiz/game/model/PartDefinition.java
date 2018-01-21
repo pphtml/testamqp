@@ -3,10 +3,13 @@ package org.superbiz.game.model;
 import static org.superbiz.util.TextUtil.slugify;
 
 public enum PartDefinition {
-    SMALL_TRUCK_FRONT(264, 113, 0.66f, -0.5f, (float)(Math.PI / 4));
+    TRUCK_FRONT("truck", 1f, 216, 89, 0.66f, -0.44f, (float)(Math.PI / 4));
+    //SMALL_TRUCK_FRONT(264, 113, 0.66f, -0.5f, (float)(Math.PI / 4));
 
     private final int width;
     private final int height;
+    private final String sprite;
+    private final float scale;
     private int pivotX;
     private int pivotY;
     private final float frontAxis;
@@ -14,7 +17,9 @@ public enum PartDefinition {
     private final float wheelDeflection;
 
 
-    PartDefinition(int width, int height, float frontAxis, float rearAxis, float wheelDeflection) {
+    PartDefinition(String sprite, float scale, int width, int height, float frontAxis, float rearAxis, float wheelDeflection) {
+        this.sprite = sprite;
+        this.scale = scale;
         this.width = width;
         this.height = height;
         this.frontAxis = frontAxis;
@@ -54,5 +59,13 @@ public enum PartDefinition {
 
     public float getWheelDeflection() {
         return wheelDeflection;
+    }
+
+    public String getSprite() {
+        return sprite;
+    }
+
+    public float getScale() {
+        return scale;
     }
 }

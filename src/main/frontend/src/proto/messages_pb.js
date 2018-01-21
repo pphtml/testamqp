@@ -2281,7 +2281,9 @@ proto.VehiclePart.toObject = function(includeInstance, msg) {
     axishalflength: jspb.Message.getFieldWithDefault(msg, 14, 0),
     frontaxis: +jspb.Message.getFieldWithDefault(msg, 15, 0.0),
     rearaxis: +jspb.Message.getFieldWithDefault(msg, 16, 0.0),
-    wheeldeflection: +jspb.Message.getFieldWithDefault(msg, 17, 0.0)
+    wheeldeflection: +jspb.Message.getFieldWithDefault(msg, 17, 0.0),
+    sprite: jspb.Message.getFieldWithDefault(msg, 18, ""),
+    scale: +jspb.Message.getFieldWithDefault(msg, 19, 0.0)
   };
 
   if (includeInstance) {
@@ -2353,6 +2355,14 @@ proto.VehiclePart.deserializeBinaryFromReader = function(msg, reader) {
     case 17:
       var value = /** @type {number} */ (reader.readFloat());
       msg.setWheeldeflection(value);
+      break;
+    case 18:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setSprite(value);
+      break;
+    case 19:
+      var value = /** @type {number} */ (reader.readFloat());
+      msg.setScale(value);
       break;
     default:
       reader.skipField();
@@ -2443,6 +2453,20 @@ proto.VehiclePart.serializeBinaryToWriter = function(message, writer) {
   if (f !== 0.0) {
     writer.writeFloat(
       17,
+      f
+    );
+  }
+  f = message.getSprite();
+  if (f.length > 0) {
+    writer.writeString(
+      18,
+      f
+    );
+  }
+  f = message.getScale();
+  if (f !== 0.0) {
+    writer.writeFloat(
+      19,
       f
     );
   }
@@ -2590,6 +2614,36 @@ proto.VehiclePart.prototype.getWheeldeflection = function() {
 /** @param {number} value */
 proto.VehiclePart.prototype.setWheeldeflection = function(value) {
   jspb.Message.setProto3FloatField(this, 17, value);
+};
+
+
+/**
+ * optional string sprite = 18;
+ * @return {string}
+ */
+proto.VehiclePart.prototype.getSprite = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 18, ""));
+};
+
+
+/** @param {string} value */
+proto.VehiclePart.prototype.setSprite = function(value) {
+  jspb.Message.setProto3StringField(this, 18, value);
+};
+
+
+/**
+ * optional float scale = 19;
+ * @return {number}
+ */
+proto.VehiclePart.prototype.getScale = function() {
+  return /** @type {number} */ (+jspb.Message.getFieldWithDefault(this, 19, 0.0));
+};
+
+
+/** @param {number} value */
+proto.VehiclePart.prototype.setScale = function(value) {
+  jspb.Message.setProto3FloatField(this, 19, value);
 };
 
 

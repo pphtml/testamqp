@@ -9,7 +9,7 @@ class Player {
         //
         const playerStartRequest = new proto.PlayerStartRequest();
         playerStartRequest.setName(this.gameContext.communication.commId);
-        playerStartRequest.setVehicletype('truck-small');
+        playerStartRequest.setVehicletype('truck');
         playerStartRequest.setVehicledesign('14338485');
         playerStartRequest.setInitiated(Date.now());
         const message = new proto.Message();

@@ -109,6 +109,8 @@ message VehiclePart {
     float frontAxis = 15;
     float rearAxis = 16;
     float wheelDeflection = 17;
+    string sprite = 18;
+    float scale = 19;
 
     enum PartType {
         FRONT = 0;
