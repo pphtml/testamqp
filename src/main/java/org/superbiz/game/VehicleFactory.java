@@ -7,6 +7,8 @@ import org.superbiz.game.model.VehiclePart;
 import org.superbiz.game.proto.Msg;
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class VehicleFactory {
     private final ModelType modelType;
@@ -50,12 +52,15 @@ public class VehicleFactory {
         vehicleData.setSpeedMultiplier(0.0f);
         vehicleData.setModelType(this.modelType);
 
-        VehiclePart frontVehiclePart = makeFrontVehiclePart();
-        vehicleData.setVehicleParts(Arrays.asList(frontVehiclePart));
+        final List<VehiclePart> vehicleParts = Arrays.stream(modelType.getPartDefinitions())
+                .map(partDefinition -> makeVehiclePart(partDefinition))
+                .collect(Collectors.toList());
+
+        vehicleData.setVehicleParts(vehicleParts);
         return vehicleData;
     }
 
-    private VehiclePart makeFrontVehiclePart() {
+    private VehiclePart makeVehiclePart(PartDefinition partDefinition) {
 //message VehiclePart {
 //    float x = 1;
 //    float y = 2;
@@ -79,7 +84,7 @@ public class VehicleFactory {
         vehiclePart.setOrientation(orientation);
         vehiclePart.setPartType(Msg.VehiclePart.PartType.FRONT);
 
-        PartDefinition partDefinition = modelType.getFrontPartDefinition();
+        //PartDefinition partDefinition = modelType.getFrontPartDefinition();
 //    string partId = 11;
 //    int32 pivotX = 12;
 //    int32 pivotY = 13;

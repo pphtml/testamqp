@@ -1,5 +1,4 @@
 - zpomalovani samo od sebe / zpomalovani pri prujezdu zatackou / couvani - https://undergroundmathematics.org/thinking-about-functions/curve-match
-- Uncaught Error: Texture Error: frame does not fit inside the base Texture dimensions: X: 2 + 2048 = 2050 > 776 or Y: 2 + 12 = 14 > 516
 - ovladani sipkama
 - naves
 - cary pruhu - vyzkouset png sprajty
@@ -31,7 +30,9 @@ g queues
 node/node node_modules/.bin/mocha --reporter spec
 node/node node/node_modules/npm/bin/npm-cli.js run build
 npm install spritesheet-js --save-dev
-node index.js --padding 2 ~/Documents/TruckingGrafika/source/*.png
+node src/main/frontend/node_modules/.bin/spritesheet-js --padding 2 -f pixi.js ~/Documents/TruckingGrafika/source/*.png
+rm src/main/resources/static/images/spritesheet.*
+mv spritesheet.* src/main/resources/static/images
 protoc -I=src/main/java/org/superbiz/game/proto --java_out=src/main/java messages.proto
 protoc -I=src/main/java/org/superbiz/game/proto --js_out=import_style=commonjs,binary:src/main/frontend/src/proto messages.proto
 
@@ -42,7 +43,6 @@ https://www.dreamstime.com/stock-illustration-road-map-toolkit-part-crossroads-p
 https://www.dreamstime.com/stock-illustration-road-map-toolkit-part-turns-roads-roundabouts-image46536716
 https://www.dreamstime.com/stock-illustration-road-map-toolkit-part-basic-elements-marking-image46536702
 https://www.google.com/imgres?imgurl=https%3A%2F%2Fimage.shutterstock.com%2Fdisplay_pic_with_logo%2F305047%2F373818496%2Fstock-vector-top-view-of-the-city-urban-crossroads-with-cars-and-houses-pedestrians-background-town-map-373818496.jpg&imgrefurl=https%3A%2F%2Fwww.vecteezy.com%2Fvector-art%2F91748-car-aerial-view-vector&docid=j5XB5MET249V7M&tbnid=jSDPvlE3hTWXnM%3A&vet=10ahUKEwiq_5yX2MvYAhWE-aQKHQK2DvMQMwhuKCYwJg..i&w=450&h=444&bih=987&biw=1920&q=truck%202d%20top%20view&ved=0ahUKEwiq_5yX2MvYAhWE-aQKHQK2DvMQMwhuKCYwJg&iact=mrc&uact=8#h=444&imgdii=s7d__9DmknyP0M:&vet=10ahUKEwiq_5yX2MvYAhWE-aQKHQK2DvMQMwhuKCYwJg..i&w=450
-https://www.google.com/imgres?imgurl=http%3A%2F%2Funluckystudio.com%2Fwp-content%2Fuploads%2F2015%2F01%2Fpreview_carspritespack.jpg&imgrefurl=https%3A%2F%2Fopengameart.org%2Fcontent%2Ffree-top-down-car-sprites-by-unlucky-studio&docid=AhCgkoCczm7tcM&tbnid=GR0do5_HluUMnM%3A&vet=10ahUKEwjOt4Dz18vYAhVB3KQKHT1tDHIQMwhrKCMwIw..i&w=700&h=1271&bih=987&biw=1920&q=truck%202d%20top%20view
 https://www.dreamstime.com/search.php?securitycheck=c6da607f4646da95f15cabc062f6e1c0&firstvalue=vector+truck&lastsearchvalue=&srh_field=vector+truck+top+view&s_il=y
 navesy:
 https://www.vecteezy.com/vector-art/89594-vehicles-arial-view-vector

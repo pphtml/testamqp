@@ -23,15 +23,16 @@
     "vuetify": "^0.17.2"
   },
   "devDependencies": {
-    "chai": "^4.1.2",
-    "express": "^4.16.2",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
     "babel-preset-env": "^1.6.0",
     "babel-preset-stage-2": "^6.24.1",
+    "chai": "^4.1.2",
     "cross-env": "^5.0.5",
     "css-loader": "^0.28.7",
+    "express": "^4.16.2",
     "file-loader": "^1.1.4",
+    "spritesheet-js": "^1.2.6",
     "style-loader": "^0.13.1",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.1",

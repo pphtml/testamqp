@@ -56,6 +56,44 @@ module.exports.move = function(orientation, distance, parts) {
     frontPart.y = newPartCentre.y;
     frontPart.orientation = angleDiff;
 
+    for (let index = 1; index < resultParts.length; index++) {
+        const previousPart = resultParts[index - 1];
+        const trailingPart = resultParts[index];
+        const axisHalfLength = trailingPart.axisHalfLength;
+
+        const previousRearAxisRatio = previousPart.rearAxis * previousPart.axisHalfLength;
+        //console.info(rearAxisRatio);
+        const frontAxisCentre = {x: previousPart.x + Math.cos(previousPart.orientation) * previousRearAxisRatio,
+            y: previousPart.y + Math.sin(previousPart.orientation) * previousRearAxisRatio};
+        // console.info(JSON.stringify(previousPart));
+        //console.info(JSON.stringify(frontAxisCentre));
+
+        const trailingOrientationCos = Math.cos(trailingPart.orientation);
+        const trailingOrientationSin = Math.sin(trailingPart.orientation);
+
+        const frontAxisRatio = trailingPart.frontAxis * axisHalfLength;
+        const rearAxisRatio = trailingPart.rearAxis * axisHalfLength;
+        const rearAxisCentre = {x: rearAxisRatio * trailingOrientationCos + trailingPart.x,
+            y: rearAxisRatio * trailingOrientationSin + trailingPart.y};
+        //console.info(JSON.stringify(rearAxisCentre));
+
+        const xDiff = frontAxisCentre.x - rearAxisCentre.x, yDiff = frontAxisCentre.y - rearAxisCentre.y;
+        let angleDiff = -Math.atan2(xDiff, yDiff) + PI_HALF;
+        if (angleDiff < 0) {
+            angleDiff += PI_DOUBLE;
+        }
+
+        const newPartCentre = {x: frontAxisCentre.x - Math.cos(angleDiff) * frontAxisRatio,
+            y: frontAxisCentre.y - Math.sin(angleDiff) * frontAxisRatio};
+
+        //[{"axisHalfLength":100,"orientation":0,"frontAxis":0.8,"rearAxis":-0.6,"x":0,"y":0}]
+        trailingPart.x = newPartCentre.x;
+        trailingPart.y = newPartCentre.y;
+        trailingPart.orientation = angleDiff;
+
+
+    }
+
     // const calculationSteps = {
     //     frontAxisRatio,
     //     frontAxisCentre,

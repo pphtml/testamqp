@@ -1,7 +1,7 @@
 const expect = require("chai").expect;
 const move = require('../src/computation/movements').move;
 
-describe("Movements", () => {
+describe("Movements with Trailer", () => {
     describe("Step Update Calculations", () => {
         it("move vehicle a bit to the east", () => {
             const frontPart = {
@@ -15,9 +15,9 @@ describe("Movements", () => {
             const rearPart = {
                 axisHalfLength: 100,
                 orientation: 0.0,
-                frontAxis: 0.8,
-                rearAxis: -0.6,
-                x: 0.0,
+                frontAxis: 0.75,
+                rearAxis: -0.5,
+                x: -200.0,
                 y: 0.0
             };
             const orientation = 0.0;
@@ -27,11 +27,17 @@ describe("Movements", () => {
             //console.info(JSON.stringify(movedVehicleParts));
 
             //expect(distanceCheck(newPath, distance)).to.equal(true);
-            expect(movedVehicleParts.length).to.equal(1);
+            expect(movedVehicleParts.length).to.equal(2);
+
             const frontPartResult = movedVehicleParts[0];
             expect(frontPartResult.x).to.be.closeTo(1000, 0.000001);
             expect(frontPartResult.y).to.be.closeTo(0, 0.000001);
             expect(frontPartResult.orientation).to.be.closeTo(0, 0.000001);
+
+            const trailerPartResult = movedVehicleParts[1];
+            expect(trailerPartResult.x).to.be.closeTo(865, 0.000001);
+            expect(trailerPartResult.y).to.be.closeTo(0, 0.000001);
+            expect(trailerPartResult.orientation).to.be.closeTo(0, 0.000001);
         });
 
         // it("move vehicle a bit to the west", () => {

@@ -38,7 +38,6 @@ class Vehicle {
         this.frameUpdatedFromServer = true;
         this.vehicleData = vehicleData;
         this.vehicleParts = vehicleData.vehicleParts;
-        const frontPart = this.vehicleParts[0];
         //this.coordinates = {x: frontPart.getX(), y: frontPart.getY()};
         // this.skinColor = skin;
         // this.angle = rotation;
@@ -50,70 +49,21 @@ class Vehicle {
         this.id = id;
         this.container = new Container();
 
-
-        //const frontPartSprite = new Sprite(resources['images/truck-small.png'].texture);
-        //const frontPartSprite = new Sprite(resources['images/transp.png'].texture);
-        const spriteName = `${frontPart.sprite}.png`;
-        //console.info(frontPart.sprite);
-        const frontPartSprite = new Sprite(resources['images/spritesheet.json'].textures[spriteName]);
-        //frontPartSprite.tint = 0x802020;
-        //frontPart.metaInf = 'eye';
-        //frontPart.scale.set(0.4, 0.4);
-        //frontPart.pivot.set(-5, -4);
-        frontPartSprite.anchor.set(0.5, 0.5);
-        frontPartSprite.displayGroup = layers.tailLayer;
-        frontPartSprite.position.set(frontPart.x, frontPart.y);
-        //frontPartSprite.rotation = Math.PI / 2;
-
-        //frontPartSprite.blendMode = BLEND_MODES.NORMAL;
-        //frontPartSprite.alpha = 1.0;
-        this.container.addChild(frontPartSprite);
-
-
-        // for (let index = this.path.length-1; index >= 0; index--) {
-        //     const part = this.path[index];
-        //     //const sprite = index == 0 ? this.head_sprite_factory() : this.tail_sprite_factory();
-        //     const sprite = this.sprite_factory();
-        //     sprite.pathIndex = index;
-        //     sprite.position.set(part.x, part.y);
-        //     sprite.rotation = part.r;
-        //     sprite.tint = this.skinColor;
-        //     //sprite.tint = 0x802020;
-        //     this.container.addChild(sprite);
-        //     //this.sprites.push(sprite);
-        // }
-        //
-        // const head = this.path[0];
-        //
-        // const eyeLeft = new Sprite(resources['images/spritesheet.json'].textures['eye.png']);
-        // eyeLeft.metaInf = 'eye';
-        // eyeLeft.scale.set(0.4, 0.4);
-        // eyeLeft.pivot.set(-5, 47);
-        // eyeLeft.displayGroup = layers.tailLayer;
-        // eyeLeft.position.set(head.x, head.y);
-        // this.container.addChild(eyeLeft);
-
-
-        //this.gameContext.stage.addChild(this.container);
+        for (let index = 0; index < this.vehicleParts.length; index++) {
+            const vehiclePart = this.vehicleParts[index];
+            const spriteName = `${vehiclePart.sprite}.png`;
+            const vehiclePartSprite = new Sprite(resources['images/spritesheet.json'].textures[spriteName]);
+            //frontPartSprite.tint = 0x802020;
+            //frontPart.metaInf = 'eye';
+            //frontPart.scale.set(0.4, 0.4);
+            //frontPart.pivot.set(-5, -4);
+            // TODO orientation ?
+            vehiclePartSprite.anchor.set(0.5, 0.5);
+            vehiclePartSprite.displayGroup = layers.tailLayer;
+            vehiclePartSprite.position.set(vehiclePart.x, vehiclePart.y);
+            this.container.addChild(vehiclePartSprite);
+        }
     }
-    // spriteNameHead() {
-    //     return `basic_head_${this.skin}.png`;
-    // }
-    //
-    // spriteNameTail() {
-    //     return `basic_tail_${this.skin}.png`;
-    // }
-
-    // head_sprite_factory = () => {
-    //     const head = new Sprite(resources['images/spritesheet.json'].textures['tail-mod2-white.png']);
-    //     //let head = new Sprite(resources["images/sprites.json"].textures[this.spriteNameHead()]);
-    //     head.scale.set(0.4, 0.4);
-    //     head.anchor.set(0.5, 0.5);
-    //     //head.displayGroup = layers.headLayer;
-    //     head.displayGroup = layers.tailLayer; //layers.headLayer;
-    //     return head;
-    // }
-
 
     update(elapsedTime) {
         // const frontPart = {
@@ -139,6 +89,11 @@ class Vehicle {
             const x = Math.floor(this.vehicleParts[0].x), y = Math.floor(this.vehicleParts[0].y);
             frontSprite.position.set(x, y);
             frontSprite.rotation = this.vehicleParts[0].orientation;
+
+            const trailerSprite = this.container.children[1];
+            const x1 = Math.floor(this.vehicleParts[1].x), y1 = Math.floor(this.vehicleParts[1].y);
+            trailerSprite.position.set(x1, y1);
+            trailerSprite.rotation = this.vehicleParts[1].orientation;
 
             this.gameContext.controls.coordinates = {x, y};
         }
