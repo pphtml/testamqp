@@ -1,6 +1,9 @@
 - zpomalovani samo od sebe / zpomalovani pri prujezdu zatackou / couvani - https://undergroundmathematics.org/thinking-about-functions/curve-match
-- ovladani sipkama
-- naves
+- scale na FE
+- nataceni kol
+- skryvani mysi
+- rozdeleni aktualizace sektoru
+  - presnejsi pocitani casu
 - cary pruhu - vyzkouset png sprajty
 - kulaty rohy silnic
 - sprite chodnik & obrubnik
@@ -9,26 +12,25 @@
 - lampy
 - napisy slow
 - odbocovaci sipky
-- sprite trava
 - parkoviste - inspirace - https://www.google.com/imgres?imgurl=https%3A%2F%2Fimage.shutterstock.com%2Fdisplay_pic_with_logo%2F305047%2F373818496%2Fstock-vector-top-view-of-the-city-urban-crossroads-with-cars-and-houses-pedestrians-background-town-map-373818496.jpg&imgrefurl=https%3A%2F%2Fwww.vecteezy.com%2Fvector-art%2F91748-car-aerial-view-vector&docid=j5XB5MET249V7M&tbnid=jSDPvlE3hTWXnM%3A&vet=10ahUKEwiq_5yX2MvYAhWE-aQKHQK2DvMQMwhuKCYwJg..i&w=450&h=444&bih=987&biw=1920&q=truck%202d%20top%20view&ved=0ahUKEwiq_5yX2MvYAhWE-aQKHQK2DvMQMwhuKCYwJg&iact=mrc&uact=8#h=444&imgdii=s7d__9DmknyP0M:&vet=10ahUKEwiq_5yX2MvYAhWE-aQKHQK2DvMQMwhuKCYwJg..i&w=450
-- omezeni rychlosti otaceni
-- stred podle stredu predni osy
-- TODO vypocitat distance ve VehiclePositions
 - posilani PlayerUpdateRequest teprve po PlayerStartResponse
 - sprite nakladaku - https://www.google.com/search?biw=1680&bih=919&tbm=isch&ei=5Z9UWr3AGM-3kwWr-aXIDw&q=truck+2d+above&gws_rd=cr&dcr=0
 - dialog startu hry - jmeno, barva
   - http://xiaokaike.github.io/vue-color/
 - multiplayer
-- hlavicky pro staticky data
 - http://2ality.com/2015/01/es6-destructuring.html
 - https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame#Notes
   - http://www.javascriptkit.com/javatutors/requestanimationframe.shtml
+
+- omezeni rychlosti otaceni
+- stred podle stredu predni osy
 
 - protobuf - oneOf - https://developers.google.com/protocol-buffers/docs/proto3#oneof
 - dynos na heroku - heroku ps -a <app name> - https://devcenter.heroku.com/articles/free-dyno-hours
 g queues
 node/node node_modules/.bin/mocha --reporter spec
 node/node node/node_modules/npm/bin/npm-cli.js run build
+var script = document.createElement('script'); script.type = 'text/javascript'; script.src = 'https://cdnjs.cloudflare.com/ajax/libs/rxjs/5.5.6/Rx.js';; document.head.appendChild(script);
 npm install spritesheet-js --save-dev
 node src/main/frontend/node_modules/.bin/spritesheet-js --padding 2 -f pixi.js ~/Documents/TruckingGrafika/source/*.png
 rm src/main/resources/static/images/spritesheet.*

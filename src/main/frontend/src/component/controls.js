@@ -1,6 +1,20 @@
 import rx from 'rxjs'
 const withinPiBounds = require('../computation/movements').withinPiBounds;
 
+class MoveEvent {
+    constructor(type, value, source) {
+        this.type = type;
+        this.value = value;
+        this.source = source;
+    }
+
+    toString(){
+        return `MoveEvent<source: ${source}, type: ${type}, value: ${value}>`;
+    }
+}
+
+const MOUSE_SENSITIVITY = 10;
+
 class Controls {
     constructor(gameContext) {
         this.gameContext = gameContext;
@@ -12,14 +26,54 @@ class Controls {
         this.baseSpeed = 1.0;
         this.speedAccelerator = false;
         this.speedBrake = false;
+        this.turningRight = false;
+        this.turningLeft = false;
+        this.turningWithKeysAngle = undefined;
+        this.lastMouseMoveEvent = undefined;
 
-        let mouseDowns = rx.Observable.fromEvent(document, 'mousedown');
-        let mouseUps = rx.Observable.fromEvent(document, 'mouseup');
+
+        const mouseDowns = rx.Observable.fromEvent(document, 'mousedown');
+        const mouseUps = rx.Observable.fromEvent(document, 'mouseup');
+        const mouseMove = rx.Observable.fromEvent(document, 'mousemove');
+        mouseMove.subscribe(event => {
+            if (this.lastMouseMoveEvent) {
+                const xDiff = this.lastMouseMoveEvent.x - event.x;
+                const yDiff = this.lastMouseMoveEvent.y - event.y;
+                const squareLength = xDiff * xDiff + yDiff * yDiff;
+                if (squareLength > MOUSE_SENSITIVITY) {
+                    this.turningWithKeysAngle = undefined;
+                }
+            }
+            this.lastMouseMoveEvent = event;
+        });
         this.mouseActions = rx.Observable.merge(mouseDowns, mouseUps);
+        this.mouseMoveEvents = this.mouseActions.map(event => {
+            const value = event.type == 'mousedown';
+            if (event.button == 0) {
+                return new MoveEvent('forward', value, 'mouse');
+            } else if (event.button == 2) {
+                return new MoveEvent('back', value, 'mouse');
+            }
+        }).filter(event => event != undefined);
 
         let keyDowns = rx.Observable.fromEvent(document, 'keydown');
         let keyUps = rx.Observable.fromEvent(document, 'keyup');
         this.keyActions = rx.Observable.merge(keyDowns, keyUps);
+        this.keyMoveEvents = this.keyActions.map(event => {
+            const value = event.type == 'keydown';
+            if (event.code == 'ArrowUp') {
+                return new MoveEvent('forward', value, 'key');
+            } else if (event.code == 'ArrowDown') {
+                return new MoveEvent('back', value, 'key');
+            } else if (event.code == 'ArrowLeft') {
+                return new MoveEvent('left', value, 'key');
+            } else if (event.code == 'ArrowRight') {
+                return new MoveEvent('right', value, 'key');
+            }
+        }).filter(event => event != undefined);
+
+        this.moveEvents = rx.Observable.merge(this.mouseMoveEvents, this.keyMoveEvents);
+
         this.piHalf = Math.PI / 2;
         this.piDouble = Math.PI * 2;
 
@@ -45,13 +99,29 @@ class Controls {
             }
         });
 
+        this.moveEvents.subscribe(event => {
+            if (event.type == 'forward') {
+                this.speedAccelerator = event.value;
+            }
+            if (event.type == 'back') {
+                this.speedBrake = event.value;
+            }
+            if (event.type == 'right') {
+                this.turningRight = event.value;
+            }
+            if (event.type == 'left') {
+                this.turningLeft = event.value;
+            }
+
+            // this.speedAccelerator = (event.buttons & 1) > 0;
+            // this.speedBrake = (event.buttons & 2) > 0;
+        });
+
         this.mouseActions.subscribe(event => {
             //console.info(event);
             // https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/buttons
             //this.mouseDown = event.buttons > 0;
-            this.speedAccelerator = (event.buttons & 1) > 0;
-            this.speedBrake = (event.buttons & 2) > 0;
-            console.info(`buttons: ${event.buttons}, acc: ${this.speedAccelerator}, brake: ${this.speedBrake}`);
+            //console.info(`buttons: ${event.buttons}, acc: ${this.speedAccelerator}, brake: ${this.speedBrake}`);
         });
     }
 
@@ -83,15 +153,19 @@ class Controls {
         this.gameContext.communication.subject.next(bytes);
     }
 
-    angle() {
-        const mousePosition = this.gameContext.renderer.plugins.interaction.mouse.global;
-        const cursorDiffX = mousePosition.x - this.gameContext.middle.x;
-        const cursorDiffY = mousePosition.y - this.gameContext.middle.y;
-        let angle = -Math.atan2(cursorDiffX, cursorDiffY) + this.piHalf;
-        if (angle < 0) {
-            angle += this.piDouble;
+    angle(ignoreKeys = false) {
+        if (ignoreKeys || !this.turningWithKeysAngle) {
+            const mousePosition = this.gameContext.renderer.plugins.interaction.mouse.global;
+            const cursorDiffX = mousePosition.x - this.gameContext.middle.x;
+            const cursorDiffY = mousePosition.y - this.gameContext.middle.y;
+            let angle = -Math.atan2(cursorDiffX, cursorDiffY) + this.piHalf;
+            if (angle < 0) {
+                angle += this.piDouble;
+            }
+            return withinPiBounds(angle);
+        } else {
+            return this.turningWithKeysAngle;
         }
-        return withinPiBounds(angle);
     }
 
     handlePlayerUpdateResponse(response) {
@@ -119,6 +193,15 @@ class Controls {
     }
 
     update(elapsedTime) {
+        if (this.turningLeft || this.turningRight) {
+            if (!this.turningWithKeysAngle) {
+                this.turningWithKeysAngle = this.angle(true);
+            }
+
+            const turningAngle = (this.turningLeft ? -1 : 1) * elapsedTime * 0.06 * 0.02;
+            this.turningWithKeysAngle += turningAngle;
+        }
+
         this.updateSpeed(elapsedTime);
     }
 }

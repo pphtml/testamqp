@@ -61,6 +61,8 @@ class Vehicle {
             vehiclePartSprite.anchor.set(0.5, 0.5);
             vehiclePartSprite.displayGroup = layers.tailLayer;
             vehiclePartSprite.position.set(vehiclePart.x, vehiclePart.y);
+            vehiclePartSprite.rotation = vehiclePart.orientation;
+            vehiclePartSprite._partIndex = index;
             this.container.addChild(vehiclePartSprite);
         }
     }
@@ -82,20 +84,23 @@ class Vehicle {
             const orientation = allowedAngle(askedAngle, originalFrontPart.orientation, wheelDeflection);
             const distance = 0.06 * elapsedTime * this.gameContext.controls.speed;
 
-            const movedVehicleParts = move(orientation, distance, this.vehicleParts);
-            this.vehicleParts = movedVehicleParts;
-            //console.info(movedVehicleParts);
-            const frontSprite = this.container.children[0];
-            const x = Math.floor(this.vehicleParts[0].x), y = Math.floor(this.vehicleParts[0].y);
-            frontSprite.position.set(x, y);
-            frontSprite.rotation = this.vehicleParts[0].orientation;
+            this.vehicleParts = move(orientation, distance, this.vehicleParts);
 
-            const trailerSprite = this.container.children[1];
-            const x1 = Math.floor(this.vehicleParts[1].x), y1 = Math.floor(this.vehicleParts[1].y);
-            trailerSprite.position.set(x1, y1);
-            trailerSprite.rotation = this.vehicleParts[1].orientation;
-
-            this.gameContext.controls.coordinates = {x, y};
+            for (let i = this.container.children.length - 1; i >= 0; i--) {
+                const sprite = this.container.children[i];
+                if (sprite.hasOwnProperty('_partIndex')) {
+                    const spriteIndex = sprite._partIndex;
+                    const vehiclePart = this.vehicleParts[spriteIndex];
+                    let x = vehiclePart.x, y = vehiclePart.y;
+                    sprite.position.set(x, y);
+                    sprite.rotation = vehiclePart.orientation;
+                    if (spriteIndex == 0) {
+                        x = Math.floor(x), y = Math.floor(y);
+                        sprite.position.set(x, y);
+                        this.gameContext.controls.coordinates = {x, y};
+                    }
+                }
+            }
         }
 
 
