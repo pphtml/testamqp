@@ -6,6 +6,7 @@ describe("Movements with Trailer", () => {
         it("move vehicle a bit to the east", () => {
             const frontPart = {
                 axisHalfLength: 100,
+                scale: 1.0,
                 orientation: 0.0,
                 frontAxis: 0.8,
                 rearAxis: -0.6,
@@ -14,6 +15,7 @@ describe("Movements with Trailer", () => {
             };
             const rearPart = {
                 axisHalfLength: 100,
+                scale: 1.0,
                 orientation: 0.0,
                 frontAxis: 0.75,
                 rearAxis: -0.5,

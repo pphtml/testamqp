@@ -18,7 +18,7 @@ module.exports.move = function(orientation, distance, parts) {
     // const xStep = Math.cos(angle) * distance;
     // const yStep = Math.sin(angle) * distance;
     const frontPart = resultParts[0];
-    const axisHalfLength = frontPart.axisHalfLength;
+    const axisHalfLength = frontPart.axisHalfLength * frontPart.scale;
 
     const frontOrientationCos = Math.cos(frontPart.orientation);
     const frontOrientationSin = Math.sin(frontPart.orientation);
@@ -59,9 +59,9 @@ module.exports.move = function(orientation, distance, parts) {
     for (let index = 1; index < resultParts.length; index++) {
         const previousPart = resultParts[index - 1];
         const trailingPart = resultParts[index];
-        const axisHalfLength = trailingPart.axisHalfLength;
+        const axisHalfLength = trailingPart.axisHalfLength * trailingPart.scale;
 
-        const previousRearAxisRatio = previousPart.rearAxis * previousPart.axisHalfLength;
+        const previousRearAxisRatio = previousPart.rearAxis * previousPart.axisHalfLength * previousPart.scale;
         //console.info(rearAxisRatio);
         const frontAxisCentre = {x: previousPart.x + Math.cos(previousPart.orientation) * previousRearAxisRatio,
             y: previousPart.y + Math.sin(previousPart.orientation) * previousRearAxisRatio};

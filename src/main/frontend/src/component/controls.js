@@ -35,13 +35,19 @@ class Controls {
         const mouseDowns = rx.Observable.fromEvent(document, 'mousedown');
         const mouseUps = rx.Observable.fromEvent(document, 'mouseup');
         const mouseMove = rx.Observable.fromEvent(document, 'mousemove');
+        this.hideMouseCursor = (hide) => {
+            if (!hide) {
+                this.turningWithKeysAngle = undefined;
+            }
+            document.getElementsByTagName('body')[0].style.cursor = (hide ? 'none' : '');
+        };
         mouseMove.subscribe(event => {
             if (this.lastMouseMoveEvent) {
                 const xDiff = this.lastMouseMoveEvent.x - event.x;
                 const yDiff = this.lastMouseMoveEvent.y - event.y;
                 const squareLength = xDiff * xDiff + yDiff * yDiff;
                 if (squareLength > MOUSE_SENSITIVITY) {
-                    this.turningWithKeysAngle = undefined;
+                    this.hideMouseCursor(false);
                 }
             }
             this.lastMouseMoveEvent = event;
@@ -200,6 +206,7 @@ class Controls {
 
             const turningAngle = (this.turningLeft ? -1 : 1) * elapsedTime * 0.06 * 0.02;
             this.turningWithKeysAngle += turningAngle;
+            this.hideMouseCursor(true);
         }
 
         this.updateSpeed(elapsedTime);

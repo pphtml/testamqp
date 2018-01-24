@@ -10,6 +10,7 @@
     "test": "./node_modules/.bin/mocha --reporter spec"
   },
   "dependencies": {
+    "babel-polyfill": "^6.26.0",
     "google-protobuf": "^3.5.0",
     "lodash": "^4.17.4",
     "mocha": "^4.0.1",

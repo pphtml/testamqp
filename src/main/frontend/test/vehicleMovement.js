@@ -6,6 +6,7 @@ describe("Movements", () => {
         it("move vehicle a bit to the east", () => {
             const frontPart = {
                 axisHalfLength: 100,
+                scale: 1.0,
                 orientation: 0.0,
                 frontAxis: 0.8,
                 rearAxis: -0.6,
@@ -29,6 +30,7 @@ describe("Movements", () => {
         it("move vehicle a bit to the west", () => {
             const frontPart = {
                 axisHalfLength: 100,
+                scale: 1.0,
                 orientation: Math.PI,
                 frontAxis: 0.8,
                 rearAxis: -0.6,
@@ -52,6 +54,7 @@ describe("Movements", () => {
         it("move vehicle a bit to the south", () => {
             const frontPart = {
                 axisHalfLength: 100,
+                scale: 1.0,
                 orientation: Math.PI / 2,
                 frontAxis: 0.8,
                 rearAxis: -0.6,
@@ -75,6 +78,7 @@ describe("Movements", () => {
         it("move vehicle a bit to the north", () => {
             const frontPart = {
                 axisHalfLength: 100,
+                scale: 1.0,
                 orientation: Math.PI / 2 * 3,
                 frontAxis: 0.8,
                 rearAxis: -0.6,
@@ -98,6 +102,7 @@ describe("Movements", () => {
         it("move vehicle a small bit to the south-east", () => {
             const frontPart = {
                 axisHalfLength: 100,
+                scale: 1.0,
                 orientation: 0.0,
                 frontAxis: 0.8,
                 rearAxis: -0.6,

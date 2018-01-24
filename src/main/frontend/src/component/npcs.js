@@ -1,6 +1,8 @@
 import * as PIXI from 'pixi.js'
 import {Sprite, Container, Graphics, loader, filters, BLEND_MODES} from 'pixi.js' // , default as PIXI
 import layers from './layers'
+import 'babel-polyfill';
+
 //const rgbDimmer = require('../computation/rgbColor').rgbDimmer;
 let resources = loader.resources;
 let TilingSprite = PIXI.extras.TilingSprite;
@@ -28,8 +30,10 @@ const ROAD_WIDTH = 180;
 const ROAD_ROUNDING_RADIUS = 40;
 const ROAD_LINE_WIDTH = 12;
 const ROAD_MIDDLE_LINE_BASIC = 12;
-const ROAD_MIDLLE_LINE_DOUBLE = 24;
-const ROAD_MIDLLE_LINE_DOUBLE_THICKNESS = 8;
+const ROAD_MIDDLE_LINE_DOUBLE = 24;
+const ROAD_MIDDLE_LINE_DOUBLE_THICKNESS = 8;
+const ROAD_MIDDLE_LINE_STRIPE_INTERVAL = 341.3333333333;
+const ROAD_MIDDLE_LINE_STRIPE_RATIO = 0.5;
 const XING_WIDENESS = 140;
 const XING_WIDENESS_PADDED = 170;
 const XING_MINIMAL_DISTANCE = 50;
@@ -181,6 +185,18 @@ class NPCS {
     }
 
     drawSectorRoads(sectorIndexes) {
+        function* stripingLines(totalLength, length, fullRatio) {
+            let x = 0;
+            while (x < totalLength) {
+                const start = x + length * ((1 - fullRatio) / 2);
+                const end = x + length * (1 - (1 - fullRatio) / 2);
+                if (start < totalLength) {
+                    yield [start, Math.min(end, totalLength)];
+                }
+                x += length;
+            }
+        }
+
         const sectorKey = this.sectorKey(sectorIndexes);
         const sectorData = this.sectorMap[sectorKey];
 
@@ -193,6 +209,7 @@ class NPCS {
 
         const drawSectorQuadrant = (currentRoadType, leftRoadType, rightRoadType, oppositeRoadType, rotate, offsetX, offsetY,
                                     sectorWidth, sectorHeight) => {
+            const sectorContainer = new Container();
             const gContext = new Graphics();
             gContext.beginFill(0xffffff);
 
@@ -209,13 +226,23 @@ class NPCS {
             const mergedRoadWidthWOXing = mergedRoadWidth - (binarySum > 2 ? XING_WIDENESS_PADDED : 0);
 
             const mainRoadMiddleLine = () => {
-                const stripesWidth = currentRoadType > 1 ? ROAD_MIDLLE_LINE_DOUBLE : ROAD_MIDDLE_LINE_BASIC;
+                const stripesWidth = currentRoadType > 1 ? ROAD_MIDDLE_LINE_DOUBLE : ROAD_MIDDLE_LINE_BASIC;
                 const top = (sectorHeight - stripesWidth) / 2;
-                if (stripesWidth == ROAD_MIDLLE_LINE_DOUBLE) {
-                    gContext.drawRect(0, top, mergedRoadWidthWOXing, ROAD_MIDLLE_LINE_DOUBLE_THICKNESS);
-                    gContext.drawRect(0, top + stripesWidth - ROAD_MIDLLE_LINE_DOUBLE_THICKNESS, mergedRoadWidthWOXing, ROAD_MIDLLE_LINE_DOUBLE_THICKNESS);
+                if (stripesWidth == ROAD_MIDDLE_LINE_DOUBLE) {
+                    gContext.drawRect(0, top, mergedRoadWidthWOXing, ROAD_MIDDLE_LINE_DOUBLE_THICKNESS);
+                    gContext.drawRect(0, top + stripesWidth - ROAD_MIDDLE_LINE_DOUBLE_THICKNESS, mergedRoadWidthWOXing, ROAD_MIDDLE_LINE_DOUBLE_THICKNESS);
+                    const redContext = new Graphics();
+                    redContext.beginFill(0xff0000);
+                    redContext.drawRect(0, currentRoadWidth, mergedRoadWidthWOXing, (sectorHeight - ROAD_MIDDLE_LINE_DOUBLE) / 2 - currentRoadWidth);
+                    redContext.endFill();
+                    redContext.alpha = 0.15;
+                    redContext.displayGroup = layers.npcLayer;
+                    redContext._sector = sectorKey;
+                    sectorContainer.addChild(redContext);
                 } else {
-                    gContext.drawRect(0, top, mergedRoadWidthWOXing, stripesWidth);
+                    for (let [start, end] of stripingLines(mergedRoadWidthWOXing, ROAD_MIDDLE_LINE_STRIPE_INTERVAL, ROAD_MIDDLE_LINE_STRIPE_RATIO)) {
+                        gContext.drawRect(start, top, end - start, stripesWidth);
+                    }
                 }
             };
 
@@ -259,7 +286,6 @@ class NPCS {
             // gContext.x = topLeft.x + offsetX;
             // gContext.y = topLeft.y + offsetY;
             //gContext.rotation = rotate;
-            const sectorContainer = new Container();
             sectorContainer.rotation = rotate;
             sectorContainer.x = topLeft.x + offsetX;
             sectorContainer.y = topLeft.y + offsetY;

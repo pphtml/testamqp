@@ -59,6 +59,7 @@ class Vehicle {
             //frontPart.pivot.set(-5, -4);
             // TODO orientation ?
             vehiclePartSprite.anchor.set(0.5, 0.5);
+            vehiclePartSprite.scale.set(vehiclePart.scale, vehiclePart.scale);
             vehiclePartSprite.displayGroup = layers.tailLayer;
             vehiclePartSprite.position.set(vehiclePart.x, vehiclePart.y);
             vehiclePartSprite.rotation = vehiclePart.orientation;

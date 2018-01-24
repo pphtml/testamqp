@@ -1,7 +1,7 @@
 {
 	"meta": {
 		"image": "spritesheet.png",
-		"size": {"w":835,"h":550},
+		"size": {"w":835,"h":549},
 		"scale": "1"
 	},
 	"frames": {
@@ -63,11 +63,11 @@
 		},
 		"truck.png":
 		{
-			"frame": {"x":2,"y":459,"w":216,"h":89},
+			"frame": {"x":2,"y":459,"w":216,"h":88},
 			"rotated": false,
 			"trimmed": false,
-			"spriteSourceSize": {"x":0,"y":0,"w":216,"h":89},
-			"sourceSize": {"w":216,"h":89}
+			"spriteSourceSize": {"x":0,"y":0,"w":216,"h":88},
+			"sourceSize": {"w":216,"h":88}
 		},
 		"Ambulance.png":
 		{

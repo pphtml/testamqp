@@ -114,7 +114,10 @@ public class GameDataService {
 //                    -17200f, -7800f, 0.0f).createVehicle();
             final VehicleData vehicle = new VehicleFactory(playerStartRequest.getVehicleType(),
                     playerStartRequest.getVehicleDesign(),
-                    0.0f, 0.0f, 0.0f).createVehicle();
+                    420.0f, -3900.0f, 0.0f).createVehicle();
+//            final VehicleData vehicle = new VehicleFactory(playerStartRequest.getVehicleType(),
+//                    playerStartRequest.getVehicleDesign(),
+//                    0.0f, 0.0f, 0.0f).createVehicle();
             vehiclePositions.registerVehicle(player.getId(), vehicle);
             Msg.PlayerStartResponse response = makeCreationResponse(vehicle, playerStartRequest);
             byte[] msgBytes = Msg.Message.newBuilder().setPlayerStartResponse(response).build().toByteArray();
