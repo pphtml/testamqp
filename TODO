@@ -1,10 +1,8 @@
 - zpomalovani samo od sebe / zpomalovani pri prujezdu zatackou / couvani - https://undergroundmathematics.org/thinking-about-functions/curve-match
 - odbocovaci sipky - inicialni natoceni - bug
-- scale na FE
-- nataceni kol
 - skryvani mysi - document.getElementsByTagName('body')[0].style.cursor = 'none'
 - rozdeleni aktualizace sektoru
-  - presnejsi pocitani casu
+  - presnejsi pocitani casu - performance.now()
 - cary pruhu - vyzkouset png sprajty
 - kulaty rohy silnic - pixijs maska
 - sprite chodnik & obrubnik
@@ -22,6 +20,7 @@
 - https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame#Notes
   - http://www.javascriptkit.com/javatutors/requestanimationframe.shtml
 
+- nataceni kol
 - omezeni rychlosti otaceni
 - stred podle stredu predni osy
 

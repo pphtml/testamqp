@@ -225,20 +225,53 @@ class NPCS {
             const mergedRoadWidth = Math.min(leftRoadWidthWORounding, rightRoadWidthWORounding);
             const mergedRoadWidthWOXing = mergedRoadWidth - (binarySum > 2 ? XING_WIDENESS_PADDED : 0);
 
+            function* generateInnerLines(top, height, count, lineWidth) {
+                const totalLinesWidth = (count - 1) * lineWidth;
+                const totalLanesWidth = height - totalLinesWidth;
+                const oneLaneWidth = totalLanesWidth / count;
+
+                for (let index = 1; index < count; index++) {
+                    yield [top - lineWidth + index * (oneLaneWidth + lineWidth), lineWidth];
+                }
+            }
+
+            function* generateInnerLanes(top, height, count, lineWidth) {
+                const totalLinesWidth = (count - 1) * lineWidth;
+                const totalLanesWidth = height - totalLinesWidth;
+                const oneLaneWidth = totalLanesWidth / count;
+
+                for (let index = 0; index < count; index++) {
+                    yield [top + index * (oneLaneWidth + lineWidth), oneLaneWidth];
+                }
+            }
+
+            const drawInnerStripingLines = (top, height, count) => {
+                // const redContext = new Graphics();
+                // redContext.beginFill(0xff0000);
+                // redContext.drawRect(0, top, mergedRoadWidthWOXing, height);
+                // redContext.endFill();
+                // redContext.alpha = 0.15;
+                // redContext.displayGroup = layers.npcLayer;
+                // redContext._sector = sectorKey;
+                // sectorContainer.addChild(redContext);
+
+                for (let [lineTop, lineWidth] of generateInnerLines(top, height, count, ROAD_MIDDLE_LINE_BASIC)) {
+                    for (let [start, end] of stripingLines(mergedRoadWidthWOXing, ROAD_MIDDLE_LINE_STRIPE_INTERVAL, ROAD_MIDDLE_LINE_STRIPE_RATIO)) {
+                        gContext.drawRect(start, lineTop, end - start, lineWidth);
+                    }
+                }
+            };
+
             const mainRoadMiddleLine = () => {
                 const stripesWidth = currentRoadType > 1 ? ROAD_MIDDLE_LINE_DOUBLE : ROAD_MIDDLE_LINE_BASIC;
                 const top = (sectorHeight - stripesWidth) / 2;
                 if (stripesWidth == ROAD_MIDDLE_LINE_DOUBLE) {
                     gContext.drawRect(0, top, mergedRoadWidthWOXing, ROAD_MIDDLE_LINE_DOUBLE_THICKNESS);
                     gContext.drawRect(0, top + stripesWidth - ROAD_MIDDLE_LINE_DOUBLE_THICKNESS, mergedRoadWidthWOXing, ROAD_MIDDLE_LINE_DOUBLE_THICKNESS);
-                    const redContext = new Graphics();
-                    redContext.beginFill(0xff0000);
-                    redContext.drawRect(0, currentRoadWidth, mergedRoadWidthWOXing, (sectorHeight - ROAD_MIDDLE_LINE_DOUBLE) / 2 - currentRoadWidth);
-                    redContext.endFill();
-                    redContext.alpha = 0.15;
-                    redContext.displayGroup = layers.npcLayer;
-                    redContext._sector = sectorKey;
-                    sectorContainer.addChild(redContext);
+
+                    const innerLanesWidth = (sectorHeight - ROAD_MIDDLE_LINE_DOUBLE) / 2 - currentRoadWidth;
+                    drawInnerStripingLines(currentRoadWidth, innerLanesWidth, currentRoadType);
+                    drawInnerStripingLines((sectorHeight + ROAD_MIDDLE_LINE_DOUBLE) / 2, innerLanesWidth, currentRoadType);
                 } else {
                     for (let [start, end] of stripingLines(mergedRoadWidthWOXing, ROAD_MIDDLE_LINE_STRIPE_INTERVAL, ROAD_MIDDLE_LINE_STRIPE_RATIO)) {
                         gContext.drawRect(start, top, end - start, stripesWidth);
