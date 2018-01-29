@@ -56,6 +56,7 @@ public class VehicleFactory {
                 .map(partDefinition -> makeVehiclePart(partDefinition))
                 .collect(Collectors.toList());
 
+        vehicleParts.get(1).setDesign("13414733");
         vehicleData.setVehicleParts(vehicleParts);
         return vehicleData;
     }

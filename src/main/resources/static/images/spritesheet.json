@@ -1,17 +1,17 @@
 {
 	"meta": {
 		"image": "spritesheet.png",
-		"size": {"w":835,"h":549},
+		"size": {"w":835,"h":538},
 		"scale": "1"
 	},
 	"frames": {
-		"background-blur.png":
+		"trailer-medium.png":
 		{
-			"frame": {"x":2,"y":94,"w":256,"h":256},
+			"frame": {"x":2,"y":94,"w":327,"h":78},
 			"rotated": false,
 			"trimmed": false,
-			"spriteSourceSize": {"x":0,"y":0,"w":256,"h":256},
-			"sourceSize": {"w":256,"h":256}
+			"spriteSourceSize": {"x":0,"y":0,"w":327,"h":78},
+			"sourceSize": {"w":327,"h":78}
 		},
 		"trailer-long.png":
 		{
@@ -20,6 +20,14 @@
 			"trimmed": false,
 			"spriteSourceSize": {"x":0,"y":0,"w":390,"h":88},
 			"sourceSize": {"w":390,"h":88}
+		},
+		"background-blur.png":
+		{
+			"frame": {"x":2,"y":176,"w":256,"h":256},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {"x":0,"y":0,"w":256,"h":256},
+			"sourceSize": {"w":256,"h":256}
 		},
 		"taxi.png":
 		{
@@ -45,14 +53,6 @@
 			"spriteSourceSize": {"x":0,"y":0,"w":217,"h":94},
 			"sourceSize": {"w":217,"h":94}
 		},
-		"Audi.png":
-		{
-			"frame": {"x":2,"y":354,"w":216,"h":101},
-			"rotated": false,
-			"trimmed": false,
-			"spriteSourceSize": {"x":0,"y":0,"w":216,"h":101},
-			"sourceSize": {"w":216,"h":101}
-		},
 		"grass-tile.png":
 		{
 			"frame": {"x":624,"y":324,"w":128,"h":128},
@@ -61,9 +61,17 @@
 			"spriteSourceSize": {"x":0,"y":0,"w":128,"h":128},
 			"sourceSize": {"w":128,"h":128}
 		},
+		"Police.png":
+		{
+			"frame": {"x":2,"y":436,"w":216,"h":100},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {"x":0,"y":0,"w":216,"h":100},
+			"sourceSize": {"w":216,"h":100}
+		},
 		"truck.png":
 		{
-			"frame": {"x":2,"y":459,"w":216,"h":88},
+			"frame": {"x":222,"y":436,"w":216,"h":88},
 			"rotated": false,
 			"trimmed": false,
 			"spriteSourceSize": {"x":0,"y":0,"w":216,"h":88},
@@ -93,13 +101,13 @@
 			"spriteSourceSize": {"x":0,"y":0,"w":198,"h":95},
 			"sourceSize": {"w":198,"h":95}
 		},
-		"Police.png":
+		"Audi.png":
 		{
-			"frame": {"x":222,"y":354,"w":216,"h":100},
+			"frame": {"x":396,"y":327,"w":216,"h":101},
 			"rotated": false,
 			"trimmed": false,
-			"spriteSourceSize": {"x":0,"y":0,"w":216,"h":100},
-			"sourceSize": {"w":216,"h":100}
+			"spriteSourceSize": {"x":0,"y":0,"w":216,"h":101},
+			"sourceSize": {"w":216,"h":101}
 		}
 	}
 }

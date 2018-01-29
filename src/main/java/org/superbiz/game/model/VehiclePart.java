@@ -30,6 +30,7 @@ public class VehiclePart {
     private float frontAxis;
     private float rearAxis;
     private float wheelDeflection;
+    private String design;
 
     private Msg.VehiclePart.PartType partType;
 
@@ -152,8 +153,17 @@ public class VehiclePart {
         return this;
     }
 
+    public String getDesign() {
+        return design;
+    }
+
+    public VehiclePart setDesign(String design) {
+        this.design = design;
+        return this;
+    }
+
     public Msg.VehiclePart.Builder asProtobufFull() {
-        return this.asProtobuf()
+        Msg.VehiclePart.Builder result = this.asProtobuf()
                 .setPartId(this.getPartId())
                 .setAxisHalfLength(this.axisHalfLength)
                 .setFrontAxis(this.frontAxis)
@@ -161,6 +171,10 @@ public class VehiclePart {
                 .setSprite(this.sprite)
                 .setScale(this.scale)
                 .setWheelDeflection(this.wheelDeflection);
+        if (this.design != null) {
+            result.setDesign(this.design);
+        }
+        return result;
 //                .setPivotX(this.getPivotX())
 //                .setPivotY(this.getPivotY());
     }

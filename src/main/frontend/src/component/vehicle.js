@@ -63,6 +63,9 @@ class Vehicle {
             vehiclePartSprite.displayGroup = layers.tailLayer;
             vehiclePartSprite.position.set(vehiclePart.x, vehiclePart.y);
             vehiclePartSprite.rotation = vehiclePart.orientation;
+            if (vehiclePart.design) {
+                vehiclePartSprite.tint = vehiclePart.design;
+            }
             vehiclePartSprite._partIndex = index;
             this.container.addChild(vehiclePartSprite);
         }

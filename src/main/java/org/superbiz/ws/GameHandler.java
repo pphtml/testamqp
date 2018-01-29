@@ -141,10 +141,12 @@ public class GameHandler implements Handler {
                             gameDataService.processMessage(message, player);
                         } catch (InvalidProtocolBufferException e) {
                             logger.log(Level.SEVERE, e.getMessage(), e);
+                            e.printStackTrace();
                         }
                     }
                 } catch (Exception e) {
                     logger.log(Level.SEVERE, e.getMessage(), e);
+                    e.printStackTrace();
                 }
             }
         });

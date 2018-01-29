@@ -3,7 +3,7 @@
 // const moveSnake = require('./wormMovement').moveSnake;
 
 class Player {
-    constructor(gameContext, skin) {
+    constructor(gameContext) {
         this.gameContext = gameContext;
         // this.gameContext.controls.skin = skin;
         //

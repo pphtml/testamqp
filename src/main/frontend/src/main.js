@@ -34,10 +34,6 @@ const featureMatrix = new FeatureMatrix();
 //     s.parentNode.insertBefore(wf, s);
 // })();
 
-const COLORS = [894661, 15773325, 5698477, 10066394, 13414733, 12674379, 14893446, 10793534, 14813475, 8733555,
-     11047750, 2009991, 16019053, 4033523, 14338485];
-let color = COLORS[Math.floor(Math.random() * COLORS.length)];
-
 PIXI.utils.skipHello();
 let stage = new Container();
 let renderOptions = {antialias: false, transparent: false, resolution: 1};
@@ -51,7 +47,6 @@ if (!featureMatrix.webGl) {
 renderer.view.style.position = "absolute";
 renderer.view.style.display = "block";
 renderer.autoResize = true;
-//renderer.backgroundColor = 0x061639;
 
 let gameContext = {
     stage: stage,
@@ -85,7 +80,7 @@ function setup() {
     let background = new Background(gameContext);
     gameContext.background = background;
 
-    let player = new Player(gameContext, color);
+    let player = new Player(gameContext);
     gameContext.player = player;
 
     // //stage.addChild(player.container);

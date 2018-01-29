@@ -3,7 +3,7 @@ package org.superbiz.game.model;
 import static org.superbiz.util.TextUtil.slugify;
 
 public enum ModelType {
-    TRUCK(PartDefinition.TRUCK_FRONT, PartDefinition.TRAILER_LONG);
+    TRUCK(PartDefinition.TRUCK_FRONT, PartDefinition.TRAILER_MEDIUM);
     //TRUCK_SMALL(PartDefinition.SMALL_TRUCK_FRONT);
 
     private final PartDefinition[] partDefinitions;

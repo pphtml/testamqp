@@ -111,6 +111,7 @@ message VehiclePart {
     float wheelDeflection = 17;
     string sprite = 18;
     float scale = 19;
+    string design = 20;
 
     enum PartType {
         FRONT = 0;

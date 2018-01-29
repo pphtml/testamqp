@@ -28,7 +28,7 @@ class Controls {
         this.speedBrake = false;
         this.turningRight = false;
         this.turningLeft = false;
-        this.turningWithKeysAngle = undefined;
+        this.turningWithKeysAngle = 0.000001;
         this.lastMouseMoveEvent = undefined;
 
 

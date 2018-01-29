@@ -1,6 +1,4 @@
 - zpomalovani samo od sebe / zpomalovani pri prujezdu zatackou / couvani - https://undergroundmathematics.org/thinking-about-functions/curve-match
-- odbocovaci sipky - inicialni natoceni - bug
-- skryvani mysi - document.getElementsByTagName('body')[0].style.cursor = 'none'
 - rozdeleni aktualizace sektoru
   - presnejsi pocitani casu - performance.now()
 - cary pruhu - vyzkouset png sprajty

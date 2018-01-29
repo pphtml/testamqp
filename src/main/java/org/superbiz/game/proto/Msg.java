@@ -8683,6 +8683,16 @@ public final class Msg {
      * <code>float scale = 19;</code>
      */
     float getScale();
+
+    /**
+     * <code>string design = 20;</code>
+     */
+    java.lang.String getDesign();
+    /**
+     * <code>string design = 20;</code>
+     */
+    com.google.protobuf.ByteString
+        getDesignBytes();
   }
   /**
    * Protobuf type {@code VehiclePart}
@@ -8708,6 +8718,7 @@ public final class Msg {
       wheelDeflection_ = 0F;
       sprite_ = "";
       scale_ = 0F;
+      design_ = "";
     }
 
     @java.lang.Override
@@ -8797,6 +8808,12 @@ public final class Msg {
             case 157: {
 
               scale_ = input.readFloat();
+              break;
+            }
+            case 162: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              design_ = s;
               break;
             }
           }
@@ -9099,6 +9116,40 @@ public final class Msg {
       return scale_;
     }
 
+    public static final int DESIGN_FIELD_NUMBER = 20;
+    private volatile java.lang.Object design_;
+    /**
+     * <code>string design = 20;</code>
+     */
+    public java.lang.String getDesign() {
+      java.lang.Object ref = design_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        design_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string design = 20;</code>
+     */
+    public com.google.protobuf.ByteString
+        getDesignBytes() {
+      java.lang.Object ref = design_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        design_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
@@ -9143,6 +9194,9 @@ public final class Msg {
       }
       if (scale_ != 0F) {
         output.writeFloat(19, scale_);
+      }
+      if (!getDesignBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 20, design_);
       }
       unknownFields.writeTo(output);
     }
@@ -9193,6 +9247,9 @@ public final class Msg {
       if (scale_ != 0F) {
         size += com.google.protobuf.CodedOutputStream
           .computeFloatSize(19, scale_);
+      }
+      if (!getDesignBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(20, design_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -9245,6 +9302,8 @@ public final class Msg {
           java.lang.Float.floatToIntBits(getScale())
           == java.lang.Float.floatToIntBits(
               other.getScale()));
+      result = result && getDesign()
+          .equals(other.getDesign());
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
@@ -9285,6 +9344,8 @@ public final class Msg {
       hash = (37 * hash) + SCALE_FIELD_NUMBER;
       hash = (53 * hash) + java.lang.Float.floatToIntBits(
           getScale());
+      hash = (37 * hash) + DESIGN_FIELD_NUMBER;
+      hash = (53 * hash) + getDesign().hashCode();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -9436,6 +9497,8 @@ public final class Msg {
 
         scale_ = 0F;
 
+        design_ = "";
+
         return this;
       }
 
@@ -9469,6 +9532,7 @@ public final class Msg {
         result.wheelDeflection_ = wheelDeflection_;
         result.sprite_ = sprite_;
         result.scale_ = scale_;
+        result.design_ = design_;
         onBuilt();
         return result;
       }
@@ -9544,6 +9608,10 @@ public final class Msg {
         }
         if (other.getScale() != 0F) {
           setScale(other.getScale());
+        }
+        if (!other.getDesign().isEmpty()) {
+          design_ = other.design_;
+          onChanged();
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -9993,6 +10061,75 @@ public final class Msg {
       public Builder clearScale() {
         
         scale_ = 0F;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object design_ = "";
+      /**
+       * <code>string design = 20;</code>
+       */
+      public java.lang.String getDesign() {
+        java.lang.Object ref = design_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          design_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string design = 20;</code>
+       */
+      public com.google.protobuf.ByteString
+          getDesignBytes() {
+        java.lang.Object ref = design_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          design_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string design = 20;</code>
+       */
+      public Builder setDesign(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        design_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string design = 20;</code>
+       */
+      public Builder clearDesign() {
+        
+        design_ = getDefaultInstance().getDesign();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string design = 20;</code>
+       */
+      public Builder setDesignBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        design_ = value;
         onChanged();
         return this;
       }
@@ -11847,18 +11984,19 @@ public final class Msg {
       "tProcessedOnServer\030\001 \001(\004\022\"\n\014vehicleParts" +
       "\030\002 \003(\0132\014.VehiclePart\022\034\n\024orientationReque" +
       "sted\030\003 \001(\002\022\023\n\013orientation\030\004 \001(\002\022\027\n\017speed" +
-      "Multiplier\030\005 \001(\002\"\233\002\n\013VehiclePart\022\t\n\001x\030\001 " +
+      "Multiplier\030\005 \001(\002\"\253\002\n\013VehiclePart\022\t\n\001x\030\001 " +
       "\001(\002\022\t\n\001y\030\002 \001(\002\022\023\n\013orientation\030\003 \001(\002\022\'\n\010p" +
       "artType\030\n \001(\0162\025.VehiclePart.PartType\022\016\n\006" +
       "partId\030\013 \001(\t\022\026\n\016axisHalfLength\030\016 \001(\r\022\021\n\t" +
       "frontAxis\030\017 \001(\002\022\020\n\010rearAxis\030\020 \001(\002\022\027\n\017whe" +
       "elDeflection\030\021 \001(\002\022\016\n\006sprite\030\022 \001(\t\022\r\n\005sc" +
-      "ale\030\023 \001(\002\"3\n\010PartType\022\t\n\005FRONT\020\000\022\013\n\007TRAI" +
-      "LER\020\001\022\017\n\013FRONT_WHEEL\020\002\"1\n\010TimeInfo\022\021\n\tin" +
-      "itiated\030\001 \001(\003\022\022\n\nprocessing\030\002 \001(\003\"\'\n\006Res" +
-      "ize\022\r\n\005width\030\001 \001(\005\022\016\n\006height\030\002 \001(\005\",\n\020Cl" +
-      "ientDisconnect\022\n\n\002id\030\001 \001(\t\022\014\n\004name\030\002 \001(\t" +
-      "B\036\n\027org.superbiz.game.protoB\003Msgb\006proto3"
+      "ale\030\023 \001(\002\022\016\n\006design\030\024 \001(\t\"3\n\010PartType\022\t\n" +
+      "\005FRONT\020\000\022\013\n\007TRAILER\020\001\022\017\n\013FRONT_WHEEL\020\002\"1" +
+      "\n\010TimeInfo\022\021\n\tinitiated\030\001 \001(\003\022\022\n\nprocess" +
+      "ing\030\002 \001(\003\"\'\n\006Resize\022\r\n\005width\030\001 \001(\005\022\016\n\006he" +
+      "ight\030\002 \001(\005\",\n\020ClientDisconnect\022\n\n\002id\030\001 \001" +
+      "(\t\022\014\n\004name\030\002 \001(\tB\036\n\027org.superbiz.game.pr" +
+      "otoB\003Msgb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -11931,7 +12069,7 @@ public final class Msg {
     internal_static_VehiclePart_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_VehiclePart_descriptor,
-        new java.lang.String[] { "X", "Y", "Orientation", "PartType", "PartId", "AxisHalfLength", "FrontAxis", "RearAxis", "WheelDeflection", "Sprite", "Scale", });
+        new java.lang.String[] { "X", "Y", "Orientation", "PartType", "PartId", "AxisHalfLength", "FrontAxis", "RearAxis", "WheelDeflection", "Sprite", "Scale", "Design", });
     internal_static_TimeInfo_descriptor =
       getDescriptor().getMessageTypes().get(9);
     internal_static_TimeInfo_fieldAccessorTable = new

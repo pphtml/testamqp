@@ -157,7 +157,8 @@ class Vehicles {
                 rearAxis: part.getRearaxis(),
                 wheelDeflection: part.getWheeldeflection(),
                 sprite: part.getSprite(),
-                scale: part.getScale()
+                scale: part.getScale(),
+                design: part.getDesign()
             };
         });
 

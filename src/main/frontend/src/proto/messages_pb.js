@@ -2283,7 +2283,8 @@ proto.VehiclePart.toObject = function(includeInstance, msg) {
     rearaxis: +jspb.Message.getFieldWithDefault(msg, 16, 0.0),
     wheeldeflection: +jspb.Message.getFieldWithDefault(msg, 17, 0.0),
     sprite: jspb.Message.getFieldWithDefault(msg, 18, ""),
-    scale: +jspb.Message.getFieldWithDefault(msg, 19, 0.0)
+    scale: +jspb.Message.getFieldWithDefault(msg, 19, 0.0),
+    design: jspb.Message.getFieldWithDefault(msg, 20, "")
   };
 
   if (includeInstance) {
@@ -2363,6 +2364,10 @@ proto.VehiclePart.deserializeBinaryFromReader = function(msg, reader) {
     case 19:
       var value = /** @type {number} */ (reader.readFloat());
       msg.setScale(value);
+      break;
+    case 20:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setDesign(value);
       break;
     default:
       reader.skipField();
@@ -2467,6 +2472,13 @@ proto.VehiclePart.serializeBinaryToWriter = function(message, writer) {
   if (f !== 0.0) {
     writer.writeFloat(
       19,
+      f
+    );
+  }
+  f = message.getDesign();
+  if (f.length > 0) {
+    writer.writeString(
+      20,
       f
     );
   }
@@ -2644,6 +2656,21 @@ proto.VehiclePart.prototype.getScale = function() {
 /** @param {number} value */
 proto.VehiclePart.prototype.setScale = function(value) {
   jspb.Message.setProto3FloatField(this, 19, value);
+};
+
+
+/**
+ * optional string design = 20;
+ * @return {string}
+ */
+proto.VehiclePart.prototype.getDesign = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 20, ""));
+};
+
+
+/** @param {string} value */
+proto.VehiclePart.prototype.setDesign = function(value) {
+  jspb.Message.setProto3StringField(this, 20, value);
 };
 
 
