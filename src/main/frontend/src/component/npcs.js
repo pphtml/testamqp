@@ -63,7 +63,7 @@ class NPCS {
             //const sectorKey = sectorKey(sectorCoordinates);
             const sectorKeysEligibleForActive = this.sectorKeysEligibleForActive(sectorCoordinates);
             if (!this.isSetsEqual(this.sectorActiveSet, sectorKeysEligibleForActive)) {
-                const sectorUpdateStart = Date.now();
+                const sectorUpdateStart = performance.now();
                 //const removalSet = new Set();
                 let removalRequested = false;
                 for (let existingSectorKey of this.sectorActiveSet) {
@@ -72,6 +72,7 @@ class NPCS {
                         // this.sectorActiveSet.delete(existingSectorKey);
                         // console.info(`after delete ${existingSectorKey}`);
                         removalRequested = true;
+                        break;
                     }
                 }
 
@@ -89,14 +90,16 @@ class NPCS {
                 for (let eligibleKey of sectorKeysEligibleForActive) {
                     if (!this.sectorActiveSet.has(eligibleKey)) {
                         //console.info(`drawing sector ${eligibleKey}`);
-                        const sectorIndexes = this.sectorIndexes(eligibleKey);
-                        this.drawSectorRoads(sectorIndexes);
+                        const sectorCoordinates = this.sectorCoordinates(eligibleKey);
+                        this.drawSectorRoads(sectorCoordinates);
+                        this.sectorActiveSet.add(eligibleKey);
+                        break;
                     }
                 }
 
-                this.sectorActiveSet = sectorKeysEligibleForActive;
+                //this.sectorActiveSet = sectorKeysEligibleForActive;
 
-                const sectorUpdateEnd = Date.now();
+                const sectorUpdateEnd = performance.now();
                 const sectorUpdateTimeSpent = sectorUpdateEnd - sectorUpdateStart;
                 console.info(`Sector updates took ${sectorUpdateTimeSpent} ms`);
             }
@@ -124,8 +127,10 @@ class NPCS {
                 const y = sectorCoordinates.y + yOffset;
                 if (x >= 0 && x < this.sectorHorizontalCount &&
                         y >= 0 && y < this.sectorVerticalCount) {
-                    const sectorKey = this.sectorKey({x, y});
-                    result.add(sectorKey);
+                    for (let quadrant of ['N', 'E', 'S', 'W']) {
+                        const sectorKey = this.sectorKey({x, y, quadrant});
+                        result.add(sectorKey);
+                    }
                 }
             }
         }
@@ -156,7 +161,7 @@ class NPCS {
         this.sectorVerticalCount = this.worldHeight / this.sectorHeight;
         for (let y = 0; y < this.sectorVerticalCount; y++) {
             for (let x = 0; x < this.sectorHorizontalCount; x++) {
-                const key = this.sectorKey({x, y});
+                const key = this.sectorKeyCoordinates({x, y});
                 this.sectorMap[key] = playerStartResponse.getSectormapMap().get(key);
             }
         }
@@ -175,16 +180,24 @@ class NPCS {
     }
 
     sectorKey(coordinates) {
+        return `${coordinates.x},${coordinates.y},${coordinates.quadrant}`;
+    }
+
+    sectorKeyCoordinates(coordinates) {
         return `${coordinates.x},${coordinates.y}`;
     }
 
-    sectorIndexes(key) {
-        const regex = /(\d+),(\d+)/;
-        const match = regex.exec(key);
-        return {x: parseInt(match[1], 10), y: parseInt(match[2], 10)};
+    stripKeyQuadrant(fullKey) {
+        return fullKey.match(/(\d+),(\d+)/)[0];
     }
 
-    drawSectorRoads(sectorIndexes) {
+    sectorCoordinates(key) {
+        const regex = /(\d+),(\d+),(\w)/;
+        const match = regex.exec(key);
+        return {x: parseInt(match[1], 10), y: parseInt(match[2], 10), quadrant: match[3]};
+    }
+
+    drawSectorRoads(sectorCoordinates) {
         function* stripingLines(totalLength, length, fullRatio) {
             let x = 0;
             while (x < totalLength) {
@@ -197,15 +210,16 @@ class NPCS {
             }
         }
 
-        const sectorKey = this.sectorKey(sectorIndexes);
-        const sectorData = this.sectorMap[sectorKey];
+        const sectorKey = this.sectorKey(sectorCoordinates);
+        const coordinatesKey = this.stripKeyQuadrant(sectorKey);
+        const sectorData = this.sectorMap[coordinatesKey];
 
         const north = sectorData.getNorth();
         const east = sectorData.getEast();
         const south = sectorData.getSouth();
         const west = sectorData.getWest();
 
-        const topLeft = this.translateToWorld(sectorIndexes.x, sectorIndexes.y);
+        const topLeft = this.translateToWorld(sectorCoordinates.x, sectorCoordinates.y);
 
         const drawSectorQuadrant = (currentRoadType, leftRoadType, rightRoadType, oppositeRoadType, rotate, offsetX, offsetY,
                                     sectorWidth, sectorHeight) => {
@@ -346,10 +360,15 @@ class NPCS {
             this.container.addChild(sectorContainer);
         };
 
-        drawSectorQuadrant(west, north, south, east, 0, 0, 0, this.sectorWidth, this.sectorHeight);
-        drawSectorQuadrant(north, east, west, south, -Math.PI * 3 / 2, this.sectorWidth, 0, this.sectorHeight, this.sectorWidth);
-        drawSectorQuadrant(east, south, north, west, -Math.PI, this.sectorHeight, this.sectorWidth, this.sectorWidth, this.sectorHeight);
-        drawSectorQuadrant(south, west, east, north, -Math.PI / 2, 0, this.sectorHeight, this.sectorHeight, this.sectorWidth);
+        if (sectorCoordinates.quadrant == 'W') {
+            drawSectorQuadrant(west, north, south, east, 0, 0, 0, this.sectorWidth, this.sectorHeight);
+        } else if (sectorCoordinates.quadrant == 'N') {
+            drawSectorQuadrant(north, east, west, south, -Math.PI * 3 / 2, this.sectorWidth, 0, this.sectorHeight, this.sectorWidth);
+        } else if (sectorCoordinates.quadrant == 'E') {
+            drawSectorQuadrant(east, south, north, west, -Math.PI, this.sectorHeight, this.sectorWidth, this.sectorWidth, this.sectorHeight);
+        } else if (sectorCoordinates.quadrant == 'S') {
+            drawSectorQuadrant(south, west, east, north, -Math.PI / 2, 0, this.sectorHeight, this.sectorHeight, this.sectorWidth);
+        }
 
         // const middleY = topLeft.y + this.sectorHeightHalf;
         // const middleX = topLeft.x + this.sectorWidthHalf;
@@ -370,16 +389,17 @@ class NPCS {
         for (let i = this.container.children.length - 1; i >= 0; i--) {
             const child = this.container.children[i];
             if (!sectorKeysEligibleForActive.has(child._sector)) {
-                //console.info(`removing sprite for sector ${sprite._sector}`);
+                //console.info(`removing sprite for sector ${child._sector}`);
                 this.container.removeChild(child);
                 if (child.constructor.name == 'Container') {
                     for (let j = child.children.length - 1; j >= 0; j--) {
                         const sprite = child.children[j];
                         child.removeChild(sprite);
-                        //delete sprite;
                     }
                 }
                 //delete child;
+                //debugger;
+                this.sectorActiveSet.delete(child._sector);
             }
         }
     }
