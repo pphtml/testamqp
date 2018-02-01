@@ -101,7 +101,7 @@ class NPCS {
 
                 const sectorUpdateEnd = performance.now();
                 const sectorUpdateTimeSpent = sectorUpdateEnd - sectorUpdateStart;
-                console.info(`Sector updates took ${sectorUpdateTimeSpent} ms`);
+                //console.info(`Sector updates took ${sectorUpdateTimeSpent.toFixed(3)} ms`);
             }
             //
             // for (let i = this.container.children.length - 1; i >= 0; i--) {

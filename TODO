@@ -1,6 +1,7 @@
 - zpomalovani samo od sebe / zpomalovani pri prujezdu zatackou / couvani - https://undergroundmathematics.org/thinking-about-functions/curve-match
 - rozdeleni aktualizace sektoru
-  - presnejsi pocitani casu - performance.now()
+  - presnejsi pocitani casu - performance.now() - zaokrouhlovani
+  - promazavani - po framech
 - cary pruhu - vyzkouset png sprajty
 - kulaty rohy silnic - pixijs maska
 - sprite chodnik & obrubnik
