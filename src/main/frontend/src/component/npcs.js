@@ -47,11 +47,11 @@ class NPCS {
         this.sectorActiveSet = new Set();
         this.isSetsEqual = (a, b) => a.size === b.size && [...a].every(value => b.has(value));
 
-        this.gameContext.communication.subject.subscribe(msg => {
-            if (msg.hasPlayerstartresponse()) {
-                this.handlePlayerStartResponse(msg.getPlayerstartresponse());
-            }
-        });
+        // this.gameContext.communication.subject.subscribe(msg => {
+        //     if (msg.hasPlayerstartresponse()) {
+        //         this.handlePlayerStartResponse(msg.getPlayerstartresponse());
+        //     }
+        // });
     }
 
     update() {

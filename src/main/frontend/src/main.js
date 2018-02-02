@@ -51,6 +51,7 @@ renderer.autoResize = true;
 let gameContext = {
     stage: stage,
     renderer: renderer,
+    middle: {x: window.innerWidth / 2, y: window.innerHeight / 2},
     middleCoordinates: function() {
         let x = this.middle.x - this.controls.coordinates.x;
         let y = this.middle.y - this.controls.coordinates.y;
@@ -76,7 +77,7 @@ loader
 function setup() {
     gameContext.communication = new Communication(gameContext);
     gameContext.controls = new Controls(gameContext);
-    gameContext.controls.resizedHandler();
+    //gameContext.controls.resizedHandler();
     let background = new Background(gameContext);
     gameContext.background = background;
 
@@ -86,8 +87,10 @@ function setup() {
     // //stage.addChild(player.container);
     let npcs = new NPCS(gameContext);
     stage.addChild(npcs.container);
+    gameContext.npcs = npcs;
     let vehicles = new Vehicles(gameContext);
     stage.addChild(vehicles.container);
+    gameContext.vehicles = vehicles;
 
     let gameInfo = new GameInfo(gameContext, 10, 10);
     stage.addChild(gameInfo.container);
@@ -100,7 +103,7 @@ function setup() {
     function gameLoop(now) {
         let elapsedTime = (now - before);
         before = now;
-        gameContext.controls.fpsSubject.next('a');
+        //gameContext.controls.fpsSubject.next('a');
 
         let angle = gameContext.controls.angle();
 

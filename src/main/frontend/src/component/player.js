@@ -7,15 +7,6 @@ class Player {
         this.gameContext = gameContext;
         // this.gameContext.controls.skin = skin;
         //
-        const playerStartRequest = new proto.PlayerStartRequest();
-        playerStartRequest.setName(this.gameContext.communication.commId);
-        playerStartRequest.setVehicletype('truck');
-        playerStartRequest.setVehicledesign('14338485');
-        playerStartRequest.setInitiated(Date.now());
-        const message = new proto.Message();
-        message.setPlayerstartrequest(playerStartRequest);
-        const msgBytes = message.serializeBinary();
-        this.gameContext.communication.subject.next(msgBytes);
 
         // message PlayerStartRequest {
         //     string name = 1;
@@ -24,6 +15,19 @@ class Player {
         //     int64 initiated = 4;
 
 
+    }
+
+    createPlayerStartRequestMsg() {
+        const playerStartRequest = new proto.PlayerStartRequest();
+        playerStartRequest.setName(this.gameContext.communication.commId);
+        playerStartRequest.setVehicletype('truck');
+        playerStartRequest.setVehicledesign('14338485');
+        playerStartRequest.setInitiated(Date.now());
+        const message = new proto.Message();
+        message.setPlayerstartrequest(playerStartRequest);
+        const msgBytes = message.serializeBinary();
+        return msgBytes;
+        //this.gameContext.communication.subject.next(msgBytes);
     }
 
     update(askedAngle, elapsedTime) {

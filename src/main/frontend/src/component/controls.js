@@ -1,4 +1,4 @@
-import rx from 'rxjs'
+//import rx from 'rxjs'
 const withinPiBounds = require('../computation/movements').withinPiBounds;
 
 class MoveEvent {
@@ -15,8 +15,11 @@ class MoveEvent {
 
 const MOUSE_SENSITIVITY = 10;
 
+let that;
+
 class Controls {
     constructor(gameContext) {
+        that = this;
         this.gameContext = gameContext;
         /*document.body.onmousedown = () => this.mouseDown++;
         document.body.onmouseup = () => this.mouseDown--;*/
@@ -32,103 +35,124 @@ class Controls {
         this.lastMouseMoveEvent = undefined;
 
 
-        const mouseDowns = rx.Observable.fromEvent(document, 'mousedown');
-        const mouseUps = rx.Observable.fromEvent(document, 'mouseup');
-        const mouseMove = rx.Observable.fromEvent(document, 'mousemove');
+        // const mouseDowns = rx.Observable.fromEvent(document, 'mousedown');
+        // const mouseUps = rx.Observable.fromEvent(document, 'mouseup');
+        // const mouseMove = rx.Observable.fromEvent(document, 'mousemove');
         this.hideMouseCursor = (hide) => {
             if (!hide) {
                 this.turningWithKeysAngle = undefined;
             }
             document.getElementsByTagName('body')[0].style.cursor = (hide ? 'none' : '');
         };
-        mouseMove.subscribe(event => {
-            if (this.lastMouseMoveEvent) {
-                const xDiff = this.lastMouseMoveEvent.x - event.x;
-                const yDiff = this.lastMouseMoveEvent.y - event.y;
-                const squareLength = xDiff * xDiff + yDiff * yDiff;
-                if (squareLength > MOUSE_SENSITIVITY) {
-                    this.hideMouseCursor(false);
-                }
-            }
-            this.lastMouseMoveEvent = event;
-        });
-        this.mouseActions = rx.Observable.merge(mouseDowns, mouseUps);
-        this.mouseMoveEvents = this.mouseActions.map(event => {
-            const value = event.type == 'mousedown';
-            if (event.button == 0) {
-                return new MoveEvent('forward', value, 'mouse');
-            } else if (event.button == 2) {
-                return new MoveEvent('back', value, 'mouse');
-            }
-        }).filter(event => event != undefined);
 
-        let keyDowns = rx.Observable.fromEvent(document, 'keydown');
-        let keyUps = rx.Observable.fromEvent(document, 'keyup');
-        this.keyActions = rx.Observable.merge(keyDowns, keyUps);
-        this.keyMoveEvents = this.keyActions.map(event => {
-            const value = event.type == 'keydown';
-            if (event.code == 'ArrowUp') {
-                return new MoveEvent('forward', value, 'key');
-            } else if (event.code == 'ArrowDown') {
-                return new MoveEvent('back', value, 'key');
-            } else if (event.code == 'ArrowLeft') {
-                return new MoveEvent('left', value, 'key');
-            } else if (event.code == 'ArrowRight') {
-                return new MoveEvent('right', value, 'key');
-            }
-        }).filter(event => event != undefined);
+        window.addEventListener('mousemove', this.handlerMouseMove, false);
+        window.addEventListener('mousedown', this.handlerMouseUpDown, false);
+        window.addEventListener('mouseup', this.handlerMouseUpDown, false);
+        // mouseMove.subscribe(event => {
+        // });
+        // this.mouseActions = rx.Observable.merge(mouseDowns, mouseUps);
+        // this.mouseMoveEvents = this.mouseActions.map(event => {
+        // }).filter(event => event != undefined);
 
-        this.moveEvents = rx.Observable.merge(this.mouseMoveEvents, this.keyMoveEvents);
+        // let keyDowns = rx.Observable.fromEvent(document, 'keydown');
+        // let keyUps = rx.Observable.fromEvent(document, 'keyup');
+        // this.keyActions = rx.Observable.merge(keyDowns, keyUps);
+        // this.keyMoveEvents = this.keyActions.map(event => {
+        //     const value = event.type == 'keydown';
+        //     if (event.code == 'ArrowUp') {
+        //         return new MoveEvent('forward', value, 'key');
+        //     } else if (event.code == 'ArrowDown') {
+        //         return new MoveEvent('back', value, 'key');
+        //     } else if (event.code == 'ArrowLeft') {
+        //         return new MoveEvent('left', value, 'key');
+        //     } else if (event.code == 'ArrowRight') {
+        //         return new MoveEvent('right', value, 'key');
+        //     }
+        // }).filter(event => event != undefined);
+        //
+        // this.moveEvents = rx.Observable.merge(this.mouseMoveEvents, this.keyMoveEvents);
 
         this.piHalf = Math.PI / 2;
         this.piDouble = Math.PI * 2;
 
-        let resizeStream = rx.Observable.fromEvent(window, 'resize');
-        rx.Observable.merge(resizeStream.debounceTime(500), resizeStream.throttleTime(500)).distinct().subscribe(event => {
-            this.resizedHandler();
-        });
+        // let resizeStream = rx.Observable.fromEvent(window, 'resize');
+        // rx.Observable.merge(resizeStream.debounceTime(500), resizeStream.throttleTime(500)).distinct().subscribe(event => {
+        //     this.resizedHandler();
+        // });
         //.debounceTime(1000).subscribe(event => { this.resizedHandler(); });
 
-        this.fpsSubject = new rx.Subject();
-        this.scoreUpdateSubject = new rx.Subject();
+        // this.fpsSubject = new rx.Subject();
+        // this.scoreUpdateSubject = new rx.Subject();
 
-        // TODO mozna pridat filter
-        this.gameContext.communication.subject.subscribe(msg => {
-            if (msg.hasClientdisconnect()) {
-                console.info('vyhodit hada z top ten');
+        // // TODO mozna pridat filter
+        // this.gameContext.communication.subject.subscribe(msg => {
+        //     if (msg.hasClientdisconnect()) {
+        //         console.info('vyhodit hada z top ten');
+        //
+        //         this.scoreUpdateSubject.next({id: msg.getClientdisconnect().getId(), type: 'remove'});
+        //     } else if (msg.hasPlayerupdateresponse()) {
+        //         this.handlePlayerUpdateResponse(msg.getPlayerupdateresponse());
+        //     } else if (msg.hasPlayerstartresponse()) {
+        //         this.handlePlayerStartResponse(msg.getPlayerstartresponse());
+        //     }
+        // });
 
-                this.scoreUpdateSubject.next({id: msg.getClientdisconnect().getId(), type: 'remove'});
-            } else if (msg.hasPlayerupdateresponse()) {
-                this.handlePlayerUpdateResponse(msg.getPlayerupdateresponse());
-            } else if (msg.hasPlayerstartresponse()) {
-                this.handlePlayerStartResponse(msg.getPlayerstartresponse());
-            }
-        });
+        // this.moveEvents.subscribe(event => {
+        //     if (event.type == 'forward') {
+        //         this.speedAccelerator = event.value;
+        //     }
+        //     if (event.type == 'back') {
+        //         this.speedBrake = event.value;
+        //     }
+        //     if (event.type == 'right') {
+        //         this.turningRight = event.value;
+        //     }
+        //     if (event.type == 'left') {
+        //         this.turningLeft = event.value;
+        //     }
+        //
+        //     // this.speedAccelerator = (event.buttons & 1) > 0;
+        //     // this.speedBrake = (event.buttons & 2) > 0;
+        // });
+    }
 
-        this.moveEvents.subscribe(event => {
-            if (event.type == 'forward') {
-                this.speedAccelerator = event.value;
+    handlerMouseMove(event) {
+        if (that.lastMouseMoveEvent) {
+            const xDiff = that.lastMouseMoveEvent.x - event.x;
+            const yDiff = that.lastMouseMoveEvent.y - event.y;
+            const squareLength = xDiff * xDiff + yDiff * yDiff;
+            if (squareLength > MOUSE_SENSITIVITY) {
+                that.hideMouseCursor(false);
             }
-            if (event.type == 'back') {
-                this.speedBrake = event.value;
-            }
-            if (event.type == 'right') {
-                this.turningRight = event.value;
-            }
-            if (event.type == 'left') {
-                this.turningLeft = event.value;
-            }
+        }
+        that.lastMouseMoveEvent = event;
+    }
 
-            // this.speedAccelerator = (event.buttons & 1) > 0;
-            // this.speedBrake = (event.buttons & 2) > 0;
-        });
+    handlerMouseUpDown(event) {
+        const value = event.type == 'mousedown';
+        if (event.button == 0) {
+            that.handlerMoveEvents(new MoveEvent('forward', value, 'mouse'));
+        } else if (event.button == 2) {
+            that.handlerMoveEvents(new MoveEvent('back', value, 'mouse'));
+        }
+    }
 
-        this.mouseActions.subscribe(event => {
-            //console.info(event);
-            // https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/buttons
-            //this.mouseDown = event.buttons > 0;
-            //console.info(`buttons: ${event.buttons}, acc: ${this.speedAccelerator}, brake: ${this.speedBrake}`);
-        });
+    handlerMoveEvents(event) {
+        if (event.type == 'forward') {
+            this.speedAccelerator = event.value;
+        }
+        if (event.type == 'back') {
+            this.speedBrake = event.value;
+        }
+        if (event.type == 'right') {
+            this.turningRight = event.value;
+        }
+        if (event.type == 'left') {
+            this.turningLeft = event.value;
+        }
+
+        // this.speedAccelerator = (event.buttons & 1) > 0;
+        // this.speedBrake = (event.buttons & 2) > 0;
     }
 
     resizedHandler() {
@@ -156,7 +180,7 @@ class Controls {
         message.setResize(resize);
         let bytes = message.serializeBinary();
         //this.gameContext.communication.socket.send(bytes);
-        this.gameContext.communication.subject.next(bytes);
+        this.gameContext.communication.send(bytes);
     }
 
     angle(ignoreKeys = false) {

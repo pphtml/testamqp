@@ -20,17 +20,17 @@ class Vehicles {
         // rectangle.alpha = 0.5;
         // this.container.addChild(rectangle);
 
-        this.gameContext.communication.subject.subscribe(msg => {
-            // if (msg.hasSnakesupdate()) {
-            //     this.updateWorms(msg.getSnakesupdate().getSnakesList());
-            // }
-            if (msg.hasPlayerstartresponse()) {
-                this.handlePlayerStartResponse(msg.getPlayerstartresponse());
-            } else if (msg.hasClientdisconnect()) {
-                console.info('vyhodit auto z mapy');
-                console.info('vymazat sprity auta');
-            }
-        });
+        // this.gameContext.communication.subject.subscribe(msg => {
+        //     // if (msg.hasSnakesupdate()) {
+        //     //     this.updateWorms(msg.getSnakesupdate().getSnakesList());
+        //     // }
+        //     if (msg.hasPlayerstartresponse()) {
+        //         this.handlePlayerStartResponse(msg.getPlayerstartresponse());
+        //     } else if (msg.hasClientdisconnect()) {
+        //         console.info('vyhodit auto z mapy');
+        //         console.info('vymazat sprity auta');
+        //     }
+        // });
     }
 
     updateWorms(worms) {

@@ -1,11 +1,14 @@
-import rx from 'rxjs'
+//import rx from 'rxjs'
 import shortid from 'shortid';
 
 // import { QueueingSubject } from 'queueing-subject'
 // import websocketConnect from 'rxjs-websockets'
 
+let that;
+
 class Communication {
     constructor(gameContext) {
+        that = this;
         this.gameContext = gameContext;
         //this.input = new QueueingSubject();
         this.commId = shortid.generate();
@@ -18,40 +21,35 @@ class Communication {
         // let z1 = rx.Observable;
         // let z2 = rx.Observable.webSocket;
         // this.subject = rx.Observable.webSocket(wsUrl);
-        this.subject = rx.Observable.webSocket({url: wsUrl, binaryType: 'arraybuffer'});
-        this.subject.resultSelector = e => {
-            const message = proto.Message.deserializeBinary(e.data);
-            return message;
-        };
+        //this.subject = rx.Observable.webSocket({url: wsUrl, binaryType: 'arraybuffer'});
+        // this.subject.resultSelector = e => {
+        //     const message = proto.Message.deserializeBinary(e.data);
+        //     return message;
+        // };
         //this.subject = new rx.Subject(); // DUMMY TODO vyhodit
 
 
-        // this.socket = new WebSocket(wsUrl);
-        // //this.socket.binaryType = 'blob';
-        // this.socket.binaryType = "arraybuffer";
-        // this.socket.onopen = function() {
-        //     //send(ctx);
-        //     console.info('on open');
-        // }
-        // this.socket.onmessage = function(msg){
-        //     console.info('on message');
-        //     //var bytes = Array.prototype.slice.call(msg.data, 0);
-        //     //var message = proto.Message.decode(msg.data);
-        //     //debugger;
-        //     let message = proto.Message.deserializeBinary(msg.data);
-        //     let worldInfo = message.getWorldinfo();
-        //     console.log(message);
-        //     debugger;
-        // };
+        this.socket = new WebSocket(wsUrl);
+        //this.socket.binaryType = 'blob';
+        this.socket.binaryType = "arraybuffer";
+        this.socket.onopen = function() {
+            //send(ctx);
+            console.info('on open');
+            that.gameContext.controls.resizedHandler();
+            const playerStartRequest = that.gameContext.player.createPlayerStartRequestMsg();
+            that.send(playerStartRequest);
+        }
+        this.socket.onmessage = function(msg){
+            console.info('on message');
+            //var bytes = Array.prototype.slice.call(msg.data, 0);
+            //var message = proto.Message.decode(msg.data);
+            //debugger;
+            const message = proto.Message.deserializeBinary(msg.data);
+            // let worldInfo = message.getWorldinfo();
+            that.receive(message);
+        };
 
 
-        // subject.subscribe(
-        //     (msg) => console.log('message received: ' + JSON.stringify(msg)),
-        //     (err) => console.log(err),
-        //     () => console.log('complete')
-        // );
-
-        //this.subject.next(JSON.stringify({ op: 'hello' }));
 
 
         // const { messages, connectionStatus } = websocketConnect(wsUrl, this.input);
@@ -60,6 +58,20 @@ class Communication {
         // let keyDowns = rx.Observable.fromEvent(document, 'keydown');
         // let keyUps = rx.Observable.fromEvent(document, 'keyup');
         // this.keyActions = rx.Observable.merge(keyDowns, keyUps);
+    }
+
+    send(message) {
+        this.socket.send(message);
+    }
+
+    receive(message) {
+        if (message.hasPlayerstartresponse()) {
+            //controls npcs vehicles
+            const playerStartResponse = message.getPlayerstartresponse();
+            that.gameContext.controls.handlePlayerStartResponse(playerStartResponse);
+            that.gameContext.vehicles.handlePlayerStartResponse(playerStartResponse);
+            that.gameContext.npcs.handlePlayerStartResponse(playerStartResponse);
+        }
     }
 }
 

@@ -111,15 +111,15 @@ class GameInfo {
         this.infoDisplayed = false;
         this.container.addChild(this.message);
 
-        this.gameContext.controls.keyActions.subscribe(event => {
-            if (event.type == 'keydown' && event.code == 'KeyI') {
-                this.infoDisplayed = !this.infoDisplayed;
-            }
-        });
+        // this.gameContext.controls.keyActions.subscribe(event => {
+        //     if (event.type == 'keydown' && event.code == 'KeyI') {
+        //         this.infoDisplayed = !this.infoDisplayed;
+        //     }
+        // });
 
         this.fps = 0;
         this.roundTrip = '?';
-        this.gameContext.controls.fpsSubject.bufferTime(1000).subscribe(samples => this.fps = samples.length);
+        //this.gameContext.controls.fpsSubject.bufferTime(1000).subscribe(samples => this.fps = samples.length);
 
         //this.scoreInfo = new ScoreInfo(gameContext, this.container);
     }
