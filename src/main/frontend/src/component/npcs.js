@@ -314,12 +314,21 @@ class NPCS {
                 sectorContainer.addChild(grassSprite);
 
                 if (roundMasking) {
+                    const roundingWidth = ROAD_ROUNDING_RADIUS - ROAD_LINE_WIDTH / 2;
                     const arc = new Graphics();
                     arc.beginFill(0xffffff);
-                    arc.drawRect(width - ROAD_ROUNDING_RADIUS, 0, ROAD_ROUNDING_RADIUS, ROAD_ROUNDING_RADIUS);
-                    arc.drawRect(0, height - ROAD_ROUNDING_RADIUS, ROAD_ROUNDING_RADIUS, ROAD_ROUNDING_RADIUS);
-                    arc.drawRect(0, 0, ROAD_ROUNDING_RADIUS, ROAD_ROUNDING_RADIUS);
-                    arc.drawRoundedRect(0, 0, width, height, ROAD_ROUNDING_RADIUS - ROAD_LINE_WIDTH / 2);
+                    // arc.drawRect(width - ROAD_ROUNDING_RADIUS, 0, ROAD_ROUNDING_RADIUS, ROAD_ROUNDING_RADIUS);
+                    // arc.drawRect(0, height - ROAD_ROUNDING_RADIUS, ROAD_ROUNDING_RADIUS, ROAD_ROUNDING_RADIUS);
+                    // arc.drawRect(0, 0, ROAD_ROUNDING_RADIUS, ROAD_ROUNDING_RADIUS);
+                    // arc.drawRoundedRect(0, 0, width, height, ROAD_ROUNDING_RADIUS - ROAD_LINE_WIDTH / 2);
+
+                    arc.lineStyle(0, 0xffffff, 0);
+                    arc.moveTo(0, 0);
+                    arc.lineTo(0, height);
+                    arc.lineTo(width - roundingWidth, height);
+                    //arc.lineTo(width, height - ble);
+                    arc.quadraticCurveTo(width, height, width, height - roundingWidth);
+                    arc.lineTo(width, 0);
                     arc.endFill();
                     sectorContainer.addChild(arc);
                     grassSprite.mask = arc;
