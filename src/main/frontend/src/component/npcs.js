@@ -305,13 +305,25 @@ class NPCS {
                 }
             };
 
-            const grass = (x, y, width, height) => {
+            const grass = (x, y, width, height, roundMasking) => {
                 const grassSprite = new TilingSprite(resources['images/spritesheet.json'].textures['grass-tile.png'], width, height);
                 //const grassSprite = new TilingSprite(resources['images/grass-tile.png'].texture, width, height);
                 grassSprite.position.set(x, y);
                 grassSprite.displayGroup = layers.npcLayer;
                 grassSprite._sector = sectorKey;
                 sectorContainer.addChild(grassSprite);
+
+                if (roundMasking) {
+                    const arc = new Graphics();
+                    arc.beginFill(0xffffff);
+                    arc.drawRect(width - ROAD_ROUNDING_RADIUS, 0, ROAD_ROUNDING_RADIUS, ROAD_ROUNDING_RADIUS);
+                    arc.drawRect(0, height - ROAD_ROUNDING_RADIUS, ROAD_ROUNDING_RADIUS, ROAD_ROUNDING_RADIUS);
+                    arc.drawRect(0, 0, ROAD_ROUNDING_RADIUS, ROAD_ROUNDING_RADIUS);
+                    arc.drawRoundedRect(0, 0, width, height, ROAD_ROUNDING_RADIUS - ROAD_LINE_WIDTH / 2);
+                    arc.endFill();
+                    sectorContainer.addChild(arc);
+                    grassSprite.mask = arc;
+                }
             };
 
             if (currentRoadType > 0) {
@@ -340,7 +352,7 @@ class NPCS {
             sectorContainer.addChild(gContext);
 
             if (currentRoadType > 0 && leftRoadType > 0) {
-                grass(0, 0, leftRoadWidth - ROAD_LINE_WIDTH, currentRoadWidth - ROAD_LINE_WIDTH);
+                grass(0, 0, leftRoadWidth - ROAD_LINE_WIDTH, currentRoadWidth - ROAD_LINE_WIDTH, true);
 
                 const arc = new Graphics();
                 arc.lineStyle(ROAD_LINE_WIDTH, 0xffffff, 0.5);
