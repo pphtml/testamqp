@@ -23,7 +23,9 @@ class Controls {
         this.coordinates = {x: 0.0, y: 0.0};
         this.skin = 'SET ME UP!';
         this.speed = 0.0;
+        this.direction = 0;
         this.baseSpeed = 1.0;
+        this.baseSpeedReverse = this.baseSpeed / 4;
         this.speedAccelerator = false;
         this.speedBrake = false;
         this.turningRight = false;
@@ -186,15 +188,51 @@ class Controls {
     }
 
     updateSpeed(elapsedTime) {
-        if (this.speedAccelerator) {
-            const maxElapsedTime = Math.min(elapsedTime, 100);
-            let accelerationTimeFrom0 = Math.pow(this.speed, 2) / this.baseSpeed;
-            accelerationTimeFrom0 += maxElapsedTime / 1000;
-            this.speed = Math.sqrt(accelerationTimeFrom0 * this.baseSpeed);
+        const maxElapsedTime = Math.min(elapsedTime, 100);
+
+        // shifting
+        if (this.speed == 0.0 && this.direction == 0) {
+            if (this.speedAccelerator) {
+                this.direction = 1;
+            } else if (this.speedBrake) {
+                this.direction = -1;
+            }
         }
-        if (this.speedBrake) {
-            const deceleration = 2.0 * this.baseSpeed * elapsedTime / 1000;
-            this.speed = Math.max(0.0, this.speed - deceleration);
+
+        // friction
+        if (!this.speedBrake && !this.speedAccelerator && this.speed != 0.0) {
+            if (this.direction > 0) {
+                this.speed = Math.max(0, this.speed - elapsedTime * 0.0005);
+            } else {
+                this.speed = Math.min(0, this.speed + elapsedTime * 0.0005);
+            }
+        }
+
+        if (this.direction == 1) {
+            if (this.speedAccelerator) {
+                let accelerationTimeFrom0 = Math.pow(this.speed, 2) / this.baseSpeed;
+                accelerationTimeFrom0 += maxElapsedTime / 1000;
+                this.speed = Math.sqrt(accelerationTimeFrom0 * this.baseSpeed);
+            }
+            if (this.speedBrake) {
+                const deceleration = 2.0 * this.baseSpeed * elapsedTime / 1000;
+                this.speed = Math.max(0.0, this.speed - deceleration);
+            }
+        } else if (this.direction == -1) {
+            if (this.speedBrake) {
+                let accelerationTimeFrom0 = Math.pow(-this.speed, 2) / this.baseSpeedReverse;
+                accelerationTimeFrom0 += maxElapsedTime / 1000;
+                this.speed = -Math.sqrt(accelerationTimeFrom0 * this.baseSpeedReverse);
+            }
+            if (this.speedAccelerator) {
+                const deceleration = 2.0 * -this.baseSpeed * elapsedTime / 1000;
+                this.speed = Math.min(0.0, -this.speed - deceleration);
+            }
+        }
+
+        // vehicle stop
+        if (!this.speedBrake && !this.speedAccelerator && this.speed == 0.0 && this.direction != 0) {
+            this.direction = 0;
         }
     }
 
