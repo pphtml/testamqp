@@ -1,6 +1,5 @@
-- zpomalovani samo od sebe / zpomalovani pri prujezdu zatackou / couvani - https://undergroundmathematics.org/thinking-about-functions/curve-match
+- omezeni uhlu kamionu
 - rozdeleni aktualizace sektoru
-  - presnejsi pocitani casu - performance.now() - zaokrouhlovani
   - promazavani - po framech
 - sprite chodnik & obrubnik
 - normalizovany viewport - scale - window.screen - Screen {availWidth: 1680, availHeight: 1010, width: 1680, height: 1050, colorDepth: 24, …}
@@ -15,6 +14,7 @@
 - http://2ality.com/2015/01/es6-destructuring.html
 - https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame#Notes
   - http://www.javascriptkit.com/javatutors/requestanimationframe.shtml
+- zjednoduseni a zpresneni vypoctu FPS (ne 61)
 
 - nataceni kol
 - omezeni rychlosti otaceni

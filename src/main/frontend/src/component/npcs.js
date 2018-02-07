@@ -61,13 +61,13 @@ class NPCS {
         if (this.worldOffsetX) {
             const sectorCoordinates = this.translateToSector(this.gameContext.controls.coordinates.x, this.gameContext.controls.coordinates.y);
             //const sectorKey = sectorKey(sectorCoordinates);
-            const sectorKeysEligibleForActive = this.sectorKeysEligibleForActive(sectorCoordinates);
-            if (!this.isSetsEqual(this.sectorActiveSet, sectorKeysEligibleForActive)) {
+            const quadrantKeysEligibleForActive = this.quadrantKeysEligibleForActive(sectorCoordinates);
+            if (!this.isSetsEqual(this.sectorActiveSet, quadrantKeysEligibleForActive)) {
                 const sectorUpdateStart = performance.now();
                 //const removalSet = new Set();
                 let removalRequested = false;
                 for (let existingSectorKey of this.sectorActiveSet) {
-                    if (!sectorKeysEligibleForActive.has(existingSectorKey)) {
+                    if (!quadrantKeysEligibleForActive.has(existingSectorKey)) {
                         //console.info(`candidate for deletion: ${existingSectorKey}`);
                         // this.sectorActiveSet.delete(existingSectorKey);
                         // console.info(`after delete ${existingSectorKey}`);
@@ -77,7 +77,7 @@ class NPCS {
                 }
 
                 // let additionRequested = false;
-                // for (let eligibleKey of sectorKeysEligibleForActive) {
+                // for (let eligibleKey of quadrantKeysEligibleForActive) {
                 //     if (!this.sectorActiveSet.has(eligibleKey)) {
                 //         additionRequested = true;
                 //         break;
@@ -85,11 +85,18 @@ class NPCS {
                 // }
 
                 if (removalRequested) {
-                    this.removeSectorRoads(sectorKeysEligibleForActive);
+                    this.removeSectorRoads(quadrantKeysEligibleForActive);
                 }
-                for (let eligibleKey of sectorKeysEligibleForActive) {
+
+                const playerCoordinates = this.gameContext.controls.coordinates;
+                const nearestEligibleQuadrants = Array.from(quadrantKeysEligibleForActive);
+                nearestEligibleQuadrants.sort((a, b) => this.computeQuadrantDistance(a, playerCoordinates) - this.computeQuadrantDistance(b, playerCoordinates));
+
+                for (let eligibleKey of nearestEligibleQuadrants) {
                     if (!this.sectorActiveSet.has(eligibleKey)) {
-                        //console.info(`drawing sector ${eligibleKey}`);
+                        // const quadrantDistance = this.computeQuadrantDistance(eligibleKey, playerCoordinates);
+                        // console.info(`quadrantDistance from ${eligibleKey}: ${quadrantDistance}`);
+
                         const sectorCoordinates = this.sectorCoordinates(eligibleKey);
                         this.drawSectorRoads(sectorCoordinates);
                         this.sectorActiveSet.add(eligibleKey);
@@ -97,7 +104,7 @@ class NPCS {
                     }
                 }
 
-                //this.sectorActiveSet = sectorKeysEligibleForActive;
+                //this.sectorActiveSet = quadrantKeysEligibleForActive;
 
                 const sectorUpdateEnd = performance.now();
                 const sectorUpdateTimeSpent = sectorUpdateEnd - sectorUpdateStart;
@@ -119,7 +126,7 @@ class NPCS {
         }
     }
 
-    sectorKeysEligibleForActive(sectorCoordinates) {
+    quadrantKeysEligibleForActive(sectorCoordinates) {
         const result = new Set();
         for (let yOffset = -PADDING_SECTOR_COUNT; yOffset <= PADDING_SECTOR_COUNT; yOffset++) {
             for (let xOffset = -PADDING_SECTOR_COUNT; xOffset <= PADDING_SECTOR_COUNT; xOffset++) {
@@ -406,10 +413,10 @@ class NPCS {
         // this.container.addChild(circle);
     }
 
-    removeSectorRoads(sectorKeysEligibleForActive) {
+    removeSectorRoads(quadrantKeysEligibleForActive) {
         for (let i = this.container.children.length - 1; i >= 0; i--) {
             const child = this.container.children[i];
-            if (!sectorKeysEligibleForActive.has(child._sector)) {
+            if (!quadrantKeysEligibleForActive.has(child._sector)) {
                 //console.info(`removing sprite for sector ${child._sector}`);
                 this.container.removeChild(child);
                 if (child.constructor.name == 'Container') {
@@ -423,6 +430,29 @@ class NPCS {
                 this.sectorActiveSet.delete(child._sector);
             }
         }
+    }
+
+    computeQuadrantDistance(key, playerCoordinates) {
+        const sectorCoordinates = this.sectorCoordinates(key);
+        const worldCoordinates = this.translateToWorld(sectorCoordinates.x, sectorCoordinates.y);
+        const quarterWidth = this.sectorWidth / 4, quarterHeight = this.sectorHeight / 4;
+        if (sectorCoordinates.quadrant == 'W') {
+            worldCoordinates.x += quarterWidth;
+            worldCoordinates.y += quarterHeight * 2;
+        } else if (sectorCoordinates.quadrant == 'N') {
+            worldCoordinates.x += quarterWidth * 2;
+            worldCoordinates.y += quarterHeight;
+        } else if (sectorCoordinates.quadrant == 'E') {
+            worldCoordinates.x += quarterWidth * 3;
+            worldCoordinates.y += quarterHeight * 2;
+        } else if (sectorCoordinates.quadrant == 'S') {
+            worldCoordinates.x += quarterWidth * 2;
+            worldCoordinates.y += quarterHeight * 3;
+        }
+        const xDiff = worldCoordinates.x - playerCoordinates.x;
+        const yDiff = worldCoordinates.y - playerCoordinates.y;
+        const distance = Math.sqrt(xDiff * xDiff + yDiff * yDiff);
+        return distance;
     }
 }
 

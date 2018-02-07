@@ -14,6 +14,8 @@ class MoveEvent {
 }
 
 const MOUSE_SENSITIVITY = 10;
+const CORNERING_FRICTION = 1000;
+const COMMON_FRICTION =  0.0005;
 
 class Controls {
     constructor(gameContext) {
@@ -23,6 +25,7 @@ class Controls {
         this.coordinates = {x: 0.0, y: 0.0};
         this.skin = 'SET ME UP!';
         this.speed = 0.0;
+        this.turningSpeed = 0.0;
         this.direction = 0;
         this.baseSpeed = 1.0;
         this.baseSpeedReverse = this.baseSpeed / 4;
@@ -199,12 +202,17 @@ class Controls {
             }
         }
 
+        // cornering
+        if (this.speed != 0.0) {
+            this.speed *= (1 - this.turningSpeed / CORNERING_FRICTION * this.speed);
+        }
+
         // friction
         if (!this.speedBrake && !this.speedAccelerator && this.speed != 0.0) {
             if (this.direction > 0) {
-                this.speed = Math.max(0, this.speed - elapsedTime * 0.0005);
+                this.speed = Math.max(0, this.speed - elapsedTime * COMMON_FRICTION);
             } else {
-                this.speed = Math.min(0, this.speed + elapsedTime * 0.0005);
+                this.speed = Math.min(0, this.speed + elapsedTime * COMMON_FRICTION);
             }
         }
 

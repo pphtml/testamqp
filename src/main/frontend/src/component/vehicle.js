@@ -86,6 +86,9 @@ class Vehicle {
             const originalFrontPart = this.vehicleParts[0];
             const askedAngle = this.gameContext.controls.angle();
             const orientation = allowedAngle(askedAngle, originalFrontPart.orientation, wheelDeflection);
+            let turningSpeed = Math.abs(originalFrontPart.orientation - orientation);
+            turningSpeed = Math.min(turningSpeed, Math.abs(Math.PI * 2 - turningSpeed));
+            this.gameContext.controls.turningSpeed = turningSpeed;
             const distance = 0.06 * elapsedTime * this.gameContext.controls.speed;
 
             this.vehicleParts = move(orientation, distance, this.vehicleParts);
