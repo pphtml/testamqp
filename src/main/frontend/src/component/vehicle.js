@@ -91,7 +91,11 @@ class Vehicle {
             this.gameContext.controls.turningSpeed = turningSpeed;
             const distance = 0.06 * elapsedTime * this.gameContext.controls.speed;
 
+            const originalX = this.vehicleParts[0].x, originalY = this.vehicleParts[0].y;
             this.vehicleParts = move(orientation, distance, this.vehicleParts);
+            if (originalX == this.vehicleParts[0].x && originalY == this.vehicleParts[0].y && this.gameContext.controls.speed) {
+                this.gameContext.controls.speed = 0.0;
+            }
 
             for (let i = this.container.children.length - 1; i >= 0; i--) {
                 const sprite = this.container.children[i];
