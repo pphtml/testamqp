@@ -14,6 +14,7 @@ module.exports.withinPiBounds = withinPiBounds;
 
 module.exports.move = function(orientation, distance, parts) {
     const resultParts = JSON.parse(JSON.stringify(parts));
+    let illegalMove = false;
 
     // const xStep = Math.cos(angle) * distance;
     // const yStep = Math.sin(angle) * distance;
@@ -91,7 +92,10 @@ module.exports.move = function(orientation, distance, parts) {
         trailingPart.y = newPartCentre.y;
         trailingPart.orientation = angleDiff;
 
-
+        const legalAngle = allowedAngle(previousPart.orientation, trailingPart.orientation, Math.PI / 2);
+        if (legalAngle != previousPart.orientation) {
+            illegalMove = true;
+        }
     }
 
     // const calculationSteps = {
@@ -105,7 +109,7 @@ module.exports.move = function(orientation, distance, parts) {
     // };
     // console.info(calculationSteps);
 
-    return resultParts;
+    return illegalMove ? parts : resultParts;
 }
 //     // returns path, xStep, yStep
 //     const path = JSON.parse(JSON.stringify(snakePath));
