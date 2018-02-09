@@ -32,6 +32,14 @@ module.exports.move = function(orientation, distance, parts) {
     const rearAxisCentre = {x: rearAxisRatio * frontOrientationCos + frontPart.x,
         y: rearAxisRatio * frontOrientationSin + frontPart.y};
 
+    // naves
+    if (parts.length >= 2 && distance > 0) {
+        orientation = allowedAngle(orientation, parts[1].orientation, Math.PI / 2 * 1.28);
+        // if (or2 != orientation) {
+        //     console.info(or2, orientation, parts[0].orientation, parts[1].orientation);
+        // }
+    }
+
     const xStep = Math.cos(orientation) * distance;
     const yStep = Math.sin(orientation) * distance;
 
@@ -93,7 +101,7 @@ module.exports.move = function(orientation, distance, parts) {
         trailingPart.orientation = angleDiff;
 
         const legalAngle = allowedAngle(previousPart.orientation, trailingPart.orientation, Math.PI / 2);
-        if (legalAngle != previousPart.orientation) {
+        if (legalAngle != previousPart.orientation && distance < 0) {
             illegalMove = true;
         }
     }
