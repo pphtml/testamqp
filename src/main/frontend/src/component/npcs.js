@@ -24,8 +24,8 @@ let TilingSprite = PIXI.extras.TilingSprite;
 //
 // const FLASHING_SPEED = 0.0117647;
 
-//const PADDING_SECTOR_COUNT = 0;
-const PADDING_SECTOR_COUNT = 1;
+const PADDING_SECTOR_COUNT = 0;
+//const PADDING_SECTOR_COUNT = 1;
 const ROAD_WIDTH = 180;
 const ROAD_ROUNDING_RADIUS = 40;
 const ROAD_LINE_WIDTH = 12;
@@ -313,12 +313,26 @@ class NPCS {
             };
 
             const grass = (x, y, width, height, roundMasking) => {
-                const grassSprite = new TilingSprite(resources['images/spritesheet.json'].textures['grass-tile.png'], width, height);
+                const switchWidthHeight = !(rotate == -Math.PI || rotate == 0);
+                const spriteWidth = switchWidthHeight ?  height : width, spriteHeight = switchWidthHeight ? width : height;
+                //const grassSprite = new TilingSprite(resources['images/spritesheet.json'].textures['grass-tile.png'], width, height);
+                const grassSprite = new TilingSprite(resources['images/spritesheet.json'].textures['pavement2-tile.png'], spriteWidth, spriteHeight);
                 //const grassSprite = new TilingSprite(resources['images/grass-tile.png'].texture, width, height);
                 grassSprite.position.set(x, y);
-                grassSprite.displayGroup = layers.npcLayer;
-                grassSprite._sector = sectorKey;
-                sectorContainer.addChild(grassSprite);
+                if (rotate == -Math.PI) {
+                    grassSprite.rotation = -rotate;
+                    grassSprite.pivot.set(width, height);
+                //} else if (rotate == -Math.PI * 3 / 2) {
+                } else if (rotate == -Math.PI / 2) {
+                    grassSprite.rotation = Math.PI / 2;
+                    //grassSprite.pivot.set(width, height);
+                    grassSprite.pivot.set(0, width);
+                    console.info(rotate);
+                    console.info(width, height);
+                    grassSprite.displayGroup = layers.npcLayer;
+                    grassSprite._sector = sectorKey;
+                    sectorContainer.addChild(grassSprite);
+                }
 
                 if (roundMasking) {
                     const roundingWidth = ROAD_ROUNDING_RADIUS - ROAD_LINE_WIDTH / 2;

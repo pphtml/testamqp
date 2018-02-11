@@ -1,37 +1,29 @@
 {
 	"meta": {
 		"image": "spritesheet.png",
-		"size": {"w":835,"h":538},
+		"size": {"w":772,"h":671},
 		"scale": "1"
 	},
 	"frames": {
-		"trailer-medium.png":
-		{
-			"frame": {"x":2,"y":94,"w":327,"h":78},
-			"rotated": false,
-			"trimmed": false,
-			"spriteSourceSize": {"x":0,"y":0,"w":327,"h":78},
-			"sourceSize": {"w":327,"h":78}
-		},
-		"trailer-long.png":
-		{
-			"frame": {"x":2,"y":2,"w":390,"h":88},
-			"rotated": false,
-			"trimmed": false,
-			"spriteSourceSize": {"x":0,"y":0,"w":390,"h":88},
-			"sourceSize": {"w":390,"h":88}
-		},
 		"background-blur.png":
 		{
-			"frame": {"x":2,"y":176,"w":256,"h":256},
+			"frame": {"x":2,"y":84,"w":256,"h":256},
 			"rotated": false,
 			"trimmed": false,
 			"spriteSourceSize": {"x":0,"y":0,"w":256,"h":256},
 			"sourceSize": {"w":256,"h":256}
 		},
+		"trailer-medium.png":
+		{
+			"frame": {"x":2,"y":2,"w":327,"h":78},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {"x":0,"y":0,"w":327,"h":78},
+			"sourceSize": {"w":327,"h":78}
+		},
 		"taxi.png":
 		{
-			"frame": {"x":396,"y":2,"w":224,"h":114},
+			"frame": {"x":333,"y":2,"w":224,"h":114},
 			"rotated": false,
 			"trimmed": false,
 			"spriteSourceSize": {"x":0,"y":0,"w":224,"h":114},
@@ -39,7 +31,7 @@
 		},
 		"Black_viper.png":
 		{
-			"frame": {"x":396,"y":120,"w":218,"h":105},
+			"frame": {"x":333,"y":120,"w":218,"h":105},
 			"rotated": false,
 			"trimmed": false,
 			"spriteSourceSize": {"x":0,"y":0,"w":218,"h":105},
@@ -47,39 +39,39 @@
 		},
 		"Car.png":
 		{
-			"frame": {"x":396,"y":229,"w":217,"h":94},
+			"frame": {"x":333,"y":229,"w":217,"h":94},
 			"rotated": false,
 			"trimmed": false,
 			"spriteSourceSize": {"x":0,"y":0,"w":217,"h":94},
 			"sourceSize": {"w":217,"h":94}
 		},
-		"grass-tile.png":
+		"Audi.png":
 		{
-			"frame": {"x":624,"y":324,"w":128,"h":128},
+			"frame": {"x":2,"y":344,"w":216,"h":101},
 			"rotated": false,
 			"trimmed": false,
-			"spriteSourceSize": {"x":0,"y":0,"w":128,"h":128},
-			"sourceSize": {"w":128,"h":128}
+			"spriteSourceSize": {"x":0,"y":0,"w":216,"h":101},
+			"sourceSize": {"w":216,"h":101}
 		},
 		"Police.png":
 		{
-			"frame": {"x":2,"y":436,"w":216,"h":100},
+			"frame": {"x":222,"y":344,"w":216,"h":100},
 			"rotated": false,
 			"trimmed": false,
 			"spriteSourceSize": {"x":0,"y":0,"w":216,"h":100},
 			"sourceSize": {"w":216,"h":100}
 		},
-		"truck.png":
+		"grass-tile.png":
 		{
-			"frame": {"x":222,"y":436,"w":216,"h":88},
+			"frame": {"x":134,"y":541,"w":128,"h":128},
 			"rotated": false,
 			"trimmed": false,
-			"spriteSourceSize": {"x":0,"y":0,"w":216,"h":88},
-			"sourceSize": {"w":216,"h":88}
+			"spriteSourceSize": {"x":0,"y":0,"w":128,"h":128},
+			"sourceSize": {"w":128,"h":128}
 		},
 		"Ambulance.png":
 		{
-			"frame": {"x":624,"y":2,"w":209,"h":102},
+			"frame": {"x":561,"y":2,"w":209,"h":102},
 			"rotated": false,
 			"trimmed": false,
 			"spriteSourceSize": {"x":0,"y":0,"w":209,"h":102},
@@ -87,7 +79,7 @@
 		},
 		"Mini_truck.png":
 		{
-			"frame": {"x":624,"y":108,"w":206,"h":113},
+			"frame": {"x":561,"y":108,"w":206,"h":113},
 			"rotated": false,
 			"trimmed": false,
 			"spriteSourceSize": {"x":0,"y":0,"w":206,"h":113},
@@ -95,19 +87,35 @@
 		},
 		"Mini_van.png":
 		{
-			"frame": {"x":624,"y":225,"w":198,"h":95},
+			"frame": {"x":561,"y":225,"w":198,"h":95},
 			"rotated": false,
 			"trimmed": false,
 			"spriteSourceSize": {"x":0,"y":0,"w":198,"h":95},
 			"sourceSize": {"w":198,"h":95}
 		},
-		"Audi.png":
+		"pavement2-tile.png":
 		{
-			"frame": {"x":396,"y":327,"w":216,"h":101},
+			"frame": {"x":561,"y":324,"w":128,"h":128},
 			"rotated": false,
 			"trimmed": false,
-			"spriteSourceSize": {"x":0,"y":0,"w":216,"h":101},
-			"sourceSize": {"w":216,"h":101}
+			"spriteSourceSize": {"x":0,"y":0,"w":128,"h":128},
+			"sourceSize": {"w":128,"h":128}
+		},
+		"pavement1-tile.png":
+		{
+			"frame": {"x":2,"y":541,"w":128,"h":128},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {"x":0,"y":0,"w":128,"h":128},
+			"sourceSize": {"w":128,"h":128}
+		},
+		"truck.png":
+		{
+			"frame": {"x":2,"y":449,"w":216,"h":88},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {"x":0,"y":0,"w":216,"h":88},
+			"sourceSize": {"w":216,"h":88}
 		}
 	}
 }
